@@ -401,28 +401,28 @@ css（层叠样式表）作用
 </li>
 </ul>
 <h2 id="基础选择器"><a href="#基础选择器" class="headerlink" title="基础选择器"></a>基础选择器</h2><ul>
-<li>标签选择器<ul>
+<li>标签选择器<ol>
 <li>结构：<strong>标签名{CSS属性名：属性值；}</strong></li>
 <li>标签选择器选择的是一类标签，而不是单独的某一个</li>
-</ul>
+</ol>
 </li>
-<li>类选择器<ul>
+<li>类选择器<ol>
 <li>结构：**.类名{CSS属性名：属性值；}**</li>
 <li>所有标签上都有class属性，class属性的属性值称为类名（类似于名字）</li>
 <li>一个标签可以同时有多个类名，类名之间以空格隔开</li>
 <li>类名可以重复，一个类选择器可以同时选中多个标签</li>
-</ul>
+</ol>
 </li>
-<li>id选择器<ul>
+<li>id选择器<ol>
 <li>结构：**#id属性值{CSS属性名：属性值；}**</li>
 <li>id属性值类似于身份证号码，在一个页面中是唯一的，不可重复的！</li>
 <li>一个标签只能有一个id属性值，一个id选择器只能选中一个标签</li>
-</ul>
+</ol>
 </li>
-<li>通配符选择器<ul>
+<li>通配符选择器<ol>
 <li>结构：***{CSS属性名：属性值；}**</li>
 <li>找到页面中所有的标签，设置样式</li>
-</ul>
+</ol>
 </li>
 </ul>
 <h2 id="字体和文本样式"><a href="#字体和文本样式" class="headerlink" title="字体和文本样式"></a>字体和文本样式</h2><ul>
@@ -448,10 +448,10 @@ css（层叠样式表）作用
 <li>如果给一个标签设置了相同的属性，后面的样式会<strong>覆盖</strong>前面的</li>
 </ul>
 </li>
-<li>字体font相关属性的连写<ul>
+<li>字体font相关属性的连写<ol>
 <li>属性名：font（复合属性）</li>
 <li>取值：font：style weight size family</li>
-</ul>
+</ol>
 </li>
 <li>文本样式<ol>
 <li>文本缩进：text-indent<ul>
@@ -468,7 +468,7 @@ css（层叠样式表）作用
 </li>
 </ol>
 </li>
-<li>行高<ul>
+<li>行高<ol>
 <li>作用：控制一行的上下行间距</li>
 <li>属性名：line-height</li>
 <li>取值<ul>
@@ -476,7 +476,7 @@ css（层叠样式表）作用
 <li>倍数（当前标签font-size的倍数）</li>
 </ul>
 </li>
-</ul>
+</ol>
 </li>
 <li>颜色常见取值<ul>
 <li>属性名<ul>
@@ -507,28 +507,30 @@ css（层叠样式表）作用
 </ol>
 </li>
 <li><p>并集选择器：<strong>，</strong></p>
-<ul>
+<ol>
 <li>作用：同时选择多组标签，设置相同的样式</li>
 <li>语法：选择器1,选择器2{css}</li>
-</ul>
+</ol>
 </li>
 <li><p>交集选择器：<strong>紧挨着</strong></p>
-<ul>
+<ol>
 <li>作用：选中页面中同时满足多个选择器的标签</li>
 <li>语法：选择器1选择器2{css}</li>
-</ul>
+</ol>
 </li>
-<li><p>hover伪类选择器</p>
-<ul>
+<li><p>hover<strong>伪类选择器</strong></p>
+<ol>
 <li>作用：选中鼠标悬停在元素上的状态，设置样式</li>
 <li>语法：选择器:hover{css}</li>
-</ul>
+</ol>
 </li>
 <li><p>emmet语法</p>
-<ul>
+<ol>
 <li><p>作用：通过简写语法，快速生成代码</p>
 </li>
 <li><p>语法</p>
+</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -575,21 +577,19 @@ css（层叠样式表）作用
 </tbody></table>
 </li>
 </ul>
-</li>
-</ul>
 <h2 id="背景相关属性"><a href="#背景相关属性" class="headerlink" title="背景相关属性"></a>背景相关属性</h2><ul>
-<li>背景颜色<ul>
+<li>背景颜色<ol>
 <li>属性名：background-color</li>
 <li>属性值：关键字、rgb表示、rgba表示、十六进制…</li>
 <li>背景颜色默认值是透明</li>
-</ul>
+</ol>
 </li>
-<li>背景图片<ul>
+<li>背景图片<ol>
 <li>属性名：background-image</li>
 <li>属性值：url(‘图片的路径’);</li>
-</ul>
+</ol>
 </li>
-<li>背景平铺<ul>
+<li>背景平铺<ol>
 <li>属性名：background-repeat</li>
 <li>属性值<ul>
 <li>repeat：水平和垂直方向都平铺</li>
@@ -598,11 +598,11 @@ css（层叠样式表）作用
 <li>repeat-y：垂直方向平铺</li>
 </ul>
 </li>
-</ul>
+</ol>
 </li>
-<li>背景位置<ul>
+<li>背景位置<ol>
 <li>属性名：background-position</li>
-<li>属性值<ol>
+<li>属性值</li>
 <li>方位名词<ul>
 <li>水平方向：left、center、right</li>
 <li>垂直方向：top、center、bottom</li>
@@ -616,12 +616,10 @@ css（层叠样式表）作用
 </li>
 </ol>
 </li>
-</ul>
-</li>
-<li>背景相关属性连写<ul>
+<li>背景相关属性连写<ol>
 <li>属性名：background</li>
 <li>书写顺序：color image repeat position</li>
-</ul>
+</ol>
 </li>
 <li>img标签和背景图片的区别<ol>
 <li>img标签是一个标签，不设置宽高默认以原尺寸显示</li>
@@ -631,38 +629,35 @@ css（层叠样式表）作用
 </ul>
 <h2 id="元素的显示模式"><a href="#元素的显示模式" class="headerlink" title="元素的显示模式"></a>元素的显示模式</h2><ul>
 <li><p>块级元素</p>
-<ul>
-<li>特点<ol>
+<ol>
+<li>特点</li>
 <li>独占一行</li>
 <li>宽度默认是父元素宽度，高度默认由内容撑开</li>
 <li>可以设置宽高</li>
-</ol>
-</li>
 <li>代表标签：div、p、h系列、ul、li、dl、dt、dd、form、header…</li>
-</ul>
+</ol>
 </li>
 <li><p>行内元素</p>
-<ul>
-<li><p>特点</p>
 <ol>
-<li>一行可以显示多个</li>
-<li>宽度和高度默认由内容撑开</li>
-<li>不可以设置宽高</li>
-</ol>
+<li><p>特点</p>
+</li>
+<li><p>一行可以显示多个</p>
+</li>
+<li><p>宽度和高度默认由内容撑开</p>
+</li>
+<li><p>不可以设置宽高</p>
 </li>
 <li><p>代表标签：a、span、b、u、i、s…</p>
 </li>
-</ul>
-</li>
-<li><p>行内块元素</p>
-<ul>
-<li>特点<ol>
-<li>一行可以显示多个</li>
-<li>可以设置宽高</li>
 </ol>
 </li>
+<li><p>行内块元素</p>
+<ol>
+<li>特点</li>
+<li>一行可以显示多个</li>
+<li>可以设置宽高</li>
 <li>代表标签：input、textarea、button、select…</li>
-</ul>
+</ol>
 </li>
 <li><p>元素显示模式转换</p>
 <ul>
@@ -728,10 +723,10 @@ css（层叠样式表）作用
 <li>常见取值：数字+px</li>
 </ol>
 </li>
-<li>边框（border）-连写形式<ul>
+<li>边框（border）-连写形式<ol>
 <li>属性值：单个取值的连写，取值之间以空格隔开；如：border: 10px solid red;</li>
 <li>单方向设置：border-方位名词</li>
-</ul>
+</ol>
 </li>
 <li>box-sizing: border-box;<ul>
 <li>变成CSS3的盒子模型，好处：加了border和padding不需要手动减法</li>
@@ -740,9 +735,71 @@ css（层叠样式表）作用
 <li>清楚默认内外边距：margin: 0;padding: 0;</li>
 </ul>
 <h2 id="CSS浮动"><a href="#CSS浮动" class="headerlink" title="CSS浮动"></a>CSS浮动</h2><ul>
-<li>结构伪类选择器<ol>
-<li></li>
+<li><p>结构伪类选择器</p>
+<ol>
+<li><p>作用：根据元素在HTML中的结构关系查找元素</p>
+</li>
+<li><p>选择器</p>
+<table>
+<thead>
+<tr>
+<th align="center">选择器</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">E:first-child{}</td>
+<td align="center">匹配父元素中的第一个子元素，并且是E元素</td>
+</tr>
+<tr>
+<td align="center">E:last-child{}</td>
+<td align="center">匹配父元素中的最后一个子元素，并且是E元素</td>
+</tr>
+<tr>
+<td align="center">E:nth-child(n){}</td>
+<td align="center">匹配父元素中的第n个子元素，并且是E元素</td>
+</tr>
+<tr>
+<td align="center">E:nth-last-child(n){}</td>
+<td align="center">匹配父元素中的倒数第n个子元素，并且是E元素</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>n的注意点</p>
+<ul>
+<li><p>n为：0、1、2、3、4、5…</p>
+</li>
+<li><p>通过n可以组成常见公式</p>
+<table>
+<thead>
+<tr>
+<th align="center">功能</th>
+<th align="center">公式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">偶数</td>
+<td align="center">2n、even</td>
+</tr>
+<tr>
+<td align="center">奇数</td>
+<td align="center">2n+1、2n-1、odd</td>
+</tr>
+<tr>
+<td align="center">找到前5个</td>
+<td align="center">-n+5</td>
+</tr>
+<tr>
+<td align="center">找到第5个往后</td>
+<td align="center">n+5</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
 </ol>
+</li>
+<li><p>伪元素：<strong>由CSS模拟出标签效果</strong>，一般页面中的非主体内容可以使用伪元素</p>
 </li>
 </ul>
 
