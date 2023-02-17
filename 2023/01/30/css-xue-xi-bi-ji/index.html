@@ -870,6 +870,91 @@ css（层叠样式表）作用
 </li>
 </ol>
 </li>
+<li><strong>元素层级问题</strong><ol>
+<li>不同布局方式元素的层级关系<ul>
+<li>标准流&lt;浮动&lt;定位</li>
+</ul>
+</li>
+<li>不同定位之间的层级关系<ul>
+<li>相对、绝对、固定默认层级相同</li>
+<li>此时HTML中写在下面的元素层级更高，会覆盖上面的元素</li>
+<li>z-index：整数，取值越大，显示顺序越靠上，默认值是0 <strong>必须配合定位生效</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="装饰"><a href="#装饰" class="headerlink" title="装饰"></a>装饰</h2><ul>
+<li><p><strong>垂直对齐方式</strong>：浏览器遇到行内和行内块标签默认当作文字处理，默认文字是按基线对齐</p>
+<ol>
+<li>属性名：vertical-align</li>
+<li>属性值：baseline  top  middle  bottom</li>
+</ol>
+</li>
+<li><p><strong>光标类型</strong></p>
+<ol>
+<li>属性名：cursor</li>
+<li>属性值：pointer(小手)  text(工字型)  move(十字光标)</li>
+</ol>
+</li>
+<li><p><strong>边框圆角</strong></p>
+<ol>
+<li>属性名：border-radius</li>
+<li>取值：数字+px 、 百分比</li>
+<li>圆形：border-radius: 50%  胶囊型：border-radius: 盒子高度的一半</li>
+</ol>
+</li>
+<li><p><strong>溢出部分显示效果</strong></p>
+<ol>
+<li><p>属性名：overflow</p>
+</li>
+<li><p>属性值：</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性值</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">visible</td>
+<td align="center">默认值，溢出部分可见</td>
+</tr>
+<tr>
+<td align="center">hidden</td>
+<td align="center">溢出部分隐藏</td>
+</tr>
+<tr>
+<td align="center">scroll</td>
+<td align="center">无论是否溢出，都显示滚动条</td>
+</tr>
+<tr>
+<td align="center">auto</td>
+<td align="center">根据是否溢出，自动显示或隐藏滚动条</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p><strong>元素本身的隐藏</strong></p>
+<ol>
+<li>常见熟悉<ul>
+<li>visibility：hidden   <strong>占位隐藏</strong></li>
+<li>display：none         <strong>不占位隐藏</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>元素整体透明度</strong></p>
+<ol>
+<li>属性名：opacity</li>
+<li>属性值：0-1之间的数字<ul>
+<li>1: 完全不透明</li>
+<li>0: 完全透明</li>
+</ul>
+</li>
+</ol>
+</li>
 </ul>
 
                 
