@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Javascript学习笔记</title>
+      <link href="/2023/02/20/javascript-xue-xi-bi-ji/"/>
+      <url>/2023/02/20/javascript-xue-xi-bi-ji/</url>
+      
+        <content type="html"><![CDATA[<p><strong>Javascript学习笔记</strong></p><h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><h4 id="js简介"><a href="#js简介" class="headerlink" title="js简介"></a>js简介</h4><ul><li>javascript介绍<ol><li>js是一种运行在<strong>客户端(浏览器)<strong>的编程语言，实现人机交互效果。</strong>HTML+CSS不属于编程语言</strong></li><li>作用<ul><li>网页特效</li><li>表单验证</li><li>数据交互(获取后台的数据，渲染到前端)</li><li>服务端编程(node.js)</li></ul></li><li>组成<ul><li>ECMAScript：规定了js基础语法核心知识</li><li>Web APIs<ul><li>DOM操作文档，比如对页面元素进行移动、大小、添加删除</li><li>BOM操作浏览器，比如页面弹窗，检测窗口宽度、存储数据到浏览器</li></ul></li></ul></li><li>书写位置<ul><li>内部Javascript：直接写在html文件里，用script标签包住；<strong>script标签写在</body>上面</strong></li><li>外部Javascript：代码写在以.js结尾的文件里 <code>&lt;script src=&quot;my.js&quot;&gt;&lt;/script&gt;</code></li><li>内联Javascript：代码直接写在标签内部 <code>&lt;button onclick=&quot;alert(&#39;内联&#39;)&quot;&gt;b&lt;/button&gt;</code></li></ul></li><li>注释<ul><li>单行注释：&#x2F;&#x2F;</li><li>块注释：&#x2F;* *&#x2F;</li></ul></li><li>结束符<ul><li>使用英文的;代表语句结束</li><li>实际开发中，可写可不写，浏览器(Javascript引擎)可以自动推断出语句的结束位置</li></ul></li><li>输入和输出语法<ul><li>输出语法<ul><li>document.write(“要出的内容”)</li><li>alert(“要出的内容”)</li><li>console.log(“控制台打印”)</li></ul></li><li>输出语法<ul><li>prompt(“请输入你的名字：”)</li></ul></li></ul></li></ol></li></ul><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul><li><p>变量是什么：变量是计算机存储数据的 “<strong>容器</strong>”</p></li><li><p>变量的基本使用</p><ol><li><p>声明</p><ul><li>语法：<code>let 变量名</code></li></ul></li><li><p>赋值</p><ul><li>赋值符号：**&#x3D;**</li></ul></li><li><p>更新变量</p><ul><li><p>变量赋值后，可以通过简单的给它一个不同的值来更新它,<strong>let不允许多次声明一个变量</strong></p><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> age<span class="token operator">=</span><span class="token number">18</span>age<span class="token operator">=</span><span class="token number">18</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li></ul></li><li><p>变量本质</p><ul><li>是程序在内存中申请的一块用来存放数据的小空间</li></ul></li></ol></li><li><p><strong>let</strong> 和 <strong>var</strong> 的区别：在较旧的JavaScript中，使用关键字var来声明变量，而不是let</p><ol><li>var声明<ul><li>可以先使用，再声明(不合理)</li><li>var声明过的变量可以重复声明(不合理)</li><li>比如变量提升、全局变量、没有块级作用域等等</li></ul></li><li>var已经废弃，统一使用let</li></ol></li><li><p>数组：<code>let 数组名=[数据1、数据2、数据3]</code> 获取数组的长度，数组.length</p></li></ul><h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><ul><li>基本使用<ol><li>概念：使用const声明的变量称为“常量”</li><li>使用场景：当某个变量永远<strong>不会改变</strong>的时候，就可以使用const来声明，而不是let</li><li>注意：<strong>常量不允许重新赋值，声明的时候必须赋值(初始化)</strong></li></ol></li><li>数据类型：<strong>弱数据类型语言</strong><ol><li>基本数据类型<ul><li>(number)数字型 ：<strong>NaN(Not a Number)</strong></li><li>(string)字符串型 ： 通过单引号(‘’)、双引号(“”)或反引号(&#96;&#96;)包裹的数据都叫字符串<ul><li>模板字符串：外边用反引号(&#96;&#96;)，里面用 <strong>${}</strong></li></ul></li><li>(boolean)布尔型  </li><li>(undefined)未定义型：表示没有赋值  </li><li>(null)空类型：表示赋值了，但是内容为空</li></ul></li><li>引用数据类型<ul><li>object对象</li></ul></li><li>通过<strong>typeof</strong>关键字检测数据类型</li><li>类型转换：把一种数据类型的变量转换为我们需要的数据类型<ul><li>隐式转换<ul><li>+号两边只要有一个是字符串，都会把另一个转成字符串</li><li>+号作为正号解析可以转成数字型<code>console.log(+&#39;123&#39;)</code></li></ul></li><li>显式转换<ul><li>Number(数据)</li><li>parseint(数据)：只保留整数</li><li>parseFloat(数据)：可以保留小数</li></ul></li></ul></li></ol></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CSS学习笔记</title>
       <link href="/2023/01/30/css-xue-xi-bi-ji/"/>
       <url>/2023/01/30/css-xue-xi-bi-ji/</url>
