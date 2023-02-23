@@ -418,13 +418,15 @@ age<span class="token operator">=</span><span class="token number">18</span><spa
 </li>
 </ul>
 <h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><ul>
-<li>基本使用<ol>
+<li><p>基本使用</p>
+<ol>
 <li>概念：使用const声明的变量称为“常量”</li>
 <li>使用场景：当某个变量永远<strong>不会改变</strong>的时候，就可以使用const来声明，而不是let</li>
 <li>注意：<strong>常量不允许重新赋值，声明的时候必须赋值(初始化)</strong></li>
 </ol>
 </li>
-<li>数据类型：<strong>弱数据类型语言</strong><ol>
+<li><p>数据类型：<strong>弱数据类型语言</strong></p>
+<ol>
 <li>基本数据类型<ul>
 <li>(number)数字型 ：<strong>NaN(Not a Number)</strong></li>
 <li>(string)字符串型 ： 通过单引号(‘’)、双引号(“”)或反引号(&#96;&#96;)包裹的数据都叫字符串<ul>
@@ -451,6 +453,67 @@ age<span class="token operator">=</span><span class="token number">18</span><spa
 <li>Number(数据)</li>
 <li>parseint(数据)：只保留整数</li>
 <li>parseFloat(数据)：可以保留小数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>运算符</p>
+<ol>
+<li>赋值运算符</li>
+<li>一元运算符：++i：先自加；i++：先运算；<strong>独立使用时候，两者没有区别</strong></li>
+<li>比较运算符：&#x3D;&#x3D;：左右两边<strong>值</strong>是否相等；&#x3D;&#x3D;&#x3D;：左右两边是否<strong>类型和值</strong>都相等</li>
+<li>逻辑运算符：&amp;&amp; 、||、 ！</li>
+<li>运算符优先级</li>
+</ol>
+</li>
+<li><p>语句</p>
+<ol>
+<li><p>表达式是可以<strong>求值</strong>的代码，语句是一段可以执行的代码</p>
+</li>
+<li><p>分支语句</p>
+<ul>
+<li><p>IF分支语句</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">if</span><span class="token punctuation">(</span>条件<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	满足条件执行的代码
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>条件<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    代码
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    不满足条件执行的代码
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>三元运算符</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">条件<span class="token operator">?</span>满足条件执行的代码<span class="token operator">:</span>不满足条件执行的代码<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>switch语句</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">switch</span><span class="token punctuation">(</span>数据<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">case</span> 值<span class="token number">1</span><span class="token operator">:</span>
+		代码<span class="token number">1</span>
+		<span class="token keyword">break</span>
+	<span class="token keyword">case</span> 值<span class="token number">2</span><span class="token operator">:</span>
+		代码<span class="token number">2</span>
+		<span class="token keyword">break</span>
+	<span class="token operator">...</span>
+	<span class="token keyword">default</span><span class="token operator">:</span>
+		代码n
+		<span class="token keyword">break</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>循环语句</p>
+<ul>
+<li><p>while循环</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">while</span><span class="token punctuation">(</span>循环条件<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token function">要重复执行的代码</span><span class="token punctuation">(</span>循环体<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>循环退出</p>
+<ul>
+<li>break：退出循环</li>
+<li>continue：结束本次循环，继续下次循环</li>
 </ul>
 </li>
 </ul>
