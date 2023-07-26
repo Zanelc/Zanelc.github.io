@@ -35,7 +35,7 @@ _multiconfig.yml
 
 接下来使用组合技:
 
-```
+```bash
 git add .
 git commit -m "注释信息"
 ## 要提交的是 source 分支
