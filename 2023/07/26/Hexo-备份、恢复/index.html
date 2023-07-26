@@ -24,7 +24,7 @@
 <meta property="og:description" content="hexo网上搭建教程很多，这里就不再复述了，鉴于每次重装系统后都需要重新部署环境，特意重新写一篇教程来讲述博客备份及恢复。 备份Hexo博客搭建并部署至github上之后，创建一个新分支用来存放源代码，我这里博客网页静态文件分支为 main，新建一个source分支来存放代码: 123456## 创建新分支之前，需要先初始化git仓库，在本地博客目录下执行:git init## 创建新分支 ， 这">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-26T15:13:45.000Z">
-<meta property="article:modified_time" content="2023-07-26T16:20:10.521Z">
+<meta property="article:modified_time" content="2023-07-26T16:27:54.881Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -280,7 +280,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## gitignore文件内容</span><br>.DS_Store<br>Thumbs.db<br>db.json<br>*.<span class="hljs-built_in">log</span><br>node_modules/<br>public/<br>.deploy*/<br>_multiconfig.yml<br></code></pre></td></tr></table></figure>
 
 <p>接下来使用组合技:</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">git <span class="hljs-keyword">add</span> .<br>git commit -m <span class="hljs-string">&quot;注释信息&quot;</span><br><span class="hljs-meta">## 要提交的是 source 分支</span><br>git <span class="hljs-keyword">push</span> origin source<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add .<br>git commit -m <span class="hljs-string">&quot;注释信息&quot;</span><br><span class="hljs-comment">## 要提交的是 source 分支</span><br>git push origin <span class="hljs-built_in">source</span><br></code></pre></td></tr></table></figure>
 
 <p>提交成功后，仓库会新增一个<strong>source</strong>分支，该分支内容如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">.github<br>scaffolds<br><span class="hljs-built_in">source</span><br>themes<br>.gitignore<br>_config.fluid.yml<br>_config.yml<br>package-lock.json<br>package.json<br></code></pre></td></tr></table></figure>
