@@ -6,8 +6,8 @@ try:
     print("---------网页文件PUSH---------")
     os.system(static_cmd)
     print("网页push成功！")
-    os.system(source_cmd)
     print("\n\n")
+    os.system(source_cmd)
     print("---------代码文件PUSH---------")
     print("源代码push成功！")
 except:
