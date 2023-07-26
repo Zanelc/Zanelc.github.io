@@ -7,8 +7,8 @@ try:
     os.system(static_cmd)
     print("网页push成功！")
     print("\n\n")
-    os.system(source_cmd)
     print("---------代码文件PUSH---------")
+    os.system(source_cmd)
     print("源代码push成功！")
 except:
     print("部署失败，请手动检查情况！")
