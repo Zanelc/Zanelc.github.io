@@ -24,7 +24,7 @@
 <meta property="og:description" content="hexo网上搭建教程很多，这里就不再复述了，鉴于每次重装系统后都需要重新部署环境，特意重新写一篇教程来讲述博客备份及恢复。 备份Hexo博客搭建并部署至github上之后，创建一个新分支用来存放源代码，我这里博客网页静态文件分支为 main，新建一个source分支来存放代码: 123456## 创建新分支之前，需要先初始化git仓库，在本地博客目录下执行:git init## 创建新分支 ， 这">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-26T15:13:45.000Z">
-<meta property="article:modified_time" content="2023-07-26T16:06:17.063Z">
+<meta property="article:modified_time" content="2023-07-26T16:19:38.307Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.7k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          14 分钟
+          15 分钟
         
       </span>
     
@@ -299,6 +299,9 @@
 <h2 id="小Tips"><a href="#小Tips" class="headerlink" title="小Tips"></a>小Tips</h2><p>每次手动部署推送还是挺麻烦的，使用python脚本一键部署：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">## 一键部署</span><br><span class="hljs-keyword">import</span> os<br>static_cmd=<span class="hljs-string">&quot;hexo c &amp;&amp; hexo g &amp;&amp; hexo d&quot;</span><br>source_cmd=<span class="hljs-string">&quot;git add . &amp;&amp; git commit -m &#x27;source update&#x27; &amp;&amp; git push origin source&quot;</span><br><span class="hljs-keyword">try</span>:<br>    os.system(static_cmd)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;网页push成功！&quot;</span>)<br>    os.system(source_cmd)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;源代码push成功！&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;部署失败，请手动检查情况！&quot;</span>)<br></code></pre></td></tr></table></figure>
 
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>有时候出现测试git连接失败、或推送失败、部署失败，大概率是因为<strong>代理</strong>问题，关闭代理或参考以下方法重新部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 在clash规则里面添加的，用于22端口直连，因为ssh使用的是22端口</span><br>- DST-PORT,22,DIRECT <br><span class="hljs-comment">## 测试git连接</span><br>ssh git@github.com<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -364,12 +367,6 @@
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2023/07/23/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
