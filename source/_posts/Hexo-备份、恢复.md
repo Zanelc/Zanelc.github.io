@@ -23,7 +23,7 @@ git checkout -b "source"
 git remote add origin 仓库名称
 ```
 
-添加远程仓库成功后，配置**.gitignore**文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:
+添加远程仓库成功后，配置 **.gitignore**文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:
 
 ```bash
 ## gitignore文件内容
@@ -64,7 +64,7 @@ package.json
 
 ## 恢复
 
-**注意：**如果用的是windows备份的，最好恢复也是在windows平台，不然在安装依赖时候，会出现很多问题，大概率是不同版本的依赖文件有差异。
+**注意**：如果用的是windows备份的，最好恢复也是在windows平台，用其他平台也可以恢复，可能会有部分依赖安装失败问题。
 
 这里用windows平台举例，假设windows机器刚装完系统，未配置任何环境，先安装**git**、**nodejs**环境。
 
@@ -73,7 +73,7 @@ package.json
 git config --global user.name yourname
 git config --global user.email youremail
 ## 如果已经有公钥，将公钥上传到github，若无，重新创建
-ssh-keygon -t rsa -C youremail
+ssh-keygen -t rsa -C youremail
 ## 安装完nodejs环境后,安装hexo命令
 npm install hexo-cli -g
 ```
