@@ -6,6 +6,7 @@ tags:
   - hexo
 abbrlink: 11292
 date: 2023-07-28 00:35:07
+index_img: /_posts/Hexo基本使用/index.png
 ---
 
 Hexo相关的一些基础配置说明。
