@@ -25,7 +25,7 @@ git remote add origin 仓库名称
 
 添加远程仓库成功后，配置 **.gitignore**文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:
 
-```bash
+```yaml
 ## gitignore文件内容
 .DS_Store
 Thumbs.db
@@ -48,7 +48,7 @@ git push origin source
 
 提交成功后，仓库会新增一个**source**分支，该分支内容如下:
 
-```bash
+```yaml
 .github
 scaffolds
 source
