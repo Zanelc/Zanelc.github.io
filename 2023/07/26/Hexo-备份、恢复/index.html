@@ -7,12 +7,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/zane.jpeg">
-  <link rel="icon" href="/img/zane.jpeg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/zane.png">
+  <link rel="icon" href="/img/zane.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+  <meta name="theme-color" content="#000">
   <meta name="author" content="Zane">
   <meta name="keywords" content="">
   
@@ -24,7 +24,7 @@
 <meta property="og:description" content="hexo网上搭建教程很多，这里就不再复述了，鉴于每次重装系统后都需要重新部署环境，特意重新写一篇教程来讲述博客备份及恢复。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-26T15:13:45.000Z">
-<meta property="article:modified_time" content="2023-07-27T17:55:05.939Z">
+<meta property="article:modified_time" content="2023-07-29T10:50:18.056Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary_large_image">
@@ -288,13 +288,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 创建新分支之前，需要先初始化git仓库，在本地博客目录下执行:</span><br>git init<br><span class="hljs-comment">## 创建新分支 ， 这里命名为 source</span><br>git checkout -b <span class="hljs-string">&quot;source&quot;</span><br><span class="hljs-comment">## 添加远程仓库 ， 这里仓库名称为博客所在仓库</span><br>git remote add origin 仓库名称<br></code></pre></td></tr></table></figure>
 
 <p>添加远程仓库成功后，配置 <strong>.gitignore</strong>文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## gitignore文件内容</span><br>.DS_Store<br>Thumbs.db<br>db.json<br>*.<span class="hljs-built_in">log</span><br>node_modules/<br>public/<br>.deploy*/<br>_multiconfig.yml<br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">## gitignore文件内容</span><br><span class="hljs-string">.DS_Store</span><br><span class="hljs-string">Thumbs.db</span><br><span class="hljs-string">db.json</span><br><span class="hljs-string">*.log</span><br><span class="hljs-string">node_modules/</span><br><span class="hljs-string">public/</span><br><span class="hljs-string">.deploy*/</span><br><span class="hljs-string">_multiconfig.yml</span><br></code></pre></td></tr></table></figure>
 
 <p>接下来使用组合技:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add .<br>git commit -m <span class="hljs-string">&quot;注释信息&quot;</span><br><span class="hljs-comment">## 要提交的是 source 分支</span><br>git push origin <span class="hljs-built_in">source</span><br></code></pre></td></tr></table></figure>
 
 <p>提交成功后，仓库会新增一个<strong>source</strong>分支，该分支内容如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">.github<br>scaffolds<br><span class="hljs-built_in">source</span><br>themes<br>.gitignore<br>_config.fluid.yml<br>_config.yml<br>package-lock.json<br>package.json<br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">.github</span><br><span class="hljs-string">scaffolds</span><br><span class="hljs-string">source</span><br><span class="hljs-string">themes</span><br><span class="hljs-string">.gitignore</span><br><span class="hljs-string">_config.fluid.yml</span><br><span class="hljs-string">_config.yml</span><br><span class="hljs-string">package-lock.json</span><br><span class="hljs-string">package.json</span><br></code></pre></td></tr></table></figure>
 
 <p>至此博客的备份任务已经完成，当博客源代码有改动时候，便可将改动提交到该分支。</p>
 <h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><p><strong>注意</strong>：如果用的是windows备份的，最好恢复也是在windows平台，用其他平台也可以恢复，可能会有部分依赖安装失败问题。</p>
