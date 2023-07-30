@@ -6,7 +6,7 @@ tags:
   - hexo
 abbrlink: 62245
 date: 2023-07-26 23:13:45
-index_img: /posts/62245/index.png
+index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/62245/index.png
 ---
 
 hexo网上搭建教程很多，这里就不再复述了，鉴于每次重装系统后都需要重新部署环境，特意重新写一篇教程来讲述博客备份及恢复。
