@@ -8,7 +8,7 @@ categories:
   - Windows程序设计
 abbrlink: 2044ef4b
 date: 2023-07-30 17:35:31
-index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/posts/2044ef4b/wallhaven-0q5zlr.jpg
+index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/2044ef4b/wallhaven-0q5zlr.jpg
 ---
 
 《Windows程序设计(第5版)》--第3章
