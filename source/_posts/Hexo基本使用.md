@@ -6,7 +6,7 @@ tags:
   - hexo
 abbrlink: 11292
 date: 2023-07-28 00:35:07
-index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/11292/hexo.jpg
+index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/11292/title.jpg
 ---
 
 Hexo相关的一些基础配置说明。
