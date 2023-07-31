@@ -47,7 +47,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![API断点](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003331018.png)
 
-断点设置完成后，当程序运行到端点处就会断下来，按 **F9** 运行程序：
+断点设置完成后，当程序运行到断点处就会断下来，按 **F9** 运行程序：
 
 ![F9运行程序](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003438364.png)
 
@@ -59,7 +59,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![跟随堆栈](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004135535.png)
 
-暂时不关心具体函数是怎么执行的，我们只关心结果，**执行到返回(F9)**，此时用户输入的数据已经被写入该缓冲区：
+暂时不关心具体函数是怎么执行的，我们只关心结果，**执行到返回(F9)** ，此时用户输入的数据已经被写入该缓冲区：
 
 ![执行到返回，数据存储在缓冲区](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004326799.png)
 
