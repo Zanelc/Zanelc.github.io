@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/title.png">
 <meta property="article:published_time" content="2023-07-31T15:24:39.000Z">
-<meta property="article:modified_time" content="2023-07-31T17:44:01.030Z">
+<meta property="article:modified_time" content="2023-07-31T17:53:32.822Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="Ollydbg基础使用">
 <meta property="article:tag" content="硬编码寻踪">
@@ -307,13 +307,13 @@
 <p>给这两个API函数设置断点，也可以在命令栏输入 <strong>bp GetDlgItemTextA</strong>:</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003210578.png" srcset="/img/loading.gif" lazyload alt="API断点"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003331018.png" srcset="/img/loading.gif" lazyload alt="API断点"></p>
-<p>断点设置完成后，当程序运行到端点处就会断下来，按 <strong>F9</strong> 运行程序：</p>
+<p>断点设置完成后，当程序运行到断点处就会断下来，按 <strong>F9</strong> 运行程序：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003438364.png" srcset="/img/loading.gif" lazyload alt="F9运行程序"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003534063.png" srcset="/img/loading.gif" lazyload alt="输入序列号"></p>
 <p>输入序列号后，点击 <strong>Verificar</strong> ，程序断在 <strong>GetDlgItemTextA</strong> 入口处，在堆栈区可以看到，该函数指定的缓冲区地址Buffer为 <strong>403010</strong>，我们在数据窗口中跟随该位置（右键–数据窗口中跟随）：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003741801.png" srcset="/img/loading.gif" lazyload alt="程序暂停"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004135535.png" srcset="/img/loading.gif" lazyload alt="跟随堆栈"></p>
-<p>暂时不关心具体函数是怎么执行的，我们只关心结果，**执行到返回(F9)**，此时用户输入的数据已经被写入该缓冲区：</p>
+<p>暂时不关心具体函数是怎么执行的，我们只关心结果，<strong>执行到返回(F9)</strong> ，此时用户输入的数据已经被写入该缓冲区：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004326799.png" srcset="/img/loading.gif" lazyload alt="执行到返回，数据存储在缓冲区"></p>
 <p>继续单步执行 <strong>F7</strong> 到用户代码，可以看到有比较和跳转指令，程序获取到用户输入后，将正确的序列号 <strong>FIACA</strong> 存放在EDX处，将用户的输入存放在EBX里，然后两个值进行比较，分别对应下面两个分支：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004741217.png" srcset="/img/loading.gif" lazyload alt="分支语句"></p>
