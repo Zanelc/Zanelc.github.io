@@ -121,6 +121,6 @@ except:
 ## 在clash规则里面添加的，用于22端口直连，因为ssh使用的是22端口
 - DST-PORT,22,DIRECT 
 ## 测试git连接
-ssh git@github.com
+ssh -T git@github.com
 ```
 
