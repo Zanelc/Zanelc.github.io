@@ -1,5 +1,5 @@
 ---
-title: Ollydbg--硬编码序列号寻踪
+title: Ollydbg--硬编码序列号寻踪一
 categories:
   - 使用Ollydbg从零开始Cracking
 tags:
@@ -129,7 +129,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![字符串比较](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213026039.png)
 
-对函数逻辑进行分析：**第一处mov指令将EBX的值赋为缓冲区的前四个字节，第二处mov指令将40204B处的值(9898)存到EDX中，然后对两个值进行比较**，很明显，EBX和EDX不相等导致**跳转未实现** ， 实际执行函数查看具体情况：
+对函数逻辑进行分析：**第一处mov指令将EBX的值赋为缓冲区的前四个字节，第二处mov指令将40204B处的值(9898)存到EDX中，然后对两个值进行比较**，很明显，EBX和EDX不相等导致**跳转未实现** ， 执行函数查看具体情况：
 
 ![比较结果](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213809056.png)
 
@@ -143,6 +143,6 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![无条件跳转](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214247938.png)
 
-**复制到可执行文件--所有修改--全部复制--保存文件**，打开修改后的文件，随意输入字符串，弹窗正确。
+**复制到可执行文件--所有修改--全部复制--保存文件**，打开修改后的文件，输入任意字符串，弹窗正确。
 
 ![弹窗正确](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214629261.png)
