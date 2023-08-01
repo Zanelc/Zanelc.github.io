@@ -76,6 +76,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b2e774
 
 ![破解成功](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b2e77430/image-20230802000559343.png)
 
-**注：** 此例中新增了个函数 [lstrcmpA](https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-lstrcmpia)，该函数对两个字符串进行比较，如果相等则返回0，在此例中，返回结果保存在 **EAX** 中，用 **OR** 判断 **EAX** 是否为0，若为0，则证明两个字符串相等。
+**注：** 此例中新增了个函数 [lstrcmpA](https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-lstrcmpa)，该函数对两个字符串进行比较，如果相等则返回0，在此例中，返回结果保存在 **EAX** 中，用 **OR** 判断 **EAX** 是否为0，若为0，则证明两个字符串相等。
 
-![lstrcmpa函数](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b2e77430/image-20230802000855166.png)
+![lstrcmpa函数](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b2e77430/image-20230802003105878.png)
+
