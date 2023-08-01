@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/title.png">
 <meta property="article:published_time" content="2023-07-31T15:24:39.000Z">
-<meta property="article:modified_time" content="2023-08-01T13:54:57.357Z">
+<meta property="article:modified_time" content="2023-08-01T15:24:55.455Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="Ollydbg基础使用">
 <meta property="article:tag" content="硬编码寻踪">
@@ -293,7 +293,7 @@
 <blockquote>
 <p>序列号是最难的工作之一，特别是当我们遇到了强力的加密算法的时候，就更难了，先从简单的情况分析开始，慢慢的延伸到复杂的情况，逐步锻炼寻找序列号的能力。</p>
 </blockquote>
-<h4 id="示例一：Leccion-13-HARDCODED-1"><a href="#示例一：Leccion-13-HARDCODED-1" class="headerlink" title="示例一：Leccion_13_HARDCODED_1"></a>示例一：Leccion_13_HARDCODED_1</h4><h5 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h5><p>最简单的情况下，正确的序列号是作为<strong>全局字符串</strong>出现在程序中的，我们先用OD打开该程序，程序停在了函数入口点(401000)处：</p>
+<h3 id="示例一：Leccion-13-HARDCODED-1"><a href="#示例一：Leccion-13-HARDCODED-1" class="headerlink" title="示例一：Leccion_13_HARDCODED_1"></a>示例一：Leccion_13_HARDCODED_1</h3><h4 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h4><p>最简单的情况下，正确的序列号是作为<strong>全局字符串</strong>出现在程序中的，我们先用OD打开该程序，程序停在了函数入口点(401000)处：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234434167.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
 <p>搜索全局字符串，如果安装有插件的话，直接使用“<strong>中文搜索引擎–智能搜索</strong>”即可搜索到全局字符串，也可以使用另外一种方式搜索，“<strong>查找–所有参考文本子串</strong>”，其实在使用这种方式搜索时候，并没有找到全部的字符串，猜测可能是字符编码的问题，<strong>建议还是使用插件去搜索，比较全</strong>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234735665.png" srcset="/img/loading.gif" lazyload alt="中文搜索引擎搜索"></p>
@@ -323,7 +323,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011314334.png" srcset="/img/loading.gif" lazyload alt="比较过程分析"></p>
 <p><strong>F9</strong>运行程序， 结果如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010114032.png" srcset="/img/loading.gif" lazyload alt="错误弹窗"></p>
-<h5 id="程序破解"><a href="#程序破解" class="headerlink" title="程序破解"></a>程序破解</h5><p>好了，现在我们已经知道了整个的序列号，也清楚了整个过程，我们使用 <strong>FIACA</strong> 测试一下是否正确，结果如下(其实这个就是正确弹窗，只是没有修改窗口标题)：</p>
+<h4 id="程序破解"><a href="#程序破解" class="headerlink" title="程序破解"></a>程序破解</h4><p>好了，现在我们已经知道了整个的序列号，也清楚了整个过程，我们使用 <strong>FIACA</strong> 测试一下是否正确，结果如下(其实这个就是正确弹窗，只是没有修改窗口标题)：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010324846.png" srcset="/img/loading.gif" lazyload alt="正确弹窗"></p>
 <p>接下来，尝试对程序进行破解，使错误的序列号也能正确弹窗，继续运行程序到跳转位置，将跳转语句改为无条件跳转 <strong>JMP</strong>，使其跳转至正确弹窗，结果如下：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011511665.png" srcset="/img/loading.gif" lazyload alt="无条件跳转"></p>
@@ -332,7 +332,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011706716.png" srcset="/img/loading.gif" lazyload alt="保存修改"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011827679.png" srcset="/img/loading.gif" lazyload alt="保存文件"></p>
 <p><strong>注：</strong> 其实上面有个细节，真正的序列号并不是 <strong>FIACA</strong>，而是 <strong>FIAC</strong>，因为比较时，<strong>ebx</strong>和 <strong>dword ptr</strong> 都是32位的，实际上只比较了 <strong>4个字节</strong>。</p>
-<h4 id="示例二：Leccon-13-HARDCODED-2"><a href="#示例二：Leccon-13-HARDCODED-2" class="headerlink" title="示例二：Leccon 13 HARDCODED 2"></a>示例二：Leccon 13 HARDCODED 2</h4><h5 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析"></a>程序分析</h5><p>有了上面的分析经验后，来继续分析第二个程序，使用OD载入该程序，程序停止了函数入口点（401000）处：</p>
+<h3 id="示例二：Leccon-13-HARDCODED-2"><a href="#示例二：Leccon-13-HARDCODED-2" class="headerlink" title="示例二：Leccon 13 HARDCODED 2"></a>示例二：Leccon 13 HARDCODED 2</h3><h4 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析"></a>程序分析</h4><p>有了上面的分析经验后，来继续分析第二个程序，使用OD载入该程序，程序停止了函数入口点（401000）处：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211529276.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
 <p>接下来查找全局字符串，发现可疑字符串 <strong>Bravo</strong> 和 <strong>9898</strong>：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211626876.png" srcset="/img/loading.gif" lazyload alt="字符串查找"></p>
@@ -349,7 +349,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213809056.png" srcset="/img/loading.gif" lazyload alt="比较结果"></p>
 <p><strong>F9</strong> 继续运行程序，弹窗错误：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214022122.png" srcset="/img/loading.gif" lazyload alt="错误弹窗"></p>
-<h5 id="程序破解-1"><a href="#程序破解-1" class="headerlink" title="程序破解"></a>程序破解</h5><p>知道了跳转的位置，我们可以得到正确的序列号为 <strong>9898</strong> ，也可以尝试对程序进行破解，将跳转语句修改为 <strong>无条件跳转</strong>：</p>
+<h4 id="程序破解-1"><a href="#程序破解-1" class="headerlink" title="程序破解"></a>程序破解</h4><p>知道了跳转的位置，我们可以得到正确的序列号为 <strong>9898</strong> ，也可以尝试对程序进行破解，将跳转语句修改为 <strong>无条件跳转</strong>：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214247938.png" srcset="/img/loading.gif" lazyload alt="无条件跳转"></p>
 <p><strong>复制到可执行文件–所有修改–全部复制–保存文件</strong>，打开修改后的文件，输入任意字符串，弹窗正确。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214629261.png" srcset="/img/loading.gif" lazyload alt="弹窗正确"></p>
