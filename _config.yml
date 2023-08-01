@@ -11,6 +11,11 @@ author: Zane
 language: zh-CN
 timezone: ''
 
+# sitemap配置
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://zanelc.github.io/
