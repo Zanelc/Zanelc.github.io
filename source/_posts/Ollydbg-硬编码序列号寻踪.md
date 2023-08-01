@@ -98,3 +98,51 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 ![保存文件](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011827679.png)
 
 **注：** 其实上面有个细节，真正的序列号并不是 **FIACA**，而是 **FIAC**，因为比较时，**ebx**和 **dword ptr** 都是32位的，实际上只比较了 **4个字节**。
+
+#### 示例二：Leccon 13 HARDCODED 2
+
+##### 程序分析
+
+有了上面的分析经验后，来继续分析第二个程序，使用OD载入该程序，程序停止了函数入口点（401000）处：
+
+![OD载入](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211529276.png)
+
+接下来查找全局字符串，发现可疑字符串 **Bravo** 和 **9898**：
+
+![字符串查找](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211626876.png)
+
+无法确定上述字符串是否为序列号，查看 **当前模块API函数列表** ，发现 **GetDlgItemTextA** 和 **MessageBoxA** ，分别用来获取输入和弹窗：
+
+![API函数列表](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211817497.png)
+
+在这 **两个函数下断点** ，**F9** 一键运行程序，输入 **test1234**，程序断在 **GetDlgItemTextA** 函数入口处，缓冲区地址为 **40300C**：
+
+![序列号输入](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212259130.png)
+
+![程序到达断点处暂停](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212602679.png)
+
+继续执行程序到返回，缓冲区成功写入用户输入：
+
+![执行到返回](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212751493.png)
+
+单步执行（**F7**）跳出函数，发现对两个值进行判断后，弹窗正确或错误。
+
+![字符串比较](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213026039.png)
+
+对函数逻辑进行分析：**第一处mov指令将EBX的值赋为缓冲区的前四个字节，第二处mov指令将40204B处的值(9898)存到EDX中，然后对两个值进行比较**，很明显，EBX和EDX不相等导致**跳转未实现** ， 实际执行函数查看具体情况：
+
+![比较结果](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213809056.png)
+
+**F9** 继续运行程序，弹窗错误：
+
+![错误弹窗](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214022122.png)
+
+##### 程序破解
+
+知道了跳转的位置，我们可以得到正确的序列号为 **9898** ，也可以尝试对程序进行破解，将跳转语句修改为 **无条件跳转**：
+
+![无条件跳转](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214247938.png)
+
+**复制到可执行文件--所有修改--全部复制--保存文件**，打开修改后的文件，随意输入字符串，弹窗正确。
+
+![弹窗正确](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214629261.png)
