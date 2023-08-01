@@ -15,9 +15,9 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 > 序列号是最难的工作之一，特别是当我们遇到了强力的加密算法的时候，就更难了，先从简单的情况分析开始，慢慢的延伸到复杂的情况，逐步锻炼寻找序列号的能力。
 
-#### 示例一：Leccion_13_HARDCODED_1
+### 示例一：Leccion_13_HARDCODED_1
 
-##### 程序分析
+#### 程序分析
 
 最简单的情况下，正确的序列号是作为**全局字符串**出现在程序中的，我们先用OD打开该程序，程序停在了函数入口点(401000)处：
 
@@ -79,7 +79,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![错误弹窗](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010114032.png)
 
-##### 程序破解
+#### 程序破解
 
 好了，现在我们已经知道了整个的序列号，也清楚了整个过程，我们使用 **FIACA** 测试一下是否正确，结果如下(其实这个就是正确弹窗，只是没有修改窗口标题)：
 
@@ -99,9 +99,9 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 **注：** 其实上面有个细节，真正的序列号并不是 **FIACA**，而是 **FIAC**，因为比较时，**ebx**和 **dword ptr** 都是32位的，实际上只比较了 **4个字节**。
 
-#### 示例二：Leccon 13 HARDCODED 2
+### 示例二：Leccon 13 HARDCODED 2
 
-##### 程序分析
+#### 程序分析
 
 有了上面的分析经验后，来继续分析第二个程序，使用OD载入该程序，程序停止了函数入口点（401000）处：
 
@@ -137,7 +137,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a535
 
 ![错误弹窗](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214022122.png)
 
-##### 程序破解
+#### 程序破解
 
 知道了跳转的位置，我们可以得到正确的序列号为 **9898** ，也可以尝试对程序进行破解，将跳转语句修改为 **无条件跳转**：
 
