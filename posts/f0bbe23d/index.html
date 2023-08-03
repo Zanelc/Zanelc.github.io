@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/title.png">
 <meta property="article:published_time" content="2023-08-03T13:12:30.000Z">
-<meta property="article:modified_time" content="2023-08-03T16:16:26.510Z">
+<meta property="article:modified_time" content="2023-08-03T16:22:48.361Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="Ollydbg基础使用">
 <meta property="article:tag" content="硬编码寻踪">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          501 字
+          505 字
         
       </span>
     
@@ -292,13 +292,13 @@
 
 <h3 id="Splish"><a href="#Splish" class="headerlink" title="Splish"></a>Splish</h3><p><strong>OD</strong> 打开该程序，断在函数入口点 <strong>401000</strong> 处：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803211731113.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
-<p><strong>查找字符串</strong> ，成功输入正确序列号时字符串提示，双击来到引用字符串处：</p>
+<p><strong>查找字符串</strong> ，发现成功输入正确序列号时字符串提示，双击来到引用字符串处：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803212230713.png" srcset="/img/loading.gif" lazyload alt="查找字符串"></p>
-<p>可以看到通过 <strong>GetWindowTextA</strong> 来获取用户输入，用 <strong>MessageBoxA</strong> 来提示序列号正确性，对 <strong>GetMindowTextA</strong> 处下断点：</p>
+<p>可以看到通过 <strong>GetWindowTextA</strong> 来获取用户输入，用 <strong>MessageBoxA</strong> 来提示序列号正确性，对 <strong>GetWindowTextA</strong> 处下断点：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803212607309.png" srcset="/img/loading.gif" lazyload alt="跳转到字符串引用处"></p>
 <p>继续 <strong>查看当前模块API函数</strong> ，找到 <strong>GetWindowTextA</strong> 和 <strong>MessageBoxA</strong> 函数，对这两个函数下断点：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803211923320.png" srcset="/img/loading.gif" lazyload alt="当前模块API函数"></p>
-<p><strong>F9</strong> 一键运行程序到断点，用户输入保存至缓冲区 <strong>403215</strong> 处，然后将 <strong>hardCoded 地址赋给eax，输入序列号地址赋给ebx</strong>：</p>
+<p><strong>F9</strong> 一键运行程序到断点，用户输入保存至缓冲区 <strong>403215</strong> 处，然后将 <strong>“hardCoded“ 地址赋给eax，输入序列号地址赋给ebx</strong>：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803235313814.png" srcset="/img/loading.gif" lazyload alt="获取用户输入"></p>
 <p><strong>对两个字符串逐个字符比较，当字符为空时，跳出循环，如果字符不一致，弹窗错误。</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803235828910.png" srcset="/img/loading.gif" lazyload alt="比较过程分析"></p>
