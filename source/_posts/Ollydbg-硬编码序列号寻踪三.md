@@ -21,11 +21,11 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe2
 
 ![OD载入](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803211731113.png)
 
-**查找字符串** ，成功输入正确序列号时字符串提示，双击来到引用字符串处：
+**查找字符串** ，发现成功输入正确序列号时字符串提示，双击来到引用字符串处：
 
 ![查找字符串](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803212230713.png)
 
-可以看到通过 **GetWindowTextA** 来获取用户输入，用 **MessageBoxA** 来提示序列号正确性，对 **GetMindowTextA** 处下断点：
+可以看到通过 **GetWindowTextA** 来获取用户输入，用 **MessageBoxA** 来提示序列号正确性，对 **GetWindowTextA** 处下断点：
 
 ![跳转到字符串引用处](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803212607309.png)
 
@@ -33,7 +33,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe2
 
 ![当前模块API函数](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803211923320.png)
 
-**F9** 一键运行程序到断点，用户输入保存至缓冲区 **403215** 处，然后将 **hardCoded 地址赋给eax，输入序列号地址赋给ebx**：
+**F9** 一键运行程序到断点，用户输入保存至缓冲区 **403215** 处，然后将 **“hardCoded“ 地址赋给eax，输入序列号地址赋给ebx**：
 
 ![获取用户输入](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230803235313814.png)
 
