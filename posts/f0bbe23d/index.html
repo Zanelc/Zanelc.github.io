@@ -16,16 +16,16 @@
   <meta name="author" content="Zane">
   <meta name="keywords" content="">
   
-    <meta name="description" content="继续增加难度，对程序序列号进行破解。">
+    <meta name="description" content="继续增加难度，对程序序列号进行破解。						–未完待续">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ollydbg--硬编码序列号寻踪三">
 <meta property="og:url" content="https://zanelc.github.io/posts/f0bbe23d/index.html">
 <meta property="og:site_name" content="Zane">
-<meta property="og:description" content="继续增加难度，对程序序列号进行破解。">
+<meta property="og:description" content="继续增加难度，对程序序列号进行破解。						–未完待续">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/title.png">
 <meta property="article:published_time" content="2023-08-03T13:12:30.000Z">
-<meta property="article:modified_time" content="2023-08-03T17:43:57.889Z">
+<meta property="article:modified_time" content="2023-08-04T10:35:07.801Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="Ollydbg基础使用">
 <meta property="article:tag" content="硬编码寻踪">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.5k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -287,7 +287,7 @@
             
               <div class="markdown-body">
                 
-                <p>继续增加难度，对程序序列号进行破解。</p>
+                <p>继续增加难度，对程序序列号进行破解。						–未完待续</p>
 <span id="more"></span>
 
 <h3 id="Splish"><a href="#Splish" class="headerlink" title="Splish"></a>Splish</h3><h4 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h4><p><strong>OD</strong> 打开该程序，断在函数入口点 <strong>401000</strong> 处：</p>
@@ -310,41 +310,41 @@
 <p>保存修改，运行程序输入任意序列号，均可以弹窗正确！</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804001141116.png" srcset="/img/loading.gif" lazyload alt="弹窗正确"></p>
 <h3 id="SamBo"><a href="#SamBo" class="headerlink" title="SamBo"></a>SamBo</h3><h4 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析"></a>程序分析</h4><p>用 <strong>OD</strong> 载入该程序，提示该程序可能被 <strong>加壳</strong> ，我们先不管它，尝试加载，程序断在入口点 <strong>4D4001</strong> 处：</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804004429485.png" srcset="/img/loading.gif" lazyload alt="提示加壳"></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804004456842.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804004429485.png" srcset="/img/loading.gif" lazyload alt="提示加壳"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804004456842.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
 <p><strong>查看程序内存窗口（alt+M）</strong>，发现程序入口点所属区段起始地址为4D4000，大小为2000H，入口点 <strong>4d4001</strong> ，代码段开始于 <strong>401000</strong>。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804005102033.png" srcset="/img/loading.gif" lazyload alt="内存窗口"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804005102033.png" srcset="/img/loading.gif" lazyload alt="内存窗口"></p>
 <p>从当前入口点开始解密其他区段，然后会跳转到真正的入口点处，<strong>F9</strong> 执行程序。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804005359472.png" srcset="/img/loading.gif" lazyload alt="程序窗口"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804005359472.png" srcset="/img/loading.gif" lazyload alt="程序窗口"></p>
 <p>弹出Crackme窗口，等待输入序列号，<strong>表明该程序已经在内存中解密区段结束了，现在在执行代码段中的代码，我们在.text区段上设置一个内存访问断点，让程序执行代码段中的代码中断下来。</strong></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804005557395.png" srcset="/img/loading.gif" lazyload alt="内存访问断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804005557395.png" srcset="/img/loading.gif" lazyload alt="内存访问断点"></p>
 <p>设置断点后，程序断在 <strong>45c85f</strong> 处，程序正在解密内存中的各种区段，我们手动分析一下源代码，<strong>鼠标右键–分析–分析代码</strong>。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804005730190.png" srcset="/img/loading.gif" lazyload alt="分析代码"></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804005949971.png" srcset="/img/loading.gif" lazyload alt="分析代码"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804005730190.png" srcset="/img/loading.gif" lazyload alt="分析代码"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804005949971.png" srcset="/img/loading.gif" lazyload alt="分析代码"></p>
 <p>可以看到分析后的代码，现在我们位于代码段，查看当前模块使用了哪些API函数，<strong>为什么刚刚程序加载时候不查看，因为当时查看模块使用的API的话是查看的壳所在模块使用的API函数</strong>。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010104736.png" srcset="/img/loading.gif" lazyload alt="分析后的代码"></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010241817.png" srcset="/img/loading.gif" lazyload alt="API函数列表"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010104736.png" srcset="/img/loading.gif" lazyload alt="分析后的代码"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010241817.png" srcset="/img/loading.gif" lazyload alt="API函数列表"></p>
 <p>很不幸API函数列表中显示的是一些比较陌生的字符串，接下来尝试查看 <strong>全局字符串</strong> ，看看有没有有用信息，<strong>发现提示成功的字符串</strong>。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010459387.png" srcset="/img/loading.gif" lazyload alt="全局字符串"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010459387.png" srcset="/img/loading.gif" lazyload alt="全局字符串"></p>
 <p>查看字符串引用地方，发现这里存在 <strong>比较指令和跳转指令，附近还有提示错误的代码块，但是并不是通过调用MessageBoxA函数来提示。</strong></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010700724.png" srcset="/img/loading.gif" lazyload alt="字符串引用"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010700724.png" srcset="/img/loading.gif" lazyload alt="字符串引用"></p>
 <p>在 <strong>test指令</strong> 处设置断点，并清除之前设置的 <strong>内存断点</strong> ，然后运行程序，输入序列号。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010840952.png" srcset="/img/loading.gif" lazyload alt="设置断点"></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804010936972.png" srcset="/img/loading.gif" lazyload alt="删除内存断点"></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011026150.png" srcset="/img/loading.gif" lazyload alt="输入序列号"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010840952.png" srcset="/img/loading.gif" lazyload alt="设置断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804010936972.png" srcset="/img/loading.gif" lazyload alt="删除内存断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011026150.png" srcset="/img/loading.gif" lazyload alt="输入序列号"></p>
 <p>程序断下来之后，继续单步执行，发现跳转实现，<strong>F9</strong> 继续运行，弹窗提示成功。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011302041.png" srcset="/img/loading.gif" lazyload alt="戏耍弹窗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011302041.png" srcset="/img/loading.gif" lazyload alt="戏耍弹窗"></p>
 <p>点击确定，发现上一步弹窗是假的，只是<strong>戏耍</strong>我们。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011352103.png" srcset="/img/loading.gif" lazyload alt="弹窗二"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011352103.png" srcset="/img/loading.gif" lazyload alt="弹窗二"></p>
 <p>再次输入序列号提交，程序依然断在 <strong>test指令</strong> 处，这次修改标志位尝试不跳转：</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011610215.png" srcset="/img/loading.gif" lazyload alt="修改标志位"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011610215.png" srcset="/img/loading.gif" lazyload alt="修改标志位"></p>
 <p>运行程序，弹窗成功！</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011641045.png" srcset="/img/loading.gif" lazyload alt="弹窗成功"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011641045.png" srcset="/img/loading.gif" lazyload alt="弹窗成功"></p>
 <p>得到结论：<strong>这个跳转是觉得序列号是否正确的关键跳转</strong> ，接下来分析一下跳转的具体代码：<strong>test指令前还存在一个call指令，我们这次把断点设置在call指令，查看一下堆栈情况</strong>。</p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804011952145.png" srcset="/img/loading.gif" lazyload alt="堆栈分析"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804011952145.png" srcset="/img/loading.gif" lazyload alt="堆栈分析"></p>
 <p><strong>堆栈中存在刚刚输入的序列号，数据窗口跟随定位到字符串，此时可以看到数据窗口中存在字符串 1556555 ，可能是正确序列号，我们对错误序列号设置内存访问断点，当错误序列号与正确序列号进行比较的话，就会断下来。</strong></p>
-<p><img src="E:\Zanelc_blog\source_posts\Ollydbg-硬编码序列号寻踪三\image-20230804012218874.png" srcset="/img/loading.gif" lazyload alt="内存访问断点"></p>
-<p><strong>F9</strong> 运行程序，如果 <strong>call</strong> 指令中有访问该内存，就会中断下来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f0bbe23d/image-20230804012218874.png" srcset="/img/loading.gif" lazyload alt="内存访问断点"></p>
+<p><strong>F9</strong> 运行程序，如果 <strong>call</strong> 指令中有访问该内存，就会中断下来，实际运行发现中断下来了(文档教程中明确说明：不会中断下来， <strong>此处的call指令并没有对序列号进行对比</strong>)，目前没有搞清楚原因在哪里，也可能是太菜了，先暂停！</p>
 
                 
               </div>
@@ -774,5 +774,5 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+<!-- hexo injector body_end start --><script src="/js/time.js"></script><script src="/js/emoji.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
 </html>
