@@ -4,9 +4,9 @@ hexo.extend.injector.register('body_end', '<script src="/js/time.js"></script>',
 hexo.extend.injector.register('body_end', '<script src="/js/emoji.js"></script>', 'default');
 // 网站运行时长
 hexo.extend.injector.register('body_end', '<script src="/js/duration.js"></script>', 'default');
-
 // 文章图片浮动
 hexo.extend.injector.register('body_end', '<script src="/js/imghover.js"></script>', 'home');
 // 添加花瓣飘落
 hexo.extend.injector.register('body_end', '<script src="/js/sakura.js"></script>', 'home');
-hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'home');
+// 图片预加载动画
+hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'default');
