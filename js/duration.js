@@ -8,7 +8,7 @@ function createtime() {
     mnum = Math.floor(minutes); if (String(mnum).length == 1) { mnum = "0" + mnum; }
     seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
     snum = Math.round(seconds); if (String(snum).length == 1) { snum = "0" + snum; }
-    document.getElementById("timeDate").innerHTML = "小破站已安全运行 " + dnum + " 天 ";
-    document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    document.getElementById("timeDate").innerHTML = "小破站已安全运行 <span style='color: #c5211c'>" + dnum + "</span> 天 ";
+    document.getElementById("times").innerHTML ="<span style='color: #e4443f'>"+ hnum + "</span> 小时<span style='color:#f59B65'> " + mnum + " </span>分 <span style='color:#f78a79'>" + snum + " </span>秒";
 }
 setInterval("createtime()", 250);
