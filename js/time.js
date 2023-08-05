@@ -2,7 +2,8 @@
 function time_show() {
   // 增加一个页脚的美化
   var foot = document.getElementsByClassName("footer-inner")
-  foot_con = '<div style="margin:5px">©2023 <i class="heart-icon fa-fw fas fa-heartbeat"></i> 永远相信美好的事情即将发生</div>'
+  var now_time=new Date().getFullYear();
+  foot_con = '<div style="margin:5px">©2023~'+now_time+' <i class="heart-icon fa-fw fas fa-heartbeat"></i> 永远相信美好的事情即将发生</div>'
   foot[0].insertAdjacentHTML('beforeend', foot_con);
 
   // 为页脚增加样式
@@ -29,7 +30,7 @@ function time_show() {
   /*对js不是很理解，这里调试好久，用上述代码会导致图片加载不出来，原因是启动了懒加载，而innerHTML写入
   代码时候，有的图片还没有加载出来，这时候重新写入所以会导致一系列图片都加载不出来，所以尽量不要使用innerHTML方法
   */
-  var html_con = '<div class="note note-warning" style="font-size:0.9rem">' +
+  var html_con = '<div class="note note-info" style="font-size:0.9rem">' +
     '<p>这是一篇发布于 ' + days + ' 天前的文章，部分信息可能已发生改变，请注意甄别。' +
     '</p></div>'
   posts[0].insertAdjacentHTML('afterbegin', html_con);   // 直接将想要写的代码插入到元素后面
