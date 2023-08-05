@@ -14,7 +14,7 @@ hexo网上搭建教程很多，这里就不再复述了，鉴于每次重装系�
 
 ## 备份
 
-Hexo博客搭建并部署至github上之后，创建一个新分支用来存放源代码，我这里博客网页静态文件分支为 **main**，新建一个**source**分支来存放代码:
+Hexo博客搭建并部署至github上之后，创建一个新分支用来存放源代码，我这里博客网页静态文件分支为 **main** ，新建一个 **source** 分支来存放代码:
 
 ```bash
 ## 创建新分支之前，需要先初始化git仓库，在本地博客目录下执行:
@@ -25,7 +25,7 @@ git checkout -b "source"
 git remote add origin 仓库名称
 ```
 
-添加远程仓库成功后，配置 **.gitignore**文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:
+添加远程仓库成功后，配置 **.gitignore** 文件，该文件用来指示哪些文件在push时候忽略，默认已经配置好了，我这里内容为:
 
 ```yaml
 ## gitignore文件内容
@@ -48,7 +48,7 @@ git commit -m "注释信息"
 git push origin source
 ```
 
-提交成功后，仓库会新增一个**source**分支，该分支内容如下:
+提交成功后，仓库会新增一个 **source** 分支，该分支内容如下:
 
 ```yaml
 .github
@@ -68,7 +68,7 @@ package.json
 
 **注意**：如果用的是windows备份的，最好恢复也是在windows平台，用其他平台也可以恢复，可能会有部分依赖安装失败问题。
 
-这里用windows平台举例，假设windows机器刚装完系统，未配置任何环境，先安装**git**、**nodejs**环境。
+这里用windows平台举例，假设windows机器刚装完系统，未配置任何环境，先安装 **git**、**nodejs** 环境。
 
 ```bash
 ## 配置git信息
@@ -91,10 +91,10 @@ npm install hexo-cli -g
 至此博客恢复部署完成，可以在本地尝试一下，看是否正常运行:
 
 ```bash
-hexo c //删除public文件夹
-hexo g //在hexo站点根目录下生成public文件夹
-hexo s //本地启动服务
-hexo d //部署站点，在本地生成.deploy_git文件夹，并将编译后的文件上传至 GitHub
+hexo c // 删除public文件夹
+hexo g // 在hexo站点根目录下生成public文件夹
+hexo s // 本地启动服务
+hexo d // 部署站点，在本地生成.deploy_git文件夹，并将编译后的文件上传至 GitHub
 ```
 ## 小Tips
 每次手动部署推送还是挺麻烦的，使用python脚本一键部署：
@@ -115,7 +115,7 @@ except:
 
 ### 注意
 
-有时候出现测试git连接失败、或推送失败、部署失败，大概率是因为**代理**问题，关闭代理或参考以下方法重新部署：
+有时候出现测试git连接失败、或推送失败、部署失败，大概率是因为 **代理** 问题，关闭代理或参考以下方法重新部署：
 
 ```bash
 ## 在clash规则里面添加的，用于22端口直连，因为ssh使用的是22端口
