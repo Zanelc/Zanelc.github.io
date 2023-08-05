@@ -1,4 +1,4 @@
-// 文章时效提醒
+// 文章时效提醒   为了简便，后续多余的功能能写到time.js文件中的就写到该文件中了
 hexo.extend.injector.register('body_end', '<script src="/js/time.js"></script>', 'default');
 // emoji点击效果
 hexo.extend.injector.register('body_end', '<script src="/js/emoji.js"></script>', 'default');

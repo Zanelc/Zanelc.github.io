@@ -236,6 +236,7 @@ font:
 # Specify the path of your custom js file, support list. The path is relative to the source directory, such as `/js/custom.js` corresponding to the directory `source/js/custom.js`
 custom_js:
  - /js/fish.js
+ - /js/code.js
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
 custom_css:
@@ -350,7 +351,7 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -424,7 +425,12 @@ footer:
   # 页脚第一行文字的 HTML，建议保留 Fluid 的链接，用于向更多人推广本主题
   # HTML of the first line of the footer, it is recommended to keep the Fluid link to promote this theme to more people
   content: '
-     <div>
+    <div style="margin:5px">
+    <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo">
+    <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github">
+    <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/author-zane-blue?style=plastic&logo=superuser">
+    </div>
+    <div>
       <span id="timeDate">载入天数...</span>
       <span id="times">载入时分秒...</span>
     </div>
@@ -1034,8 +1040,11 @@ links:
   # 友链下方自定义区域，支持 HTML，可插入例如申请友链的文字
   # Custom content at the bottom of the links
   custom:
-    enable: false
-    content: '<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>'
+    enable: true
+    content: '
+    <p style="text-align: center;">什么都没有，你好像很少朋友哎~</>
+    <hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名</li><li>简介</li><li>链接</li><li>图片</li></ul>
+    '
 
   # 评论插件
   # Comment plugin
