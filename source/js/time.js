@@ -1,12 +1,12 @@
 // 提示文章发布日期
 function time_show() {
-  // 增加一个页脚的美化
+  // 增加一个页脚的美化:网站创建日期
   var foot = document.getElementsByClassName("footer-inner")
   var now_time=new Date().getFullYear();
   foot_con = '<div style="margin:5px">©2023~'+now_time+' <i class="heart-icon fa-fw fas fa-heartbeat"></i> 永远相信美好的事情即将发生</div>'
   foot[0].insertAdjacentHTML('beforeend', foot_con);
 
-  // 为页脚增加样式
+  // 为页脚增加fish样式
   var footer=document.getElementsByClassName("footer-inner");
   fish='<div id="jsi-flying-fish-container" style="margin-top:-90px;line-height: 0;"></div>'
   footer[0].insertAdjacentHTML('afterend',fish);

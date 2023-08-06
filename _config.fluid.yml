@@ -306,7 +306,7 @@ lazyload:
 
   # 开启后懒加载仅在文章页生效，如果自定义页面需要使用，可以在 Front-matter 里指定 `lazyload: true`
   # If true, only enable lazyload on the post page. For custom pages, you can set 'lazyload: true' in front-matter
-  onlypost: false
+  onlypost: true
 
   # 触发加载的偏移倍数，基数是视窗高度，可根据部署环境的请求速度调节
   # The factor of viewport height that triggers loading
@@ -425,10 +425,10 @@ footer:
   # 页脚第一行文字的 HTML，建议保留 Fluid 的链接，用于向更多人推广本主题
   # HTML of the first line of the footer, it is recommended to keep the Fluid link to promote this theme to more people
   content: '
-    <div style="margin:5px">
+    <div class="static_badge" style="margin:5px">
+    <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/zane-blog-blue?style=plastic&logo=dependabot">
     <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo">
     <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github">
-    <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/author-zane-blue?style=plastic&logo=superuser">
     </div>
     <div>
       <span id="timeDate">载入天数...</span>

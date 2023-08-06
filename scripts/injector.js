@@ -8,5 +8,5 @@ hexo.extend.injector.register('body_end', '<script src="/js/duration.js"></scrip
 hexo.extend.injector.register('body_end', '<script src="/js/imghover.js"></script>', 'home');
 // 添加花瓣飘落
 hexo.extend.injector.register('body_end', '<script src="/js/sakura.js"></script>', 'home');
-// 图片预加载动画
-hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'default');
+// 图片预加载动画，在主题中修改
+// hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'default');
