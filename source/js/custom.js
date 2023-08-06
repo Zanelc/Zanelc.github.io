@@ -10,7 +10,7 @@ const createSnowFlake = () => {
 
     const winWidth = window.innerWidth;
     const winHeight = window.innerHeight;
-    let FallHeight = (bannerHeight / winHeight) * 100+"vh";
+    let FallHeight = (bannerHeight / winHeight) * 100 + "vh";
     let randomLeft = getRandomNumber(0, winWidth);
     let randomOpacity = getRandomNumber(0, 1);
     let randomSize = getRandomNumber(0.6, 2);
@@ -31,3 +31,23 @@ const getRandomNumber = (min, max) => {
 setInterval(createSnowFlake, 40); // Create snowflake every 50ms (lower interval more snowflakes)
 
 
+// 添加一站到底效果
+function scrollbottom() {
+    drop_style = '\
+    <li class="nav-item" id="scroll-bottom-button">  \
+    <a class="nav-link"><i class="iconfont icon-arrowdown"></i>   \
+    <span>一站到底</span></a>  \
+    </li>   \
+    '
+    var nav = document.getElementsByClassName("navbar-nav");
+    nav[0].insertAdjacentHTML('beforeend', drop_style);
+    let scrollToBottomButton = document.getElementById("scroll-bottom-button");
+    scrollToBottomButton.addEventListener('click', function () {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth',
+            duration: 500
+        });
+    });
+};
+scrollbottom();

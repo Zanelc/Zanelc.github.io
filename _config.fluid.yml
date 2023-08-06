@@ -353,6 +353,7 @@ navbar:
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
     - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
+
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
 search:
@@ -467,7 +468,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.jpg
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -539,7 +540,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/post.png
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -903,7 +904,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/archive.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -914,7 +915,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/category.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -943,7 +944,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/tag.png
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -983,7 +984,7 @@ about:
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/post.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -994,7 +995,7 @@ page:
 #---------------------------
 page404:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/post.png
   banner_img_height: 85
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
@@ -1008,7 +1009,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/default.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/links.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
