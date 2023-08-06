@@ -79,7 +79,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -310,65 +310,65 @@
 <p>序列号是最难的工作之一，特别是当我们遇到了强力的加密算法的时候，就更难了，先从简单的情况分析开始，慢慢的延伸到复杂的情况，逐步锻炼寻找序列号的能力。</p>
 </blockquote>
 <h3 id="示例一：Leccion-13-HARDCODED-1"><a href="#示例一：Leccion-13-HARDCODED-1" class="headerlink" title="示例一：Leccion_13_HARDCODED_1"></a>示例一：Leccion_13_HARDCODED_1</h3><h4 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h4><p>最简单的情况下，正确的序列号是作为<strong>全局字符串</strong>出现在程序中的，我们先用OD打开该程序，程序停在了函数入口点(401000)处：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234434167.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234434167.png" srcset="/img/load.gif" lazyload alt="OD载入"></p>
 <p>搜索全局字符串，如果安装有插件的话，直接使用“<strong>中文搜索引擎–智能搜索</strong>”即可搜索到全局字符串，也可以使用另外一种方式搜索，“<strong>查找–所有参考文本子串</strong>”，其实在使用这种方式搜索时候，并没有找到全部的字符串，猜测可能是字符编码的问题，<strong>建议还是使用插件去搜索，比较全</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234735665.png" srcset="/img/loading.gif" lazyload alt="中文搜索引擎搜索"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731235143887.png" srcset="/img/loading.gif" lazyload alt="查找字符串"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731234735665.png" srcset="/img/load.gif" lazyload alt="中文搜索引擎搜索"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230731235143887.png" srcset="/img/load.gif" lazyload alt="查找字符串"></p>
 <p>搜索的全部字符串结果如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801002630829.png" srcset="/img/loading.gif" lazyload alt="字符串结果"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801002630829.png" srcset="/img/load.gif" lazyload alt="字符串结果"></p>
 <p>其实看到 <strong>“FIACA”</strong> 这个字符串，我们猜测它可能就是我们要找的序列号，但有些程序也会故意放置一些假的序列号在字符串列表中，引诱我们上当，接下来我们去检查字符串的正确性。</p>
 <p>查看当前模块的API函数列表(快捷键<strong>ctrl+N</strong>)，发现有几个比较熟悉的API函数<strong>GetDlgItemTextA</strong> 和 <strong>MessageBoxA</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801002846244.png" srcset="/img/loading.gif" lazyload alt="查看API函数列表"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003012079.png" srcset="/img/loading.gif" lazyload alt="当前模块的API函数"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801002846244.png" srcset="/img/load.gif" lazyload alt="查看API函数列表"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003012079.png" srcset="/img/load.gif" lazyload alt="当前模块的API函数"></p>
 <p>给这两个API函数设置断点，也可以在命令栏输入 <strong>bp GetDlgItemTextA</strong>:</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003210578.png" srcset="/img/loading.gif" lazyload alt="API断点"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003331018.png" srcset="/img/loading.gif" lazyload alt="API断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003210578.png" srcset="/img/load.gif" lazyload alt="API断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003331018.png" srcset="/img/load.gif" lazyload alt="API断点"></p>
 <p>断点设置完成后，当程序运行到断点处就会断下来，按 <strong>F9</strong> 运行程序：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003438364.png" srcset="/img/loading.gif" lazyload alt="F9运行程序"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003534063.png" srcset="/img/loading.gif" lazyload alt="输入序列号"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003438364.png" srcset="/img/load.gif" lazyload alt="F9运行程序"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003534063.png" srcset="/img/load.gif" lazyload alt="输入序列号"></p>
 <p>输入序列号后，点击 <strong>Verificar</strong> ，程序断在 <strong>GetDlgItemTextA</strong> 入口处，在堆栈区可以看到，该函数指定的缓冲区地址Buffer为 <strong>403010</strong>，我们在数据窗口中跟随该位置（右键–数据窗口中跟随）：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003741801.png" srcset="/img/loading.gif" lazyload alt="程序暂停"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004135535.png" srcset="/img/loading.gif" lazyload alt="跟随堆栈"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801003741801.png" srcset="/img/load.gif" lazyload alt="程序暂停"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004135535.png" srcset="/img/load.gif" lazyload alt="跟随堆栈"></p>
 <p>暂时不关心具体函数是怎么执行的，我们只关心结果，<strong>执行到返回(F9)</strong> ，此时用户输入的数据已经被写入该缓冲区：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004326799.png" srcset="/img/loading.gif" lazyload alt="执行到返回，数据存储在缓冲区"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004326799.png" srcset="/img/load.gif" lazyload alt="执行到返回，数据存储在缓冲区"></p>
 <p>继续单步执行 <strong>F7</strong> 到用户代码，可以看到有比较和跳转指令，程序获取到用户输入后，将正确的序列号 <strong>FIACA</strong> 存放在EDX处，将用户的输入存放在EBX里，然后两个值进行比较，分别对应下面两个分支：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004741217.png" srcset="/img/loading.gif" lazyload alt="分支语句"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801004741217.png" srcset="/img/load.gif" lazyload alt="分支语句"></p>
 <p>执行CMP指令时，两个地方存储的数据可以在下方状态窗口看到，显然二者数据不等：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801005532580.png" srcset="/img/loading.gif" lazyload alt="数据比较"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801005532580.png" srcset="/img/load.gif" lazyload alt="数据比较"></p>
 <p>比较过后，<strong>ZF</strong> 标志位置0，无法跳转至正确弹窗：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011314334.png" srcset="/img/loading.gif" lazyload alt="比较过程分析"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011314334.png" srcset="/img/load.gif" lazyload alt="比较过程分析"></p>
 <p><strong>F9</strong>运行程序， 结果如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010114032.png" srcset="/img/loading.gif" lazyload alt="错误弹窗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010114032.png" srcset="/img/load.gif" lazyload alt="错误弹窗"></p>
 <h4 id="程序破解"><a href="#程序破解" class="headerlink" title="程序破解"></a>程序破解</h4><p>好了，现在我们已经知道了整个的序列号，也清楚了整个过程，我们使用 <strong>FIACA</strong> 测试一下是否正确，结果如下(其实这个就是正确弹窗，只是没有修改窗口标题)：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010324846.png" srcset="/img/loading.gif" lazyload alt="正确弹窗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801010324846.png" srcset="/img/load.gif" lazyload alt="正确弹窗"></p>
 <p>接下来，尝试对程序进行破解，使错误的序列号也能正确弹窗，继续运行程序到跳转位置，将跳转语句改为无条件跳转 <strong>JMP</strong>，使其跳转至正确弹窗，结果如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011511665.png" srcset="/img/loading.gif" lazyload alt="无条件跳转"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011546147.png" srcset="/img/loading.gif" lazyload alt="正确弹窗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011511665.png" srcset="/img/load.gif" lazyload alt="无条件跳转"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011546147.png" srcset="/img/load.gif" lazyload alt="正确弹窗"></p>
 <p>每次修改太麻烦，可以选择对修改进行保存，右键“复制到可执行文件–所有修改”，选择全部复制，然后保存文件即可。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011706716.png" srcset="/img/loading.gif" lazyload alt="保存修改"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011827679.png" srcset="/img/loading.gif" lazyload alt="保存文件"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011706716.png" srcset="/img/load.gif" lazyload alt="保存修改"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801011827679.png" srcset="/img/load.gif" lazyload alt="保存文件"></p>
 <p><strong>注：</strong> 其实上面有个细节，真正的序列号并不是 <strong>FIACA</strong>，而是 <strong>FIAC</strong>，因为比较时，<strong>ebx</strong>和 <strong>dword ptr</strong> 都是32位的，实际上只比较了 <strong>4个字节</strong>。</p>
 <h3 id="示例二：Leccon-13-HARDCODED-2"><a href="#示例二：Leccon-13-HARDCODED-2" class="headerlink" title="示例二：Leccon 13 HARDCODED 2"></a>示例二：Leccon 13 HARDCODED 2</h3><h4 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析"></a>程序分析</h4><p>有了上面的分析经验后，来继续分析第二个程序，使用OD载入该程序，程序停止了函数入口点（401000）处：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211529276.png" srcset="/img/loading.gif" lazyload alt="OD载入"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211529276.png" srcset="/img/load.gif" lazyload alt="OD载入"></p>
 <p>接下来查找全局字符串，发现可疑字符串 <strong>Bravo</strong> 和 <strong>9898</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211626876.png" srcset="/img/loading.gif" lazyload alt="字符串查找"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211626876.png" srcset="/img/load.gif" lazyload alt="字符串查找"></p>
 <p>无法确定上述字符串是否为序列号，查看 <strong>当前模块API函数列表</strong> ，发现 <strong>GetDlgItemTextA</strong> 和 <strong>MessageBoxA</strong> ，分别用来获取输入和弹窗：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211817497.png" srcset="/img/loading.gif" lazyload alt="API函数列表"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801211817497.png" srcset="/img/load.gif" lazyload alt="API函数列表"></p>
 <p>在这 <strong>两个函数下断点</strong> ，<strong>F9</strong> 一键运行程序，输入 <strong>test1234</strong>，程序断在 <strong>GetDlgItemTextA</strong> 函数入口处，缓冲区地址为 <strong>40300C</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212259130.png" srcset="/img/loading.gif" lazyload alt="序列号输入"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212602679.png" srcset="/img/loading.gif" lazyload alt="程序到达断点处暂停"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212259130.png" srcset="/img/load.gif" lazyload alt="序列号输入"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212602679.png" srcset="/img/load.gif" lazyload alt="程序到达断点处暂停"></p>
 <p>继续执行程序到返回，缓冲区成功写入用户输入：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212751493.png" srcset="/img/loading.gif" lazyload alt="执行到返回"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801212751493.png" srcset="/img/load.gif" lazyload alt="执行到返回"></p>
 <p>单步执行（<strong>F7</strong>）跳出函数，发现对两个值进行判断后，弹窗正确或错误。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213026039.png" srcset="/img/loading.gif" lazyload alt="字符串比较"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213026039.png" srcset="/img/load.gif" lazyload alt="字符串比较"></p>
 <p>对函数逻辑进行分析：<strong>第一处mov指令将EBX的值赋为缓冲区的前四个字节，第二处mov指令将40204B处的值(9898)存到EDX中，然后对两个值进行比较</strong>，很明显，EBX和EDX不相等导致<strong>跳转未实现</strong> ， 执行函数查看具体情况：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213809056.png" srcset="/img/loading.gif" lazyload alt="比较结果"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801213809056.png" srcset="/img/load.gif" lazyload alt="比较结果"></p>
 <p><strong>F9</strong> 继续运行程序，弹窗错误：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214022122.png" srcset="/img/loading.gif" lazyload alt="错误弹窗"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214022122.png" srcset="/img/load.gif" lazyload alt="错误弹窗"></p>
 <h4 id="程序破解-1"><a href="#程序破解-1" class="headerlink" title="程序破解"></a>程序破解</h4><p>知道了跳转的位置，我们可以得到正确的序列号为 <strong>9898</strong> ，也可以尝试对程序进行破解，将跳转语句修改为 <strong>无条件跳转</strong>：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214247938.png" srcset="/img/loading.gif" lazyload alt="无条件跳转"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214247938.png" srcset="/img/load.gif" lazyload alt="无条件跳转"></p>
 <p><strong>复制到可执行文件–所有修改–全部复制–保存文件</strong>，打开修改后的文件，输入任意字符串，弹窗正确。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214629261.png" srcset="/img/loading.gif" lazyload alt="弹窗正确"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/f1a53511/image-20230801214629261.png" srcset="/img/load.gif" lazyload alt="弹窗正确"></p>
 
                 
               </div>
@@ -623,7 +623,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <div style="margin:5px"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo" srcset="/img/loading.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github" srcset="/img/loading.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/author-zane-blue?style=plastic&logo=superuser" srcset="/img/loading.gif" lazyload> </div> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> </div> 
+       <div style="margin:5px"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo" srcset="/img/load.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github" srcset="/img/load.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/author-zane-blue?style=plastic&logo=superuser" srcset="/img/load.gif" lazyload> </div> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> </div> 
     </div>
   
   
