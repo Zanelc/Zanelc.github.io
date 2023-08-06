@@ -915,7 +915,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/category.png
+  banner_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/category.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
