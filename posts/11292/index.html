@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -305,7 +305,7 @@
 <span id="more"></span>
 
 <h3 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h3><p>front-matter是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，例如</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-h2i3bzlkywj24o"></i><span>yaml</span><div class="collapse show" id="collapse-h2i3bzlkywj24o"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Hello</span> <span class="hljs-string">World</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">1996</span><span class="hljs-string">/01/01</span> <span class="hljs-number">00</span><span class="hljs-string">:00:00</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-rts8yclkyywlfr"></i><span>yaml</span><div class="collapse show" id="collapse-rts8yclkyywlfr"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Hello</span> <span class="hljs-string">World</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">1996</span><span class="hljs-string">/01/01</span> <span class="hljs-number">00</span><span class="hljs-string">:00:00</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
 
 <p>常用的参数如下：</p>
 <table>
@@ -372,10 +372,10 @@
 </blockquote>
 <p>只要存在于 <strong>_config.fluid.yml</strong> 的配置都是高优先级，修改原 <strong>_config.yml</strong>是无效的，创建该文件主要是为了后续升级方便。</p>
 <h3 id="文字摘要"><a href="#文字摘要" class="headerlink" title="文字摘要"></a>文字摘要</h3><p>摘要默认自动开启，有两种方式来手动指定摘要：</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-ols7qqlkywj24o"></i><span>yaml</span><div class="collapse show" id="collapse-ols7qqlkywj24o"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">正文一部分作为摘要</span><br><span class="hljs-string">&lt;!--</span> <span class="hljs-string">more</span> <span class="hljs-string">--&gt;</span><br><span class="hljs-string">正文</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-9dckitlkyywlfr"></i><span>yaml</span><div class="collapse show" id="collapse-9dckitlkyywlfr"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">正文一部分作为摘要</span><br><span class="hljs-string">&lt;!--</span> <span class="hljs-string">more</span> <span class="hljs-string">--&gt;</span><br><span class="hljs-string">正文</span><br></code></pre></td></tr></table></div></figure>
 
 <p>另一种是在<strong>Front-matter</strong>中指定，添加 <code>excerpt</code>字段：</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-vipqadlkywj24o"></i><span>yaml</span><div class="collapse show" id="collapse-vipqadlkywj24o"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span><br><span class="hljs-attr">date:</span><br><span class="hljs-attr">excerpt:</span> <span class="hljs-string">摘要</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-z6vk4llkyywlfr"></i><span>yaml</span><div class="collapse show" id="collapse-z6vk4llkyywlfr"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span><br><span class="hljs-attr">date:</span><br><span class="hljs-attr">excerpt:</span> <span class="hljs-string">摘要</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
 
 
                 
@@ -496,7 +496,7 @@
             
   
   
-    <article id="comments" lazyload>
+    <article id="comments">
       
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
@@ -627,7 +627,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <div style="margin:5px"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo" srcset="/img/load.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github" srcset="/img/load.gif" lazyload> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/author-zane-blue?style=plastic&logo=superuser" srcset="/img/load.gif" lazyload> </div> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> </div> 
+       <div class="static_badge" style="margin:5px"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/zane-blog-blue?style=plastic&logo=dependabot"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github"> </div> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> </div> 
     </div>
   
   
@@ -700,7 +700,9 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
   
 
 
@@ -824,5 +826,5 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-<!-- hexo injector body_end start --><script src="/js/time.js"></script><script src="/js/emoji.js"></script><script src="/js/duration.js"></script><script src="/js/load.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+<!-- hexo injector body_end start --><script src="/js/time.js"></script><script src="/js/emoji.js"></script><script src="/js/duration.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
 </html>
