@@ -7,6 +7,8 @@ hexo.extend.injector.register('body_end', '<script src="/js/duration.js"></scrip
 // 文章图片浮动
 hexo.extend.injector.register('body_end', '<script src="/js/imghover.js"></script>', 'home');
 // 添加花瓣飘落
-hexo.extend.injector.register('body_end', '<script src="/js/sakura.js"></script>', 'home');
+// hexo.extend.injector.register('body_end', '<script src="/js/sakura.js"></script>', 'home');
 // 图片预加载动画，在主题中修改
 // hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'default');
+// 自定义js实现
+hexo.extend.injector.register('body_end', '<script src="/js/custom.js"></script>', 'default');

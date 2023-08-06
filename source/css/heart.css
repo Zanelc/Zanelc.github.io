@@ -1,3 +1,4 @@
+/* 页脚心跳动画 */
 @keyframes heartbeat {
     0% {
       transform: scale(1);
@@ -15,3 +16,20 @@
     font-size: 18px;
     animation: heartbeat 1s infinite;
   }
+
+
+  /* 下雪样式 */
+:root {
+    --fall-height: 105vh;
+}
+.snowflake {
+  color: #fff;
+  position: absolute;
+  top: -20px;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to {
+    transform: translateY(var(--fall-height));
+  }
+} 
