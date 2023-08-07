@@ -29,7 +29,8 @@ const getRandomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
 };
 setInterval(createSnowFlake, 40); // Create snowflake every 50ms (lower interval more snowflakes)
-
+// 隐藏页面滚动条，雪花会增加一个横向滚动条
+document.documentElement.style.overflowX = 'hidden';
 
 // 添加一站到底效果
 function scrollbottom() {
@@ -39,6 +40,7 @@ function scrollbottom() {
     <span>一站到底</span></a>  \
     </li>   \
     '
+
     var nav = document.getElementsByClassName("navbar-nav");
     nav[0].insertAdjacentHTML('beforeend', drop_style);
     let scrollToBottomButton = document.getElementById("scroll-bottom-button");
