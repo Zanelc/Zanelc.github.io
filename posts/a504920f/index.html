@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/zane.png">
+  <link rel="icon" href="/img/zane.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#000">
+  <meta name="author" content="Zane">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对于平常的应用开发，我们很少需要关注编译和链接过程，IDE一般都将这一过程帮我们完成，通常将这种编译和链接合并到一起的过程称为 **构建 ** ，本文特意来探讨软件运行背后的机理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员的自我修养">
+<meta property="og:url" content="https://zanelc.github.io/posts/a504920f/index.html">
+<meta property="og:site_name" content="Zane">
+<meta property="og:description" content="对于平常的应用开发，我们很少需要关注编译和链接过程，IDE一般都将这一过程帮我们完成，通常将这种编译和链接合并到一起的过程称为 **构建 ** ，本文特意来探讨软件运行背后的机理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a504920f/title.png">
+<meta property="article:published_time" content="2023-08-07T16:27:08.000Z">
+<meta property="article:modified_time" content="2023-08-07T18:55:32.087Z">
+<meta property="article:author" content="Zane">
+<meta property="article:tag" content="程序运行原理">
+<meta property="article:tag" content="程序链接过程">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a504920f/title.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>程序员的自我修养 - Zane</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/heart.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zane&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@source/source/img/post.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="程序员的自我修养"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-08 00:27" pubdate>
+          2023年8月8日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">程序员的自我修养</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>对于平常的应用开发，我们很少需要关注编译和链接过程，IDE一般都将这一过程帮我们完成，通常将这种编译和链接合并到一起的过程称为 **构建 ** ，本文特意来探讨软件运行背后的机理。</p>
+<span id="more"></span>
+
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>以 <strong>helloword</strong> 程序为例，代码如下：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-xbmto5ll18gcyo"></i><span>c</span><div class="collapse show" id="collapse-xbmto5ll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// hello.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello world.\n&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></div></figure>
+
+<p>当对 <strong>hello.c</strong> 进行构建时，<strong>IDE</strong> 帮我们做了以下四件事：<strong>预处理、编译、汇编、链接。</strong></p>
+<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><blockquote>
+<p>预处理过程主要处理那些源代码文件中以 <strong>“#“</strong> 开始的预编译指令：例如将所有的 <strong>#define</strong> 宏定义展开， <strong>#include</strong> 指令所包含的文件插入到该预编译指令的位置、删除所有注释等。</p>
+</blockquote>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-ytiljoll18gcyo"></i><span>bash</span><div class="collapse show" id="collapse-ytiljoll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">// 预处理<br>gcc -E hello.c -o hello.i<br></code></pre></td></tr></table></div></figure>
+
+<p>执行完该指令后，生成预处理后的 <strong>hello.i</strong> 文件，部分文件内容如下：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-43fcpall18gcyo"></i><span>C</span><div class="collapse show" id="collapse-43fcpall18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// hello.i 部分文件内容</span><br>...<br>  __attribute__ ((__dllimport__)) <span class="hljs-type">int</span> __attribute__((__cdecl__)) _snwscanf_l(<span class="hljs-type">const</span> <span class="hljs-type">wchar_t</span> *_Src,<span class="hljs-type">size_t</span> _MaxCount,<span class="hljs-type">const</span> <span class="hljs-type">wchar_t</span> *_Format,<span class="hljs-type">_locale_t</span> _Locale,...);<br>  __attribute__ ((__dllimport__)) <span class="hljs-type">int</span> __attribute__((__cdecl__)) _wscanf_l(<span class="hljs-type">const</span> <span class="hljs-type">wchar_t</span> *_Format,<span class="hljs-type">_locale_t</span> _Locale,...);<br><br><br><br><br><br>  __attribute__ ((__dllimport__)) <span class="hljs-type">size_t</span> __attribute__((__cdecl__)) _fread_nolock_s(<span class="hljs-type">void</span> *_DstBuf,<span class="hljs-type">size_t</span> _DstSize,<span class="hljs-type">size_t</span> _ElementSize,<span class="hljs-type">size_t</span> _Count,FILE *_File);<br># <span class="hljs-number">1398</span> <span class="hljs-string">&quot;C:/Program Files/Mingw-w64/x86_64-8.1.0-release-win32-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include/stdio.h&quot;</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br><br># <span class="hljs-number">1</span> <span class="hljs-string">&quot;C:/Program Files/Mingw-w64/x86_64-8.1.0-release-win32-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_print_pop.h&quot;</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span><br># <span class="hljs-number">1400</span> <span class="hljs-string">&quot;C:/Program Files/Mingw-w64/x86_64-8.1.0-release-win32-seh-rt_v6-rev0/mingw64/x86_64-w64-mingw32/include/stdio.h&quot;</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br># <span class="hljs-number">2</span> <span class="hljs-string">&quot;.\\hello.c&quot;</span> <span class="hljs-number">2</span><br><br># <span class="hljs-number">2</span> <span class="hljs-string">&quot;.\\hello.c&quot;</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello world.\n&quot;</span>);<br> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></div></figure>
+
+<p>可以发现，程序中 <strong>#include</strong> 指令已经在预处理阶段被替换为其包含的文件内容。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><blockquote>
+<p>编译过程就是把预处理完的文件进行一系列词法分析、语法分析、语义分析及优化后产生相应的 <strong>汇编代码</strong> 文件。</p>
+</blockquote>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-euy18wll18gcyo"></i><span>bash</span><div class="collapse show" id="collapse-euy18wll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">// 编译<br>gcc -S hello.i -o hello.s<br></code></pre></td></tr></table></div></figure>
+
+<p>生成目标文件 <strong>hello.s</strong> ，内容如下：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-u0lo9tll18gcyo"></i><span>c</span><div class="collapse show" id="collapse-u0lo9tll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// hello.s 文件内容</span><br>	.file	<span class="hljs-string">&quot;hello.c&quot;</span><br>	.text<br>	.def	__main;	.scl	<span class="hljs-number">2</span>;	.type	<span class="hljs-number">32</span>;	.endef<br>	.section .rdata,<span class="hljs-string">&quot;dr&quot;</span><br>.LC0:<br>	.ascii <span class="hljs-string">&quot;Hello world.\0&quot;</span><br>	.text<br>	.globl	main<br>	.def	main;	.scl	<span class="hljs-number">2</span>;	.type	<span class="hljs-number">32</span>;	.endef<br>	.seh_proc	main<br>main:<br>	pushq	%rbp<br>	.seh_pushreg	%rbp<br>	movq	%rsp, %rbp<br>	.seh_setframe	%rbp, <span class="hljs-number">0</span><br>	subq	$<span class="hljs-number">32</span>, %rsp<br>	.seh_stackalloc	<span class="hljs-number">32</span><br>	.seh_endprologue<br>	call	__main<br>	leaq	.LC0(%rip), %rcx<br>	call	<span class="hljs-built_in">puts</span><br>	movl	$<span class="hljs-number">0</span>, %eax<br>	addq	$<span class="hljs-number">32</span>, %rsp<br>	popq	%rbp<br>	ret<br>	.seh_endproc<br>	.ident	<span class="hljs-string">&quot;GCC: (x86_64-win32-seh-rev0, Built by MinGW-W64 project) 8.1.0&quot;</span><br>	.def	<span class="hljs-built_in">puts</span>;	.scl	<span class="hljs-number">2</span>;	.type	<span class="hljs-number">32</span>;	.endef<br><br></code></pre></td></tr></table></div></figure>
+
+<p>这里可以看到生成的汇编格式与我们平常见到的 <strong>Inter汇编</strong> 语法有所相同，主要取决于使用的工具和平台，<strong>GCC编译器使用了 AT&amp;T&#x2F;UNIX 汇编语法</strong>。</p>
+<h3 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h3><blockquote>
+<p>汇编器是讲汇编代码转变为机器可以执行的指令,每一个汇编语句几乎都对应一条机器指令。</p>
+</blockquote>
+<p>源代码文件经过预处理、编译和汇编后生成 <strong>目标文件</strong>。</p>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-9utwnull18gcyo"></i><span>bash</span><div class="collapse show" id="collapse-9utwnull18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">// 汇编<br>gcc -c hello.s -o hello.o<br></code></pre></td></tr></table></div></figure>
+
+<p>目标文件为<strong>二进制文件</strong>，可以使用 <strong>file、objdump、hexdump</strong>来查看该文件信息：</p>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-x7l34cll18gcyo"></i><span>bash</span><div class="collapse show" id="collapse-x7l34cll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$:file hello.o<br>hello.o: Intel amd64 COFF object file, no line number info, not stripped, 7 sections, symbol offset=0x200, 20 symbols, 1st section name <span class="hljs-string">&quot;.text&quot;</span><br></code></pre></td></tr></table></div></figure>
+
+<p>汇编之后的所有的全局变量以及函数的入口地址都被暂时设置为 <strong>0</strong> ，不能直接使用，需要下一个步骤， 链接。</p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><blockquote>
+<p>目标代码中有变量定义在其他模块，该怎么办？事实上，定义其他模块的1全局变量和函数在最终运行时的绝对地址都要在最终链接时才能确定。链接的主要内容就是把各个模块之间相互引用的部分都处理好，使得各个模块之间能够正确地衔接。</p>
+</blockquote>
+<p>链接过程主要包括了 <strong>地址和空间分配、符号决议和重定位</strong> 等步骤。</p>
+<p>假设有个全局变量叫 <strong>var</strong> ，它在目标文件 <strong>A</strong> 里面，我们要在目标文件 <strong>B</strong> 里面访问这个全局变量，目标文件 <strong>B</strong> 里面有这样一条指令：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-9gy0cmll18gcyo"></i><span>c</span><div class="collapse show" id="collapse-9gy0cmll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 相当于C语言中的 var=42</span><br>movl $<span class="hljs-number">0x2a</span>,var<br></code></pre></td></tr></table></div></figure>
+
+<p>我们这里来实践查看一下效果：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-tzlzwdll18gcyo"></i><span>c</span><div class="collapse show" id="collapse-tzlzwdll18gcyo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// vim test.c  extern指明var为外部引用</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> var;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>        var=<span class="hljs-number">42</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 将源代码编译成目标文件</span><br>$:gcc -E test.c -o test.i<br>$:gcc -S test.i -o test.s<br>$:gcc -c test.s -o test.o<br><br><span class="hljs-comment">// 使用objdump来查看反汇编代码</span><br>$:objdump -d test.o<br>Disassembly of section .text:<br><br><span class="hljs-number">0000000000000000</span> &lt;main&gt;:<br>   <span class="hljs-number">0</span>:   f3 <span class="hljs-number">0f</span> <span class="hljs-number">1</span>e fa             endbr64<br>   <span class="hljs-number">4</span>:   <span class="hljs-number">55</span>                      push   %rbp<br>   <span class="hljs-number">5</span>:   <span class="hljs-number">48</span> <span class="hljs-number">89</span> e5                mov    %rsp,%rbp<br>   <span class="hljs-number">8</span>:   c7 <span class="hljs-number">05</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">2</span>a    movl   $<span class="hljs-number">0x2a</span>,<span class="hljs-number">0x0</span>(%rip)        # <span class="hljs-number">12</span> &lt;main+<span class="hljs-number">0x12</span>&gt;<br>   f:   <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br>  <span class="hljs-number">12</span>:   b8 <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span>          mov    $<span class="hljs-number">0x0</span>,%eax<br>  <span class="hljs-number">17</span>:   <span class="hljs-number">5</span>d                      pop    %rbp<br>  <span class="hljs-number">18</span>:   c3                      ret<br></code></pre></td></tr></table></div></figure>
+
+<p>可以看到，指令 <strong>movl $0x2a,var</strong> 对应的机器码为 <strong>c7 05 00 00 00 00 2a</strong> ，由于编译目标文件时候，编译器并不知道变量 <strong>var</strong> 的地址，所以将这条 <strong>mov</strong> 指令的地址置为0，等待 <strong>链接器将目标文件A和目标文件B链接起来的时候再将其修正</strong>，这个修正的过程也叫做 <strong>重定位</strong>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB-%E9%93%BE%E6%8E%A5%E3%80%81%E8%A3%85%E8%BD%BD%E4%B8%8E%E5%BA%93/" class="category-chain-item">程序员的自我修养--链接、装载与库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86/" class="print-no-link">#程序运行原理</a>
+      
+        <a href="/tags/%E7%A8%8B%E5%BA%8F%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/" class="print-no-link">#程序链接过程</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>程序员的自我修养</div>
+      <div>https://zanelc.github.io/posts/a504920f/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Zane</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年8月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/f0bbe23d/" title="Ollydbg--硬编码序列号寻踪三">
+                        <span class="hidden-mobile">Ollydbg--硬编码序列号寻踪三</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'zanelc/hexo-comments');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <div class="static_badge" style="margin:5px"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/zane-blog-blue?style=plastic&logo=dependabot"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/hexo-fluid-pink?style=plastic&logo=hexo"> <img style="margin:5px" alt="Static Badge" src="https://img.shields.io/badge/deploy-github-red?style=plastic&logo=github"> </div> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/fish.js"></script>
+<script src="/js/code.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/time.js"></script><script src="/js/emoji.js"></script><script src="/js/duration.js"></script><script src="/js/custom.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300,"hOffset":20,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
