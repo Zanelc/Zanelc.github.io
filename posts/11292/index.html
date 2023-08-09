@@ -19,7 +19,7 @@
     <meta name="description" content="Hexo相关的一些基础配置说明。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo基本使用">
-<meta property="og:url" content="https://zanelc.github.io/posts/11292/index.html">
+<meta property="og:url" content="https://blog.zanelc.site/posts/11292/index.html">
 <meta property="og:site_name" content="Zane">
 <meta property="og:description" content="Hexo相关的一些基础配置说明。">
 <meta property="og:locale" content="zh_CN">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"zanelc.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.zanelc.site","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/load.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -305,7 +305,7 @@
 <span id="more"></span>
 
 <h3 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h3><p>front-matter是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，例如</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-xbtgu0ll2l8see"></i><span>yaml</span><div class="collapse show" id="collapse-xbtgu0ll2l8see"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Hello</span> <span class="hljs-string">World</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">1996</span><span class="hljs-string">/01/01</span> <span class="hljs-number">00</span><span class="hljs-string">:00:00</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-gz9ow1ll3yiuy8"></i><span>yaml</span><div class="collapse show" id="collapse-gz9ow1ll3yiuy8"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Hello</span> <span class="hljs-string">World</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">1996</span><span class="hljs-string">/01/01</span> <span class="hljs-number">00</span><span class="hljs-string">:00:00</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
 
 <p>常用的参数如下：</p>
 <table>
@@ -372,10 +372,10 @@
 </blockquote>
 <p>只要存在于 <strong>_config.fluid.yml</strong> 的配置都是高优先级，修改原 <strong>_config.yml</strong>是无效的，创建该文件主要是为了后续升级方便。</p>
 <h3 id="文字摘要"><a href="#文字摘要" class="headerlink" title="文字摘要"></a>文字摘要</h3><p>摘要默认自动开启，有两种方式来手动指定摘要：</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-f0ag74ll2l8see"></i><span>yaml</span><div class="collapse show" id="collapse-f0ag74ll2l8see"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">正文一部分作为摘要</span><br><span class="hljs-string">&lt;!--</span> <span class="hljs-string">more</span> <span class="hljs-string">--&gt;</span><br><span class="hljs-string">正文</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-6e6p78ll3yiuy8"></i><span>yaml</span><div class="collapse show" id="collapse-6e6p78ll3yiuy8"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">正文一部分作为摘要</span><br><span class="hljs-string">&lt;!--</span> <span class="hljs-string">more</span> <span class="hljs-string">--&gt;</span><br><span class="hljs-string">正文</span><br></code></pre></td></tr></table></div></figure>
 
 <p>另一种是在<strong>Front-matter</strong>中指定，添加 <code>excerpt</code>字段：</p>
-<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-hd63fbll2l8see"></i><span>yaml</span><div class="collapse show" id="collapse-hd63fbll2l8see"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span><br><span class="hljs-attr">date:</span><br><span class="hljs-attr">excerpt:</span> <span class="hljs-string">摘要</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
+<figure class="highlight yaml"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-64nsufll3yiuy8"></i><span>yaml</span><div class="collapse show" id="collapse-64nsufll3yiuy8"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span><br><span class="hljs-attr">date:</span><br><span class="hljs-attr">excerpt:</span> <span class="hljs-string">摘要</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></div></figure>
 
 
                 
@@ -423,7 +423,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Hexo基本使用</div>
-      <div>https://zanelc.github.io/posts/11292/</div>
+      <div>https://blog.zanelc.site/posts/11292/</div>
     </div>
     <div class="license-meta">
       
