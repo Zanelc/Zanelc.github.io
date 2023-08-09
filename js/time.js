@@ -11,6 +11,11 @@ function time_show() {
   fish='<div id="jsi-flying-fish-container" style="margin-top:-90px;line-height: 0;"></div>'
   footer[0].insertAdjacentHTML('afterend',fish);
   
+  // 为鼠标增加特效
+  var header=document.getElementsByTagName('header');
+  mouse='<canvas id="mousemove"></canvas>'
+  header[0].insertAdjacentHTML('afterbegin',mouse);
+
   // 获取时间标签
   var times = document.getElementsByTagName('time');
   if (times.length === 0) { return; }
