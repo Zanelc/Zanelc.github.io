@@ -12,3 +12,5 @@ hexo.extend.injector.register('body_end', '<script src="/js/imghover.js"></scrip
 // hexo.extend.injector.register('body_end', '<script src="/js/load.js"></script>', 'default');
 // 自定义js实现
 hexo.extend.injector.register('body_end', '<script src="/js/custom.js"></script>', 'default');
+
+hexo.extend.injector.register('body_end', '<script src="/js/mousemove.js"></script>', 'default');
