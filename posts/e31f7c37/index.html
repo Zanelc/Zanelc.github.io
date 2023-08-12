@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/title.png">
 <meta property="article:published_time" content="2023-08-10T15:46:37.000Z">
-<meta property="article:modified_time" content="2023-08-10T18:46:12.438Z">
+<meta property="article:modified_time" content="2023-08-12T18:33:02.150Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="IDA pro使用教程">
 <meta name="twitter:card" content="summary_large_image">
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          3.2k 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          17 分钟
+          27 分钟
         
       </span>
     
@@ -361,6 +361,36 @@
 <li>unk_xxxxxx：位置xxxxxx处的大小未知的数据</li>
 </ul>
 <p><strong>loc和sub指令区别</strong>：loc指令相当于一处标记，一般都是跳转到loc处，如：jmp loc_xxxxxx；而sub指令相当于一个函数，一般是进行函数调用，如：call sub_xxxxxx。</p>
+<h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p>记住大量地址并非易事，这促使早期的程序员给他们希望引用的程序位置分配符号名称，<strong>给符号分配名称，与给程序操作码分配助记指令名称并无不同</strong>。</p>
+<h4 id="交叉引用"><a href="#交叉引用" class="headerlink" title="交叉引用"></a>交叉引用</h4><p><strong>IDA</strong> 的交叉引用通常简称为 <strong>XREF</strong> ，<strong>IDA</strong> 中有两类基本的交叉引用：<strong>代码交叉引用</strong> 和 <strong>数据交叉引用</strong> ，所有的引用的都是在 <strong>一个地址引用另一个地址</strong> 。</p>
+<p>如下是一个交叉引用，地址中总有一个上行或下行箭头，表示 <strong>引用位置的相对方向</strong> ，由函数调用导致的交叉引用使用后缀 <strong>p</strong> ，跳转交叉引用使用后缀 <strong>j</strong>。下图中下行箭头表示  <strong>.text:004011E6</strong> 地址比当前行地址高，需要向下才能到达该地址。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813010358980.png" srcset="/img/load.gif" lazyload alt="代码交叉引用"></p>
+<p><strong>数据交叉引用</strong> 用于跟踪二进制文件访问数据的方式。<strong>IDA</strong> 中最常用的三种数据交叉引用分别用于表示某个位置何时被 <strong>读取</strong>、何时被 <strong>写入</strong> 以及何时被 <strong>引用</strong> 。</p>
+<p><strong>后缀r</strong> 表示读取交叉引用，<strong>后缀w</strong> 表示写入交叉引用，<strong>后缀o</strong> 表示偏移量交叉引用，它表示引用的是某个位置的地址而不是内容。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813011728966.png" srcset="/img/load.gif" lazyload alt="数据交叉引用"></p>
+<p>双击 <strong>sub_401000+1E</strong> 处交叉引用，可以看到引用的为该处地址 <strong>offset dword_402004</strong>，而非内容。通常，代码或数据中的 <strong>指针</strong> 操作会导致偏移量交叉引用，例如：数组访问操作通常在数组的起始地址上加一个偏移量来实现。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813012039296.png" srcset="/img/load.gif" lazyload alt="偏移量交叉引用"></p>
+<p><strong>跳转到地址</strong></p>
+<p>使用 <strong>Jump&gt;Jump to Address</strong> 命令或者使用快捷键 <strong>G</strong> 快速导航到指定位置，使用快捷键 <strong>ESC</strong> 可立即跳转到当前位置的上一个位置。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813012800389.png" srcset="/img/load.gif" lazyload alt="快捷键G"></p>
+<h3 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h3><p><strong>编译器通过栈帧使得对函数参数和局部变量分配和释放的过程对程序员透明。</strong></p>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-fxp190ll8curlh"></i><span>assembly</span><div class="collapse show" id="collapse-fxp190ll8curlh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">push ebp<br>mov  ebp，esp<br>sub  esp，76<br></code></pre></td></tr></table></div></figure>
+
+<p>如果希望 <strong>EBP</strong> 作为栈指针，那么在修改它之前，必须保存 <strong>EBP</strong> 的当前值，并且在返回调用方时恢复 <strong>EBP</strong> 的值，局部变量的空间在 <strong>sub</strong> 处分配。</p>
+<p><strong>使用一个专用的栈指针，所有变量相对于栈指针寄存器的偏移量都可以计算出来，许多时候，正偏移量用于访问函数参数，而负偏移量用于访问局部变量。</strong></p>
+<p>典型的 <strong>尾声</strong> 代码：恢复调用方的栈指针。</p>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-kicpqmll8curlh"></i><span>assembly</span><div class="collapse show" id="collapse-kicpqmll8curlh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov esp,ebp<br>pop ebp<br>ret<br></code></pre></td></tr></table></div></figure>
+
+<p>栈帧是一个 <strong>运行时概念</strong> ，没有 <strong>栈</strong> 和 <strong>运行中</strong> 的程序，栈帧就不可能存在。</p>
+<p>下面这片代码中， <strong>IDA</strong> 认为这个函数使用 <strong>EBP</strong> 寄存器作为栈指针，变量处表明 <strong>IDA</strong> 提供了一个 <strong>摘要栈视图</strong> ，列出了 <strong>栈帧内直接被引用的每一个变量，以及变量的大小和他们与栈指针的偏移距离。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813020138237.png" srcset="/img/load.gif" lazyload alt="摘要栈视图"></p>
+<p>局部变量以 <strong>var_</strong> 为前缀，函数参数以 <strong>arg_</strong> 为前缀，<strong>IDA只会为那些在函数中直接引用的栈变量自动生成名称。</strong></p>
+<p><strong>除了摘要栈视图外，IDA还提供了一个详细栈帧视图</strong>，这种视图会显示一个栈帧所分配道德每个字节。显示的两个特殊值分别为 <strong>s</strong> 和 <strong>r</strong>，表示被保存的返回地址 <strong>r</strong> 和 被保存的寄存器值 **(s，在本例中，s仅代表EBP)**。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813021210966.png" srcset="/img/load.gif" lazyload alt="栈帧视图"></p>
+<h3 id="搜索数据库"><a href="#搜索数据库" class="headerlink" title="搜索数据库"></a>搜索数据库</h3><h4 id="文本搜索"><a href="#文本搜索" class="headerlink" title="文本搜索"></a>文本搜索</h4><p><strong>IDA文本搜索相当于对反汇编窗口进行子字符串搜索，通过search&gt;Text(alt+t)启动命令搜索</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813022103868.png" srcset="/img/load.gif" lazyload alt="文本搜索"></p>
+<h4 id="二进制搜索"><a href="#二进制搜索" class="headerlink" title="二进制搜索"></a>二进制搜索</h4><p><strong>使用search&gt;sequence of bytes(alt+b)即可启动二进制搜索</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813022524275.png" srcset="/img/load.gif" lazyload alt="二进制搜索"></p>
 
                 
               </div>
@@ -432,7 +462,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年8月11日</div>
+          <div>2023年8月13日</div>
         </div>
       
       
