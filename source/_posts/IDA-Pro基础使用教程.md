@@ -128,3 +128,79 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c
 - unk_xxxxxx：位置xxxxxx处的大小未知的数据
 
 **loc和sub指令区别**：loc指令相当于一处标记，一般都是跳转到loc处，如：jmp loc_xxxxxx；而sub指令相当于一个函数，一般是进行函数调用，如：call sub_xxxxxx。
+
+### 导航
+
+记住大量地址并非易事，这促使早期的程序员给他们希望引用的程序位置分配符号名称，**给符号分配名称，与给程序操作码分配助记指令名称并无不同**。
+
+#### 交叉引用
+
+**IDA** 的交叉引用通常简称为 **XREF** ，**IDA** 中有两类基本的交叉引用：**代码交叉引用** 和 **数据交叉引用** ，所有的引用的都是在 **一个地址引用另一个地址** 。
+
+如下是一个交叉引用，地址中总有一个上行或下行箭头，表示 **引用位置的相对方向** ，由函数调用导致的交叉引用使用后缀 **p** ，跳转交叉引用使用后缀 **j**。下图中下行箭头表示  **.text:004011E6** 地址比当前行地址高，需要向下才能到达该地址。 
+
+![代码交叉引用](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813010358980.png)
+
+**数据交叉引用** 用于跟踪二进制文件访问数据的方式。**IDA** 中最常用的三种数据交叉引用分别用于表示某个位置何时被 **读取**、何时被 **写入** 以及何时被 **引用** 。
+
+**后缀r** 表示读取交叉引用，**后缀w** 表示写入交叉引用，**后缀o** 表示偏移量交叉引用，它表示引用的是某个位置的地址而不是内容。
+
+![数据交叉引用](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813011728966.png)
+
+双击 **sub_401000+1E** 处交叉引用，可以看到引用的为该处地址 **offset dword_402004**，而非内容。通常，代码或数据中的 **指针** 操作会导致偏移量交叉引用，例如：数组访问操作通常在数组的起始地址上加一个偏移量来实现。
+
+![偏移量交叉引用](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813012039296.png)
+
+**跳转到地址**
+
+使用 **Jump>Jump to Address** 命令或者使用快捷键 **G** 快速导航到指定位置，使用快捷键 **ESC** 可立即跳转到当前位置的上一个位置。
+
+![快捷键G](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813012800389.png)
+
+### 栈帧
+
+**编译器通过栈帧使得对函数参数和局部变量分配和释放的过程对程序员透明。**
+
+```assembly
+push ebp
+mov  ebp，esp
+sub  esp，76
+```
+
+如果希望 **EBP** 作为栈指针，那么在修改它之前，必须保存 **EBP** 的当前值，并且在返回调用方时恢复 **EBP** 的值，局部变量的空间在 **sub** 处分配。
+
+**使用一个专用的栈指针，所有变量相对于栈指针寄存器的偏移量都可以计算出来，许多时候，正偏移量用于访问函数参数，而负偏移量用于访问局部变量。**
+
+典型的 **尾声** 代码：恢复调用方的栈指针。
+
+```assembly
+mov esp,ebp
+pop ebp
+ret
+```
+
+栈帧是一个 **运行时概念** ，没有 **栈** 和 **运行中** 的程序，栈帧就不可能存在。
+
+下面这片代码中， **IDA** 认为这个函数使用 **EBP** 寄存器作为栈指针，变量处表明 **IDA** 提供了一个 **摘要栈视图** ，列出了 **栈帧内直接被引用的每一个变量，以及变量的大小和他们与栈指针的偏移距离。**
+
+![摘要栈视图](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813020138237.png)
+
+局部变量以 **var_** 为前缀，函数参数以 **arg_** 为前缀，**IDA只会为那些在函数中直接引用的栈变量自动生成名称。**
+
+**除了摘要栈视图外，IDA还提供了一个详细栈帧视图**，这种视图会显示一个栈帧所分配道德每个字节。显示的两个特殊值分别为 **s** 和 **r**，表示被保存的返回地址 **r** 和 被保存的寄存器值 **(s，在本例中，s仅代表EBP)**。
+
+![栈帧视图](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813021210966.png)
+
+### 搜索数据库
+
+#### 文本搜索
+
+**IDA文本搜索相当于对反汇编窗口进行子字符串搜索，通过search>Text(alt+t)启动命令搜索**。
+
+![文本搜索](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813022103868.png)
+
+#### 二进制搜索
+
+**使用search>sequence of bytes(alt+b)即可启动二进制搜索**。
+
+![二进制搜索](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813022524275.png)
