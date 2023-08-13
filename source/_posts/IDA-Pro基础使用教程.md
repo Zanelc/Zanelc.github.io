@@ -94,7 +94,7 @@ index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c
 
 **导入窗口列出由被分析的二进制文件导入的所有函数。** **静态链接的二进制文件保存在外部依赖关系**，因此不需要导入其他内容。
 
-导入窗口每个条目列出一个导入项目的名称，以及包含该项目的库的名称。由于被导入的函数位于共享库中，窗口中的每个条目列出的地址相关导入表条目的虚拟地址。，双击条目，**IDA** 将跳转到条目对应地址处，而内存中显示内容为 **?? ?? ?? ??** 。 **因为IDA是一种静态分析工具，它无法获知程序在执行时会在这个内存输入什么地址。**
+导入窗口每个条目列出一个导入项目的名称，以及包含该项目的库的名称。由于被导入的函数位于共享库中，窗口中的每个条目列出的地址相关导入表条目的虚拟地址。，双击条目，**IDA** 将跳转到条目对应地址处，而内存中显示内容为 **?? ?? ?? ??**。 **因为IDA是一种静态分析工具，它无法获知程序在执行时会在这个内存输入什么地址。**
 
 ![导入表](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230811020740746.png)
 
@@ -209,11 +209,11 @@ ret
 
 在分析一个程序时，操作反汇编代码清单最常用的一个方法，是将默认名称更改为更有意义的名称。要更改一个名称，只需单击需要修改的名称，并使用 **N** 键打开更名对话框，或者右键选择 **Rename** 选项。
 
-![Rename](E:\Zanelc_blog\source\_posts\IDA-Pro基础使用教程\image-20230813163735795.png)
+![Rename](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813163735795.png)
 
 栈变量有关的名称是反汇编清单中最简单的名称，它们 **与特定的虚拟地址无关** ，因而从未出现在名称窗口中。
 
-![栈变量重命名](E:\Zanelc_blog\source\_posts\IDA-Pro基础使用教程\image-20230813164014444.png)
+![栈变量重命名](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813164014444.png)
 
 输入框中输入 **空白名称** ，将生成默认的名称。
 
@@ -225,7 +225,7 @@ ret
 
 常规注释位于现有汇编代码的 **尾部**，使用 **:** 热键，可以打开 **输入注释** 对话框，常规注释可以跨越多行。
 
-![常规注释](E:\Zanelc_blog\source\_posts\IDA-Pro基础使用教程\image-20230813171352618.png)
+![常规注释](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813171352618.png)
 
 #### 可重复注释
 
@@ -235,4 +235,4 @@ ret
 
 通过函数注释，可以为函数的反汇编代码清单顶部显示的注释分组。
 
-![函数注释](E:\Zanelc_blog\source\_posts\IDA-Pro基础使用教程\image-20230813172357843.png)
+![函数注释](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813172357843.png)
