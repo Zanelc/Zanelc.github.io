@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/title.png">
 <meta property="article:published_time" content="2023-08-10T15:46:37.000Z">
-<meta property="article:modified_time" content="2023-08-13T09:45:26.373Z">
+<meta property="article:modified_time" content="2023-08-13T09:50:02.952Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="IDA pro使用教程">
 <meta name="twitter:card" content="summary_large_image">
@@ -374,12 +374,12 @@
 <p>使用 <strong>Jump&gt;Jump to Address</strong> 命令或者使用快捷键 <strong>G</strong> 快速导航到指定位置，使用快捷键 <strong>ESC</strong> 可立即跳转到当前位置的上一个位置。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813012800389.png" srcset="/img/load.gif" lazyload alt="快捷键G"></p>
 <h3 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h3><p><strong>编译器通过栈帧使得对函数参数和局部变量分配和释放的过程对程序员透明。</strong></p>
-<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-5cqg0sll99if94"></i><span>assembly</span><div class="collapse show" id="collapse-5cqg0sll99if94"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">push ebp<br>mov  ebp，esp<br>sub  esp，76<br></code></pre></td></tr></table></div></figure>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-q7ynyoll99lxol"></i><span>assembly</span><div class="collapse show" id="collapse-q7ynyoll99lxol"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">push ebp<br>mov  ebp，esp<br>sub  esp，76<br></code></pre></td></tr></table></div></figure>
 
 <p>如果希望 <strong>EBP</strong> 作为栈指针，那么在修改它之前，必须保存 <strong>EBP</strong> 的当前值，并且在返回调用方时恢复 <strong>EBP</strong> 的值，局部变量的空间在 <strong>sub</strong> 处分配。</p>
 <p><strong>使用一个专用的栈指针，所有变量相对于栈指针寄存器的偏移量都可以计算出来，许多时候，正偏移量用于访问函数参数，而负偏移量用于访问局部变量。</strong></p>
 <p>典型的 <strong>尾声</strong> 代码：恢复调用方的栈指针。</p>
-<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-8e4y6hll99if94"></i><span>assembly</span><div class="collapse show" id="collapse-8e4y6hll99if94"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov esp,ebp<br>pop ebp<br>ret<br></code></pre></td></tr></table></div></figure>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-11vsa9ll99lxol"></i><span>assembly</span><div class="collapse show" id="collapse-11vsa9ll99lxol"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov esp,ebp<br>pop ebp<br>ret<br></code></pre></td></tr></table></div></figure>
 
 <p>栈帧是一个 <strong>运行时概念</strong> ，没有 <strong>栈</strong> 和 <strong>运行中</strong> 的程序，栈帧就不可能存在。</p>
 <p>下面这片代码中， <strong>IDA</strong> 认为这个函数使用 <strong>EBP</strong> 寄存器作为栈指针，变量处表明 <strong>IDA</strong> 提供了一个 <strong>摘要栈视图</strong> ，列出了 <strong>栈帧内直接被引用的每一个变量，以及变量的大小和他们与栈指针的偏移距离。</strong></p>
@@ -392,16 +392,16 @@
 <h4 id="二进制搜索"><a href="#二进制搜索" class="headerlink" title="二进制搜索"></a>二进制搜索</h4><p><strong>使用search&gt;sequence of bytes(alt+b)即可启动二进制搜索</strong>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813022524275.png" srcset="/img/load.gif" lazyload alt="二进制搜索"></p>
 <h3 id="名称和命名"><a href="#名称和命名" class="headerlink" title="名称和命名"></a>名称和命名</h3><p>在分析一个程序时，操作反汇编代码清单最常用的一个方法，是将默认名称更改为更有意义的名称。要更改一个名称，只需单击需要修改的名称，并使用 <strong>N</strong> 键打开更名对话框，或者右键选择 <strong>Rename</strong> 选项。</p>
-<p><img src="E:\Zanelc_blog\source_posts\IDA-Pro基础使用教程\image-20230813163735795.png" srcset="/img/load.gif" lazyload alt="Rename"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813163735795.png" srcset="/img/load.gif" lazyload alt="Rename"></p>
 <p>栈变量有关的名称是反汇编清单中最简单的名称，它们 <strong>与特定的虚拟地址无关</strong> ，因而从未出现在名称窗口中。</p>
-<p><img src="E:\Zanelc_blog\source_posts\IDA-Pro基础使用教程\image-20230813164014444.png" srcset="/img/load.gif" lazyload alt="栈变量重命名"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813164014444.png" srcset="/img/load.gif" lazyload alt="栈变量重命名"></p>
 <p>输入框中输入 <strong>空白名称</strong> ，将生成默认的名称。</p>
 <h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>绝大多数 <strong>IDA注释</strong> 以分号为前缀，表示这一行分号以后的部分都属于注释。</p>
 <h4 id="常规注释"><a href="#常规注释" class="headerlink" title="常规注释"></a>常规注释</h4><p>常规注释位于现有汇编代码的 <strong>尾部</strong>，使用 <strong>:</strong> 热键，可以打开 <strong>输入注释</strong> 对话框，常规注释可以跨越多行。</p>
-<p><img src="E:\Zanelc_blog\source_posts\IDA-Pro基础使用教程\image-20230813171352618.png" srcset="/img/load.gif" lazyload alt="常规注释"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813171352618.png" srcset="/img/load.gif" lazyload alt="常规注释"></p>
 <h4 id="可重复注释"><a href="#可重复注释" class="headerlink" title="可重复注释"></a>可重复注释</h4><p>可重复注释的行为与交叉引用的概念有关，热键为 <strong>;</strong> ，</p>
 <h4 id="函数注释"><a href="#函数注释" class="headerlink" title="函数注释"></a>函数注释</h4><p>通过函数注释，可以为函数的反汇编代码清单顶部显示的注释分组。</p>
-<p><img src="E:\Zanelc_blog\source_posts\IDA-Pro基础使用教程\image-20230813172357843.png" srcset="/img/load.gif" lazyload alt="函数注释"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/image-20230813172357843.png" srcset="/img/load.gif" lazyload alt="函数注释"></p>
 
                 
               </div>
