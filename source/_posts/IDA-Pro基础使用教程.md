@@ -3,8 +3,7 @@ title: IDA Pro基础使用教程
 tags:
   - IDA pro使用教程
 categories:
-  - 逆向工具
-  - IDA使用
+  - [逆向工具,IDA使用]
 abbrlink: e31f7c37
 date: 2023-08-10 23:46:37
 index_img: https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/e31f7c37/title.png

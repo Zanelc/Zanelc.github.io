@@ -1,7 +1,7 @@
 ---
 title: Ollydbg--硬编码序列号寻踪一
 categories:
-  - 使用Ollydbg从零开始Cracking
+  - [使用Ollydbg从零开始Cracking,OD使用]
 tags:
   - Ollydbg基础使用
   - 硬编码寻踪
