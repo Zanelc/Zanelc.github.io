@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/title.png">
 <meta property="article:published_time" content="2023-08-16T16:40:41.000Z">
-<meta property="article:modified_time" content="2023-08-16T17:52:28.834Z">
+<meta property="article:modified_time" content="2023-08-18T18:45:47.583Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="浅析程序运行原理">
 <meta property="article:tag" content="程序链接过程">
@@ -241,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          487 字
+          2.4k 字
         
       </span>
     
@@ -252,7 +252,7 @@
         
         
         
-          5 分钟
+          21 分钟
         
       </span>
     
@@ -307,17 +307,50 @@
 
 <p><strong>当我们有两个目标文件时，如何将他们链接起来形成一个可执行文件？这个过程中发生了什么？</strong></p>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>使用以下两个源代码文件展开分析：</p>
-<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-y0blgzlle16qjg"></i><span>c</span><div class="collapse show" id="collapse-y0blgzlle16qjg"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// a.c</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> shared;<br><span class="hljs-keyword">extern</span> <span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">int</span>* a,<span class="hljs-type">int</span>* b)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">int</span> a=<span class="hljs-number">100</span>;<br>	swap(&amp;a,&amp;shared);<br>&#125;<br><br><span class="hljs-comment">// b.c</span><br><span class="hljs-type">int</span> shared=<span class="hljs-number">1</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">int</span>* a, <span class="hljs-type">int</span>* b)</span><br>&#123;<br>	<span class="hljs-type">int</span> temp = *a;<br>    *a = *b;<br>    *b = temp;<br>&#125;<br><br>$:gcc -c a.c b.c<br></code></pre></td></tr></table></div></figure>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-txd8e6llgy292e"></i><span>c</span><div class="collapse show" id="collapse-txd8e6llgy292e"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// a.c</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> shared;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">int</span> a=<span class="hljs-number">100</span>;<br>	swap(&amp;a,&amp;shared);<br>&#125;<br><br><span class="hljs-comment">// b.c</span><br><span class="hljs-type">int</span> shared=<span class="hljs-number">1</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">int</span>* a, <span class="hljs-type">int</span>* b)</span><br>&#123;<br>	<span class="hljs-type">int</span> temp = *a;<br>    *a = *b;<br>    *b = temp;<br>&#125;<br><br>$:gcc -c a.c b.c<br></code></pre></td></tr></table></div></figure>
 
 <h3 id="空间与地址分配"><a href="#空间与地址分配" class="headerlink" title="空间与地址分配"></a>空间与地址分配</h3><p><strong>对于多个输入目标文件，链接器如何将他们的各个段合并到输出文件？</strong></p>
 <h4 id="按序叠加"><a href="#按序叠加" class="headerlink" title="按序叠加"></a>按序叠加</h4><p><img src="E:\Zanelc_blog\source_posts\程序员的自我修养-二\image-20230817013511092.png" srcset="/img/load.gif" lazyload alt="按序叠加"></p>
 <p>这并不是一个很好的方案，因为 <strong>每个段都有一定的地址和空间对齐要求</strong> ，在有很多输入文件的情况下，输出文件将会有很多零散的段，会造成大量的内存碎片。</p>
-<h4 id="相似段合并"><a href="#相似段合并" class="headerlink" title="相似段合并"></a>相似段合并</h4><p><img src="E:\Zanelc_blog\source_posts\程序员的自我修养-二\image-20230817013731658.png" srcset="/img/load.gif" lazyload alt="相似段合并"></p>
+<h4 id="相似段合并"><a href="#相似段合并" class="headerlink" title="相似段合并"></a>相似段合并</h4><blockquote>
+<p>链接器为目标文件分配地址和空间这句话中的“地址和空间”有连个含义：第一个是在输出的可执行文件的空间；第二个是装载后的虚拟地址中的虚拟地址空间。</p>
+</blockquote>
+<p><img src="E:\Zanelc_blog\source_posts\程序员的自我修养-二\image-20230817013731658.png" srcset="/img/load.gif" lazyload alt="相似段合并"></p>
 <p>采用这种方法的链接器一般都采用一种叫 <strong>两步链接</strong> 的方法：</p>
 <ol>
 <li>空间与地址分配</li>
 <li>符号解析与重定位 <strong>这一步是链接过程的核心，特别是重定位过程。</strong></li>
 </ol>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-ahymt9llgy292e"></i><span>bash</span><div class="collapse show" id="collapse-ahymt9llgy292e"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">// 链接目标文件 a.o b.o<br>$: ld a.o b.o -e main -o ab<br></code></pre></td></tr></table></div></figure>
+
+<p>查看链接前后地址的分配情况，<strong>VMA</strong> 表示虚拟地址， <strong>LMA</strong> 表示加载地址，<strong>正常情况下，这两个值应该是一样的</strong>。</p>
+<p>可以看到，在链接之前，目标文件的所有段的 <strong>VMA</strong> 都是0，因为虚拟空间还没有被分配，默认都为0，等到链接之后，可执行文件 <strong>ab</strong> 中的各个段都被分配到了相应的虚拟地址。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819014504889.png" srcset="/img/load.gif" lazyload alt="VMA"></p>
+<h4 id="符号地址的确定"><a href="#符号地址的确定" class="headerlink" title="符号地址的确定"></a>符号地址的确定</h4><p><strong>链接后文件中的各个段的虚拟地址就已经确定了</strong>，因为各个符号在段内的相对位置是固定的，所以这时候 <strong>main、shared、swap</strong> 的地址也已经是确定的了，只不过链接器需要给每个符号加上一个 <strong>偏移量</strong>，使它们能够调整到正确的虚拟地址。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819015502205.png" srcset="/img/load.gif" lazyload alt="虚拟地址确定"></p>
+<h3 id="符号解析和重定位"><a href="#符号解析和重定位" class="headerlink" title="符号解析和重定位"></a>符号解析和重定位</h3><h4 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h4><blockquote>
+<p>在完成空间和地址的分配步骤以后，链接器就进入了符号解析与重定位的步骤，这也是静态链接的核心内容。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-20605433-id-1617453.html">GCC内联汇编的基础</a></p>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-9sk2ijllgy292e"></i><span>assembly</span><div class="collapse show" id="collapse-9sk2ijllgy292e"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs assembly">$:objdump -d a.o<br>a.o:     file format elf64-x86-64<br>Disassembly of section .text:<br>0000000000000000 &lt;main&gt;:<br>   0:   f3 0f 1e fa             endbr64<br>   4:   55                      push   %rbp<br>   5:   48 89 e5                mov    %rsp,%rbp<br>   8:   48 83 ec 10             sub    $0x10,%rsp<br>   c:   c7 45 fc 64 00 00 00    movl   $0x64,-0x4(%rbp)<br>  13:   48 8d 45 fc             lea    -0x4(%rbp),%rax<br>  17:   48 8d 15 00 00 00 00    lea    0x0(%rip),%rdx        # 1e &lt;main+0x1e&gt;<br>  1e:   48 89 d6                mov    %rdx,%rsi<br>  21:   48 89 c7                mov    %rax,%rdi<br>  24:   b8 00 00 00 00          mov    $0x0,%eax<br>  29:   e8 00 00 00 00          call   2e &lt;main+0x2e&gt;<br>  2e:   b8 00 00 00 00          mov    $0x0,%eax<br>  33:   c9                      leave<br>  34:   c3                      re<br></code></pre></td></tr></table></div></figure>
+
+<p>在程序的代码里面使用的都是 <strong>虚拟地址</strong> ，可以看到 <strong>main</strong> 的其实地址为 0，这是因为在未进行空间分配之前，目标文件代码段中的起始地址以 0 开始，等到空间分配完成以后，各个函数才会确定自己在虚拟地址空间中的位置。</p>
+<p>当 <strong>a.c</strong> 被编译成目标文件时，编译器并不知道 <strong>shared</strong> 和 <strong>swap</strong> 的地址，因为它们定义在其他目标文件中，所以编译器暂时 <strong>把0看作是他们的地址，把真正的计算地址工作留给了链接器</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819021437854.png" srcset="/img/load.gif" lazyload alt="链接前"></p>
+<p>链接器可以根据符号的地址对每个需要重定位的指令进行地址修正，修正后引用的地址都被替换掉。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819022744397.png" srcset="/img/load.gif" lazyload alt="image-20230819022744397"></p>
+<h4 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h4><p>链接器是怎么知道哪些指令需要被调整的呢？这些指令的哪些部分需要被调整？怎么调整？</p>
+<p><strong>重定位表</strong> 专门负责保存这些与重定位相关的信息，在ELF文件中往往是一个或多个段。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819023221699.png" srcset="/img/load.gif" lazyload alt="重定位表"></p>
+<h4 id="符号解析"><a href="#符号解析" class="headerlink" title="符号解析"></a>符号解析</h4><blockquote>
+<p>之所以要链接是因为我们目标文件中用到的符号被定义在其他目标文件，所以要将它们链接起来</p>
+</blockquote>
+<p>如果只链接一个文件，链接器就会发现 <strong>shared</strong> 和 <strong>swap</strong> 两个符号没有定义，没办法完成链接工作。</p>
+<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-9sun14llgy292e"></i><span>bash</span><div class="collapse show" id="collapse-9sun14llgy292e"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$:ld a.o -e main<br>ld: a.o: <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `main<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">a.c:(.text+0x1a): undefined reference to `shared&#x27;</span><br>ld: a.c:(.text+0x2a): undefined reference to `swap<br></code></pre></td></tr></table></div></figure>
+
+<p>查看 <strong>a.o</strong> 的符号表, <strong>GLOBAL</strong> 类型的符号，除了 <strong>main</strong> 函数是定义在代码段之外，其他两个 <strong>shared</strong> 和 <strong>swap</strong> 都是 <strong>UND</strong> ，即 <strong>undefined</strong> 未定义类型，<strong>这种未定义的符号都是因为该目标文件中有关于它们的重定位项。</strong> 链接器在扫描完所有的输入目标文件之后，所有这些未定义的符号都应该能够在全局符号表中找到，否则链接器就报符号未定义错误。</p>
+<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-gytejjllgy292e"></i><span>assembly</span><div class="collapse show" id="collapse-gytejjllgy292e"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">，$:readelf -s a.o<br>Symbol table &#x27;.symtab&#x27; contains 6 entries:<br>   Num:    Value          Size Type    Bind   Vis      Ndx Name<br>     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND<br>     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS a.c<br>     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1 .text<br>     3: 0000000000000000    53 FUNC    GLOBAL DEFAULT    1 main<br>     4: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND shared<br>     5: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND swap<br></code></pre></td></tr></table></div></figure>
+
 
                 
               </div>
@@ -391,7 +424,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年8月17日</div>
+          <div>2023年8月19日</div>
         </div>
       
       
