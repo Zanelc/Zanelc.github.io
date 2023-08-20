@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/title.png">
 <meta property="article:published_time" content="2023-08-19T16:43:49.000Z">
-<meta property="article:modified_time" content="2023-08-19T18:40:33.608Z">
+<meta property="article:modified_time" content="2023-08-20T10:46:28.533Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="浅析程序运行原理">
 <meta property="article:tag" content="程序链接过程">
@@ -241,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          3.1k 字
         
       </span>
     
@@ -252,7 +252,7 @@
         
         
         
-          11 分钟
+          26 分钟
         
       </span>
     
@@ -333,7 +333,27 @@
 <blockquote>
 <p>每个PE文件在装载时都会有一个装载目标地址，这个地址就是所谓的 <strong>基地址</strong> ，由于PE文件被这几场可以装载到任何地址，所以这个基地址并不是固定的，每次装载时都可能会变化。如果PE文件中的地址都使用绝对地址，它们都要随着基地址的变化而变化，但是如果使用RVA这样一种基于基地址的相对地址，那么无论基地址怎么变化，PE文件中的RVA都保持一致。</p>
 </blockquote>
-<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3>
+<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p>静态链接对于计算机内存和磁盘的 <strong>空间浪费</strong> 非常严重，同时对程序的 <strong>更新、部署和发布</strong> 也会带来很多麻烦，即一旦程序中有任何模块更新，整个程序就要重新链接、发布给用户。</p>
+<p><strong>把链接过程推迟到运行时再进行，这就是动态链接的基本思想。动态链接把程序按照模块拆分成各个相对独立的部分，在程序运行时才将它们连接在一起形成一个完整的程序，而不是像静态链接一样把所有的程序模块都链接成一个单独的可执行文件。</strong></p>
+<p>在Linux系统中， <strong>ELF</strong> 动态链接文件被称为 <strong>动态共享对象</strong> ，简称 <strong>共享对象，一般是以 “.so” 为扩展名的一些文件</strong>；而在 <strong>Windows</strong> 系统中，动态链接文件被称为 <strong>动态链接库，它们就是平时常见的以 “.dll” 为扩展名的文件。</strong></p>
+<blockquote>
+<p>动态链接会导致程序性能的一些损失(程序每次装载时都要重新进行链接)，但是用这点性能损失换取程序在空间上的节省和程序构建和升级的灵活性，是相当值得的。</p>
+</blockquote>
+<p>通过一个简单的例子来大致感受一下动态链接：</p>
+<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-xhayrhlljbpgph"></i><span>c</span><div class="collapse show" id="collapse-xhayrhlljbpgph"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// lib.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> LIB_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LIB_H</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">foobar</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-comment">//lib.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">foobar</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span><br>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Printing from lib.so %d\n&quot;</span>,i);<br>&#125;<br><br><span class="hljs-comment">//program1.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lib.h&quot;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>        foobar(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">//program2.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lib.h&quot;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>        foobar(<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 将lib.c编译成一个共享文件对象</span><br>$:gcc -fPIC -shared -o lib.so lib.c<br><br><span class="hljs-comment">// 编译目标文件</span><br>$:gcc -o program1 program1.c lib.so<br>$:gcc -o program2 program2.c lib.so<br></code></pre></td></tr></table></div></figure>
+
+<p>从 <strong>program1</strong> 的角度来看，整个编译和链接过程如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/image-20230820175441567.png" srcset="/img/load.gif" lazyload alt="动态链接过程"></p>
+<p>在静态链接过程中，链接会把 <strong>program1.o</strong> 和 <strong>lib.o</strong> 链接在一起，并且产生输出可执行文件 <strong>program1</strong> ，但是在这里， <strong>lib.o</strong> 没有被链接进来，链接的输入目标文件只有 <strong>program1.o</strong> ，但是 <strong>lib.so</strong> 也参与了链接过程，这是怎么回事呢？</p>
+<blockquote>
+<p>在静态链接时，程序最终只有一个可执行文件，它是一个不可分割的整体；但是在动态链接下，一个程序被分成了若干个文件，有程序的主要部分，即可执行文件(program1)和程序所依赖的共享对象(lib.so)，很多时候我们也把这些部分称为 <strong>模块</strong> ，即 <strong>动态链接下的可执行文件和共享对象都可以看作是程序的一个模块</strong> 。</p>
+</blockquote>
+<p>当链接器将 <strong>program1.o</strong> 链接成可执行文件时，这时候链接器必须确定 <strong>program1.o</strong> 中所引用的 <strong>foobar()</strong> 函数的性质。如果 <strong>foobar()</strong> 是一个定义与其他静态目标模块中的函数，那么链接器将会按照静态链接的规则，将 <strong>program1.o</strong> 中的 <strong>foobar</strong> 地址引用重定位；如果 <strong>foobar()</strong> 是一个定义在某个动态共享对象中的函数，那么链接器就会将这个符号的引用标记为一个动态链接的符号， <strong>不对它进行地址重定位，把这个过程留到装载时再进行。</strong></p>
+<p><strong>lib.so 保存了完整的符号信息，把它也作为链接的输入文件之一，链接器在解析符号时就可以知道：foobar是一个定义在lib.so 的动态符号，这样链接器就可以对foobar的引用做特殊处理，使它成为一个对动态符号的引用。</strong></p>
+<h3 id="Windows下动态链接"><a href="#Windows下动态链接" class="headerlink" title="Windows下动态链接"></a>Windows下动态链接</h3><p><strong>DLL</strong> 即动态链接库的缩写，它相当于linux下的共享对象。</p>
+<p><strong>PE</strong> 里面有两个很常用的概念就是 <strong>基地址</strong> 和 <strong>相对地址</strong>，当一个 <strong>PE</strong> 文件被装载时，其进程地址空间中的起始地址就是基地址。在DLL文件中，需要 <strong>显式</strong> 告诉编译器我们需要导出某个符号，否则编译器默认所有符号都不导出，当在程序中使用 <strong>DLL</strong> 导出的符号时，这个过程被称为 <strong>导入</strong> 。</p>
+<p>程序使用 <strong>DLL</strong> 的过程其实是引用 <strong>DLL</strong> 中的导出函数和符号的过程。导出表从最简单的结构上来看，它提供了一个符号名与符号地址的映射关系，即可以通过某个符号查找相应的地址。</p>
+
                 
               </div>
             
