@@ -64,3 +64,17 @@ excerpt: 摘要
 ---
 ```
 
+### Tag插件
+在 **markdown** 中使用便签:
+
+```text
+{% note success %}
+文字 或者 `markdown` 均可
+{% endnote %}
+```
+
+或者使用 **HTML** 形式：`<p class="note note-primary">标签</p>`
+
+可选便签：
+
+![可选便签样式](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/11292/image-20230820190319569.png)
