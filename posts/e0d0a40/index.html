@@ -16,27 +16,37 @@
   <meta name="author" content="Zane">
   <meta name="keywords" content="">
   
-    <meta name="description" content="接上一篇文章的内容，接下来对程序的链接过程进行分析。">
+    <meta name="description" content="使用上一章节的方法来搜索特征值，确实能够找到输入的序列号，但是跟踪不到实际比较序列号字符串处（能力有限）， 遂换了一种方法，通过使用 IDR 软件来获取函数地址，在 x32dbg 中对该函数下断点来分析得到正确序列号。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="程序员的自我修养--二">
-<meta property="og:url" content="https://blog.zanelc.site/posts/b884c480/index.html">
+<meta property="og:title" content="序列号生成算法分析三">
+<meta property="og:url" content="https://blog.zanelc.site/posts/e0d0a40/index.html">
 <meta property="og:site_name" content="Zane">
-<meta property="og:description" content="接上一篇文章的内容，接下来对程序的链接过程进行分析。">
+<meta property="og:description" content="使用上一章节的方法来搜索特征值，确实能够找到输入的序列号，但是跟踪不到实际比较序列号字符串处（能力有限）， 遂换了一种方法，通过使用 IDR 软件来获取函数地址，在 x32dbg 中对该函数下断点来分析得到正确序列号。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/title.png">
-<meta property="article:published_time" content="2023-08-16T16:40:41.000Z">
-<meta property="article:modified_time" content="2023-08-19T16:57:58.569Z">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926223757947.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926224355948.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926224158316.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926225118646.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926225549564.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926225932130.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926230123976.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926230330698.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926230404082.png">
+<meta property="og:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926230538882.png">
+<meta property="article:published_time" content="2023-09-26T14:23:20.000Z">
+<meta property="article:modified_time" content="2023-09-26T15:46:08.568Z">
 <meta property="article:author" content="Zane">
-<meta property="article:tag" content="浅析程序运行原理">
-<meta property="article:tag" content="程序链接过程">
+<meta property="article:tag" content="菜鸡逆向">
+<meta property="article:tag" content="xdbg基础使用">
+<meta property="article:tag" content="序列号算法分析">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/title.png">
+<meta name="twitter:image" content="e:\Zanelc_blog\source_posts\%E5%BA%8F%E5%88%97%E5%8F%B7%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E4%B8%89\image-20230926223757947.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>程序员的自我修养--二 - Zane</title>
+  <title>序列号生成算法分析三 - Zane</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="程序员的自我修养--二"></span>
+            <span id="subtitle" data-typed-text="序列号生成算法分析三"></span>
           
         </div>
 
@@ -229,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-17 00:40" pubdate>
-          2023年8月17日 凌晨
+        <time datetime="2023-09-26 22:23" pubdate>
+          2023年9月26日 晚上
         </time>
       </span>
     
@@ -241,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          903 字
         
       </span>
     
@@ -252,7 +262,7 @@
         
         
         
-          27 分钟
+          8 分钟
         
       </span>
     
@@ -297,75 +307,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">程序员的自我修养--二</h1>
+            <h1 id="seo-header">序列号生成算法分析三</h1>
             
             
               <div class="markdown-body">
                 
-                <p>接上一篇文章的内容，接下来对程序的链接过程进行分析。</p>
+                <p>使用上一章节的方法来搜索特征值，确实能够找到输入的序列号，但是跟踪不到实际比较序列号字符串处（能力有限）， 遂换了一种方法，通过使用 IDR 软件来获取函数地址，在 x32dbg 中对该函数下断点来分析得到正确序列号。</p>
 <span id="more"></span>
 
-<p><strong>当我们有两个目标文件时，如何将他们链接起来形成一个可执行文件？这个过程中发生了什么？</strong></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>使用以下两个源代码文件展开分析：</p>
-<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-at5t76ln0hpawq"></i><span>c</span><div class="collapse show" id="collapse-at5t76ln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// a.c</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> shared;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">int</span> a=<span class="hljs-number">100</span>;<br>	swap(&amp;a,&amp;shared);<br>&#125;<br><br><span class="hljs-comment">// b.c</span><br><span class="hljs-type">int</span> shared=<span class="hljs-number">1</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">int</span>* a, <span class="hljs-type">int</span>* b)</span><br>&#123;<br>	<span class="hljs-type">int</span> temp = *a;<br>    *a = *b;<br>    *b = temp;<br>&#125;<br><br>$:gcc -c a.c b.c<br></code></pre></td></tr></table></div></figure>
-
-<h3 id="空间与地址分配"><a href="#空间与地址分配" class="headerlink" title="空间与地址分配"></a>空间与地址分配</h3><p><strong>对于多个输入目标文件，链接器如何将他们的各个段合并到输出文件？</strong></p>
-<h4 id="按序叠加"><a href="#按序叠加" class="headerlink" title="按序叠加"></a>按序叠加</h4><p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230817013511092.png" srcset="/img/load.gif" lazyload alt="按序叠加"></p>
-<p>这并不是一个很好的方案，因为 <strong>每个段都有一定的地址和空间对齐要求</strong> ，在有很多输入文件的情况下，输出文件将会有很多零散的段，会造成大量的内存碎片。</p>
-<h4 id="相似段合并"><a href="#相似段合并" class="headerlink" title="相似段合并"></a>相似段合并</h4><blockquote>
-<p>链接器为目标文件分配地址和空间这句话中的“地址和空间”有连个含义：第一个是在输出的可执行文件的空间；第二个是装载后的虚拟地址中的虚拟地址空间。</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230817013731658.png" srcset="/img/load.gif" lazyload alt="相似段合并"></p>
-<p>采用这种方法的链接器一般都采用一种叫 <strong>两步链接</strong> 的方法：</p>
-<ol>
-<li>空间与地址分配</li>
-<li>符号解析与重定位 <strong>这一步是链接过程的核心，特别是重定位过程。</strong></li>
-</ol>
-<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-qa73auln0hpawq"></i><span>bash</span><div class="collapse show" id="collapse-qa73auln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">// 链接目标文件 a.o b.o<br>$: ld a.o b.o -e main -o ab<br></code></pre></td></tr></table></div></figure>
-
-<p>查看链接前后地址的分配情况，<strong>VMA</strong> 表示虚拟地址， <strong>LMA</strong> 表示加载地址，<strong>正常情况下，这两个值应该是一样的</strong>。</p>
-<p>可以看到，在链接之前，目标文件的所有段的 <strong>VMA</strong> 都是0，因为虚拟空间还没有被分配，默认都为0，等到链接之后，可执行文件 <strong>ab</strong> 中的各个段都被分配到了相应的虚拟地址。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819014504889.png" srcset="/img/load.gif" lazyload alt="VMA"></p>
-<h4 id="符号地址的确定"><a href="#符号地址的确定" class="headerlink" title="符号地址的确定"></a>符号地址的确定</h4><p><strong>链接后文件中的各个段的虚拟地址就已经确定了</strong>，因为各个符号在段内的相对位置是固定的，所以这时候 <strong>main、shared、swap</strong> 的地址也已经是确定的了，只不过链接器需要给每个符号加上一个 <strong>偏移量</strong>，使它们能够调整到正确的虚拟地址。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819015502205.png" srcset="/img/load.gif" lazyload alt="虚拟地址确定"></p>
-<h3 id="符号解析和重定位"><a href="#符号解析和重定位" class="headerlink" title="符号解析和重定位"></a>符号解析和重定位</h3><h4 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h4><blockquote>
-<p>在完成空间和地址的分配步骤以后，链接器就进入了符号解析与重定位的步骤，这也是静态链接的核心内容。</p>
-</blockquote>
-<p><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-20605433-id-1617453.html">GCC内联汇编的基础</a></p>
-<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-929xo3ln0hpawq"></i><span>assembly</span><div class="collapse show" id="collapse-929xo3ln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs assembly">$:objdump -d a.o<br>a.o:     file format elf64-x86-64<br>Disassembly of section .text:<br>0000000000000000 &lt;main&gt;:<br>   0:   f3 0f 1e fa             endbr64<br>   4:   55                      push   %rbp<br>   5:   48 89 e5                mov    %rsp,%rbp<br>   8:   48 83 ec 10             sub    $0x10,%rsp<br>   c:   c7 45 fc 64 00 00 00    movl   $0x64,-0x4(%rbp)<br>  13:   48 8d 45 fc             lea    -0x4(%rbp),%rax<br>  17:   48 8d 15 00 00 00 00    lea    0x0(%rip),%rdx        # 1e &lt;main+0x1e&gt;<br>  1e:   48 89 d6                mov    %rdx,%rsi<br>  21:   48 89 c7                mov    %rax,%rdi<br>  24:   b8 00 00 00 00          mov    $0x0,%eax<br>  29:   e8 00 00 00 00          call   2e &lt;main+0x2e&gt;<br>  2e:   b8 00 00 00 00          mov    $0x0,%eax<br>  33:   c9                      leave<br>  34:   c3                      re<br></code></pre></td></tr></table></div></figure>
-
-<p>在程序的代码里面使用的都是 <strong>虚拟地址</strong> ，可以看到 <strong>main</strong> 的其实地址为 0，这是因为在未进行空间分配之前，目标文件代码段中的起始地址以 0 开始，等到空间分配完成以后，各个函数才会确定自己在虚拟地址空间中的位置。</p>
-<p>当 <strong>a.c</strong> 被编译成目标文件时，编译器并不知道 <strong>shared</strong> 和 <strong>swap</strong> 的地址，因为它们定义在其他目标文件中，所以编译器暂时 <strong>把0看作是他们的地址，把真正的计算地址工作留给了链接器</strong>。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819021437854.png" srcset="/img/load.gif" lazyload alt="链接前"></p>
-<p>链接器可以根据符号的地址对每个需要重定位的指令进行地址修正，修正后引用的地址都被替换掉。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819022744397.png" srcset="/img/load.gif" lazyload alt="image-20230819022744397"></p>
-<h4 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h4><p>链接器是怎么知道哪些指令需要被调整的呢？这些指令的哪些部分需要被调整？怎么调整？</p>
-<p><strong>重定位表</strong> 专门负责保存这些与重定位相关的信息，在ELF文件中往往是一个或多个段。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230819023221699.png" srcset="/img/load.gif" lazyload alt="重定位表"></p>
-<h4 id="符号解析"><a href="#符号解析" class="headerlink" title="符号解析"></a>符号解析</h4><blockquote>
-<p>之所以要链接是因为我们目标文件中用到的符号被定义在其他目标文件，所以要将它们链接起来</p>
-</blockquote>
-<p>如果只链接一个文件，链接器就会发现 <strong>shared</strong> 和 <strong>swap</strong> 两个符号没有定义，没办法完成链接工作。</p>
-<figure class="highlight bash"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-2qwxyvln0hpawq"></i><span>bash</span><div class="collapse show" id="collapse-2qwxyvln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$:ld a.o -e main<br>ld: a.o: <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `main<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">a.c:(.text+0x1a): undefined reference to `shared&#x27;</span><br>ld: a.c:(.text+0x2a): undefined reference to `swap<br></code></pre></td></tr></table></div></figure>
-
-<p>查看 <strong>a.o</strong> 的符号表, <strong>GLOBAL</strong> 类型的符号，除了 <strong>main</strong> 函数是定义在代码段之外，其他两个 <strong>shared</strong> 和 <strong>swap</strong> 都是 <strong>UND</strong> ，即 <strong>undefined</strong> 未定义类型，<strong>这种未定义的符号都是因为该目标文件中有关于它们的重定位项。</strong> 链接器在扫描完所有的输入目标文件之后，所有这些未定义的符号都应该能够在全局符号表中找到，否则链接器就报符号未定义错误。</p>
-<figure class="highlight plaintext"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-u035weln0hpawq"></i><span>assembly</span><div class="collapse show" id="collapse-u035weln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">，$:readelf -s a.o<br>Symbol table &#x27;.symtab&#x27; contains 6 entries:<br>   Num:    Value          Size Type    Bind   Vis      Ndx Name<br>     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND<br>     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS a.c<br>     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1 .text<br>     3: 0000000000000000    53 FUNC    GLOBAL DEFAULT    1 main<br>     4: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND shared<br>     5: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND swap<br></code></pre></td></tr></table></div></figure>
-
-<h3 id="静态库链接"><a href="#静态库链接" class="headerlink" title="静态库链接"></a>静态库链接</h3><div class="note note-success">
-            <p>程序之所以有用，因为它会有输入输出，这些输入输出的对象可以是数据，可以是人，也可以是另外一种程序，还可以是另外一台计算机，一个没有输入输出的程序没有任何意义。</p>
+<div class="note note-success">
+            <p>通网罗马的路不止一条，逆向也没有通解，有时候一个不经意的地址就能解决逆向难题。</p>
           </div>
-<blockquote>
-<p>一般情况下，一种语言的开发环境往往会附带有语言库，这些库就是对操作系统API的封装，比如 printf 函数对字符串进行一些必要的处理后，最后会调用操作系统提供的API。很大一部分库函数都是要调用操作系统API的。</p>
-</blockquote>
-<p><strong>静态库可以简单的看出一组目标文件的集合</strong></p>
-<p>把零散的目标文件直接提供给库的使用者，很大程度上会造成文件传输、管理和组织的不便，通常使用 <strong>ar</strong> 压缩程序讲这些目标文件压缩在一起，并对其进行 <strong>编号和索引</strong>，以便于查找和检索，就形成了静态库文件。</p>
-<p>例如，我们可以使用 <strong>ar</strong> 工具来查看 <strong>libc.a</strong> 静态库文件包含了哪些目标文件：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230820000307422.png" srcset="/img/load.gif" lazyload alt="ar查看静态库"></p>
-<p>查看 <strong>printf</strong> 函数所在的目标文件，可以看到 <strong>printf</strong> 被定义在了 <strong>printf.o</strong> 这个目标文件中。</p>
-<figure class="highlight jboss-cli"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-yo85elln0hpawq"></i><span>jboss-cli</span><div class="collapse show" id="collapse-yo85elln0hpawq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">$<span class="hljs-function">:objdump</span> -t <span class="hljs-string">/usr/lib32/libc.a</span> | grep printf<br><span class="hljs-string">...</span><br>printf.o:     file format elf32-i386<br>00000000 g     F <span class="hljs-string">.text</span>  0000002d __printf<br>00000000         *UND*  00000000 <span class="hljs-string">.hidden</span> __vfprintf_internal<br>00000000 g     F <span class="hljs-string">.text</span>  0000002d _IO_printf<br>00000000 g     F <span class="hljs-string">.text</span>  0000002d print<br><span class="hljs-string">...</span><br></code></pre></td></tr></table></div></figure>
 
-<p><strong>ld</strong> 链接起会自动寻找所有需要的符号以及它们所在的目标文件，将这些目标文件从 <strong>libc.a</strong> 中 <strong>解压</strong> 出来，最终将它们链接成为一个可执行文件。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/b884c480/image-20230820001045509.png" srcset="/img/load.gif" lazyload alt="静态链接"></p>
+<h3 id="crackme-4stz"><a href="#crackme-4stz" class="headerlink" title="crackme_4stz"></a>crackme_4stz</h3><h4 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h4><p>首先打开程序，界面如下，输入 <strong>用户名</strong> 和 <strong>序列号</strong> 才会弹窗：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926223757947.png" srcset="/img/load.gif" lazyload alt="程序界面"></p>
+<p>已经尝试过教程中的方法来跟踪，没有跟踪到 <strong>实际序列号</strong> 处，这里就不再使用这种方法。</p>
+<h5 id="为什么要使用IDR软件呢？"><a href="#为什么要使用IDR软件呢？" class="headerlink" title="为什么要使用IDR软件呢？"></a>为什么要使用IDR软件呢？</h5><p>首先使用 <strong>PEID</strong> 来分析程序信息，检测出程序开发环境为 <strong>Borland Delphi 4.0-5.0</strong>，程序是 <strong>delphi</strong> 开发的</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926224355948.png" srcset="/img/load.gif" lazyload alt="PEID分析"></p>
+<p>而 <strong>IDR</strong> （全称为 <strong>Interactive Delphi Reconstructor</strong>）是一款开源的 <strong>Delphi</strong> 反编译软件，能够从编译文件中恢复大部分初始的 <strong>Delphi</strong> 源代码的程序</p>
+<p>打开 <strong>IDR</strong> 软件，将该程序拖进去分析，检出 <strong>Edit2</strong> 编辑框绑定 <strong>Change</strong> 事件，猜测这个函数就是校验函数，把用户输入的序列号与正确的序列号进行比对，该函数的地址为 <strong>4580B0</strong>：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926224158316.png" srcset="/img/load.gif" lazyload alt="IDR分析"></p>
+<p>重新使用 <strong>x32dbg</strong> 载入该程序，<strong>ctrl+G</strong> 跳转至目标地址 <strong>4580B0</strong> 处，并在该处下断点：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926225118646.png" srcset="/img/load.gif" lazyload alt="Ctrl+G跳转"></p>
+<p><strong>F9</strong> 运行程序，输入账号 <strong>crackme</strong> 和序列号，当序列号输入第一个字符 <strong>1</strong> 的时候，触发断点，程序断在 <strong>4580B0</strong> 处：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926225549564.png" srcset="/img/load.gif" lazyload alt="触发断点"></p>
+<p>继续 <strong>F8</strong> 单步执行函数，程序在执行完 <strong>call</strong> 调用后，<strong>EAX</strong> 处为 <strong>402134</strong> 地址，猜测该函数为生成序列号的函数（根据用户输入的用户名，来生成相应的序列号）：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926225932130.png" srcset="/img/load.gif" lazyload alt="序列号生成"></p>
+<p>继续 <strong>F8</strong> 单步执行，发现 <strong>EAX</strong> 存放用户输入序列号地址， <strong>EDX</strong> 存放正确序列号地址，两处序列号进行比对：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926230123976.png" srcset="/img/load.gif" lazyload alt="序列号比对"></p>
+<p>很明显两个序列号是不一样的，双击修改 <strong>ZF</strong> 标志位的值，使跳转失败，继续执行下面代码：</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926230330698.png" srcset="/img/load.gif" lazyload alt="修改ZF值"></p>
+<p><strong>F9</strong> 继续执行，成功弹窗！</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926230404082.png" srcset="/img/load.gif" lazyload alt="成功弹窗"></p>
+<p>重新运行程序，看 <strong>crackme</strong> 对应的序列号是不是 <strong>402134</strong>，验证成功。</p>
+<p><img src="E:\Zanelc_blog\source_posts\序列号生成算法分析三\image-20230926230538882.png" srcset="/img/load.gif" lazyload alt="输入正确序列号"></p>
+<div class="note note-success">
+            <p>到这里分析就结束了，其实有想过进一步跟踪来分析是如何生成序列号过程的，跟踪了一会还是放弃了，也有跟踪到，还是自己太没耐心了，有时候觉得还是重在理解基本操作，具体的crack部分可以留到以后的crackme挑战再深究，不要在前期太过钻牛角尖。</p>
+          </div>
 
                 
               </div>
@@ -384,12 +362,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/" class="category-chain-item">纸上得来终觉浅</a>
+  <a href="/categories/%E4%BD%BF%E7%94%A8Ollydbg%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8BCracking/" class="category-chain-item">使用Ollydbg从零开始Cracking</a>
   
   
     <span>></span>
     
-  <a href="/categories/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB-%E9%93%BE%E6%8E%A5%E3%80%81%E8%A3%85%E8%BD%BD%E4%B8%8E%E5%BA%93/" class="category-chain-item">程序员的自我修养--链接、装载与库</a>
+  <a href="/categories/%E4%BD%BF%E7%94%A8Ollydbg%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8BCracking/xdbg%E4%BD%BF%E7%94%A8/" class="category-chain-item">xdbg使用</a>
   
   
 
@@ -406,9 +384,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B5%85%E6%9E%90%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86/" class="print-no-link">#浅析程序运行原理</a>
+        <a href="/tags/%E8%8F%9C%E9%B8%A1%E9%80%86%E5%90%91/" class="print-no-link">#菜鸡逆向</a>
       
-        <a href="/tags/%E7%A8%8B%E5%BA%8F%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/" class="print-no-link">#程序链接过程</a>
+        <a href="/tags/xdbg%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" class="print-no-link">#xdbg基础使用</a>
+      
+        <a href="/tags/%E5%BA%8F%E5%88%97%E5%8F%B7%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" class="print-no-link">#序列号算法分析</a>
       
     </div>
   
@@ -420,8 +400,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>程序员的自我修养--二</div>
-      <div>https://blog.zanelc.site/posts/b884c480/</div>
+      <div>序列号生成算法分析三</div>
+      <div>https://blog.zanelc.site/posts/e0d0a40/</div>
     </div>
     <div class="license-meta">
       
@@ -433,13 +413,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月17日</div>
+          <div>2023年9月26日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年8月20日</div>
+          <div>2023年9月26日</div>
         </div>
       
       
@@ -470,18 +450,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/fad8528d/" title="程序员的自我修养--三">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">程序员的自我修养--三</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/4c519c4d/" title="序列号生成算法分析二">
-                        <span class="hidden-mobile">序列号生成算法分析二</span>
+                      <a href="/posts/fad8528d/" title="程序员的自我修养--三">
+                        <span class="hidden-mobile">程序员的自我修养--三</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
