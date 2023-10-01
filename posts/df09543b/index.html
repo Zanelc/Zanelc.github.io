@@ -16,18 +16,22 @@
   <meta name="author" content="Zane">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="ollydbg反调试">
 <meta property="og:url" content="https://blog.zanelc.site/posts/df09543b/index.html">
 <meta property="og:site_name" content="Zane">
+<meta property="og:description" content="很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/title.png">
 <meta property="article:published_time" content="2023-09-30T03:57:35.000Z">
-<meta property="article:modified_time" content="2023-09-30T04:01:26.780Z">
+<meta property="article:modified_time" content="2023-10-01T06:38:38.201Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="菜鸡逆向">
 <meta property="article:tag" content="xdbg基础使用">
 <meta property="article:tag" content="反调试基础">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/title.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -238,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1.2k 字
         
       </span>
     
@@ -249,7 +253,7 @@
         
         
         
-          1 分钟
+          10 分钟
         
       </span>
     
@@ -299,7 +303,49 @@
             
               <div class="markdown-body">
                 
-                
+                <p>很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。</p>
+<span id="more"></span>
+
+<h3 id="IsDebuggerPresent检测"><a href="#IsDebuggerPresent检测" class="headerlink" title="IsDebuggerPresent检测"></a>IsDebuggerPresent检测</h3><p>使用X32dbg来加载程序 <strong>Crackme1.exe</strong> ，<strong>F9</strong> 一键运行程序，程序直接终止。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001012411540.png" srcset="/img/load.gif" lazyload alt="调试结束"></p>
+<p>该 <strong>Crackme</strong> 可能使用的是最常见的 <strong>API函数IsDebuggerPresent</strong> 来检测是否被调试，重新加载程序，查看API函数列表，发现该函数。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001012611448.png" srcset="/img/load.gif" lazyload alt="IsDebuggerPresent"></p>
+<blockquote>
+<p>IsDebuggerPresent函数解释：</p>
+<p>作用<br>    确定调用进程是否由用户模式的调试器调试。<br>语法<br>    BOOL WINAPI IsDebuggerPresent(void);<br>参数<br>    该函数没有参数<br>返回值<br>    如果当前进程运行在调试器的上下文，返回值为非零值。<br>    如果当前进程没有运行在调试器的上下文，返回值是零。</p>
+</blockquote>
+<p>对这个函数下断点，查看调用情况，运行函数，执行到返回发现返回值为非零值，检测出当前属于调试模式。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001012949225.png" srcset="/img/load.gif" lazyload alt="断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001013058433.png" srcset="/img/load.gif" lazyload alt="执行到返回"></p>
+<p>此时处于调试模式，继续执行，发现调用 <strong>PostQuitMessage</strong> 函数。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001013321096.png" srcset="/img/load.gif" lazyload alt="PostQuitMessage"></p>
+<blockquote>
+<p>PostQuitMessage函数解释：</p>
+<p>PostQuitMessage 函数将WM_QUIT消息发布到线程的消息队列并立即返回;函数只是向系统指示线程正在请求在将来的某个时间退出。</p>
+<p>当线程从其消息队列中检索 WM_QUIT 消息时，它应退出其消息循环，并将控制权返回到系统。 返回到系统的退出值必须是WM_QUIT消息的 wParam 参数</p>
+</blockquote>
+<p>继续耐心跟踪过程，发现程序调用 <strong>ExitProcess</strong> 来退出进程，此时已经很清楚，程序通过 <strong>IsDebuggerPresent</strong> 来检测是否被调试，如果被调试就直接退出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001013736771.png" srcset="/img/load.gif" lazyload alt="ExitProcess"></p>
+<p>知道了反调试原理，我们有多种方法来绕过反调试，首先运行程序到 <strong>IsDebuggerPresent</strong> 调用处，运行完该函数后，会有个条件跳转，将此处修改为无条件跳转，再次打开修补后的文件，即可正常调试。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001014112138.png" srcset="/img/load.gif" lazyload alt="修改为无条件跳转"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001014424835.png" srcset="/img/load.gif" lazyload alt="修补文件"></p>
+<p>我们进一步分析 <strong>IsDebuggerPersent</strong> 原理，继续运行到函数处。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001015006119.png" srcset="/img/load.gif" lazyload alt="image-20231001015006119"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001015419326.png" srcset="/img/load.gif" lazyload alt="FS 寄存器"></p>
+<p>在这里看到一个非常重要的寄存器 <strong>FS</strong> 的值，其实 <strong>FS</strong> 的值就是指向了一个结构体，该结构体包含了有关正在运行的程序的一些非常重要的信息，我们在数据窗口定位到这个地址。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001021541157.png" srcset="/img/load.gif" lazyload alt="定位到FS"></p>
+<p>该结构被称为TEB或TIB(线程环境块)，该结构保存了有关当前程序的非常重要的信息。例如：TIB被存储在哪里，程序堆栈从哪里开始以及从哪里结束。</p>
+<p>在数据窗口中定位到 <strong>FS:[0x30]</strong> 地址为 <strong>0039E000</strong> ，查看该处地址，发现 <strong>[EAX+0x2]</strong> 处值为 <strong>1</strong>，此处就是我们要找的特殊字节，手动将此处值修改为 <strong>0</strong> ，<strong>F9</strong> 运行程序，因为修改了特殊字节的值，此时程序被认为未被调试。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001022042288.png" srcset="/img/load.gif" lazyload alt="定位FS:[0x30]"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001022142429.png" srcset="/img/load.gif" lazyload alt="eax+2"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001022439534.png" srcset="/img/load.gif" lazyload alt="正常运行"></p>
+<p>很多基于此的反调试插件，其实为我们做的就是上述的事情。尝试使用 <strong>x32dbg</strong> 本身的隐藏调试器功能，使用上述方法发现此时特殊字节的值修改为 <strong>0</strong>， <strong>F9</strong> 成功运行程序。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001142742796.png" srcset="/img/load.gif" lazyload alt="隐藏调试器"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001143137469.png" srcset="/img/load.gif" lazyload alt="特殊字节值被修改"></p>
+<p>同理，使用插件 <strong>ScyllaHide</strong> 插件来反调试，特殊字节的值被修改为 <strong>0</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001143241139.png" srcset="/img/load.gif" lazyload alt="image-20231001143241139"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001143339972.png" srcset="/img/load.gif" lazyload alt="ScyllaHide"></p>
+
                 
               </div>
             
@@ -374,7 +420,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月30日</div>
+          <div>2023年10月1日</div>
         </div>
       
       
