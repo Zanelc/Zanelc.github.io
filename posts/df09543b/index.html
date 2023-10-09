@@ -18,14 +18,14 @@
   
     <meta name="description" content="很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ollydbg反调试">
+<meta property="og:title" content="ollydbg反调试一">
 <meta property="og:url" content="https://blog.zanelc.site/posts/df09543b/index.html">
 <meta property="og:site_name" content="Zane">
 <meta property="og:description" content="很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/title.png">
 <meta property="article:published_time" content="2023-09-30T03:57:35.000Z">
-<meta property="article:modified_time" content="2023-10-01T06:38:38.201Z">
+<meta property="article:modified_time" content="2023-10-09T18:00:57.125Z">
 <meta property="article:author" content="Zane">
 <meta property="article:tag" content="菜鸡逆向">
 <meta property="article:tag" content="xdbg基础使用">
@@ -37,7 +37,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ollydbg反调试 - Zane</title>
+  <title>ollydbg反调试一 - Zane</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ollydbg反调试"></span>
+            <span id="subtitle" data-typed-text="ollydbg反调试一"></span>
           
         </div>
 
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          3.4k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
         
-          10 分钟
+          29 分钟
         
       </span>
     
@@ -298,14 +298,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">ollydbg反调试</h1>
+            <h1 id="seo-header">ollydbg反调试一</h1>
             
             
               <div class="markdown-body">
                 
                 <p>很多程序会检测自身是否正在被调试，如果检测到正在被调试的话，就会结束自身进程或者不按常规流程运行，所以绕过程序对工具的检测是很有必要的。</p>
 <span id="more"></span>
-
 <h3 id="IsDebuggerPresent检测"><a href="#IsDebuggerPresent检测" class="headerlink" title="IsDebuggerPresent检测"></a>IsDebuggerPresent检测</h3><p>使用X32dbg来加载程序 <strong>Crackme1.exe</strong> ，<strong>F9</strong> 一键运行程序，程序直接终止。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001012411540.png" srcset="/img/load.gif" lazyload alt="调试结束"></p>
 <p>该 <strong>Crackme</strong> 可能使用的是最常见的 <strong>API函数IsDebuggerPresent</strong> 来检测是否被调试，重新加载程序，查看API函数列表，发现该函数。</p>
@@ -326,7 +325,7 @@
 </blockquote>
 <p>继续耐心跟踪过程，发现程序调用 <strong>ExitProcess</strong> 来退出进程，此时已经很清楚，程序通过 <strong>IsDebuggerPresent</strong> 来检测是否被调试，如果被调试就直接退出。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001013736771.png" srcset="/img/load.gif" lazyload alt="ExitProcess"></p>
-<p>知道了反调试原理，我们有多种方法来绕过反调试，首先运行程序到 <strong>IsDebuggerPresent</strong> 调用处，运行完该函数后，会有个条件跳转，将此处修改为无条件跳转，再次打开修补后的文件，即可正常调试。</p>
+<p>了解了反调试原理，我们有多种方法来绕过反调试，首先运行程序到 <strong>IsDebuggerPresent</strong> 调用处，运行完该函数后，会有个条件跳转，将此处修改为无条件跳转，再次打开修补后的文件，即可正常调试。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001014112138.png" srcset="/img/load.gif" lazyload alt="修改为无条件跳转"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001014424835.png" srcset="/img/load.gif" lazyload alt="修补文件"></p>
 <p>我们进一步分析 <strong>IsDebuggerPersent</strong> 原理，继续运行到函数处。</p>
@@ -345,6 +344,56 @@
 <p>同理，使用插件 <strong>ScyllaHide</strong> 插件来反调试，特殊字节的值被修改为 <strong>0</strong>。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001143241139.png" srcset="/img/load.gif" lazyload alt="image-20231001143241139"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231001143339972.png" srcset="/img/load.gif" lazyload alt="ScyllaHide"></p>
+<h3 id="进程名检测"><a href="#进程名检测" class="headerlink" title="进程名检测"></a>进程名检测</h3><p>使用 <strong>x32dbg</strong> 打开 <strong>DaXXoR.ExE</strong> 程序，<strong>F9</strong> 运行程序弹出报错，如何应对这种检测呢，重新加载该程序。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010000442300.png" srcset="/img/load.gif" lazyload alt="弹窗错误"></p>
+<p>查看当前程序的 <strong>API</strong> 函数，发现有很多都不是用于检测进程名的， <strong>如果程序不直接导入API的话，会使用GetProcAddress这个API函数来获取这些API函数的地址进行间接调用。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010000720413.png" srcset="/img/load.gif" lazyload alt="GetProcAddress函数"></p>
+<p>对该函数下断点，运行起来，当前待获取的函数是 <strong>__CPPdebugHook</strong>，该函数检测进程名没有关系，继续运行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010000846919.png" srcset="/img/load.gif" lazyload alt="当前获取函数"></p>
+<p>运行到获取 <strong>EnumProcesses</strong> 这个函数的地址，接着运行到返回获取得到函数地址，对该地址设置断点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010001053262.png" srcset="/img/load.gif" lazyload alt="EnumProcesses函数"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010001232179.png" srcset="/img/load.gif" lazyload alt="设置断点"></p>
+<blockquote>
+<p>EnumProcesses函数：</p>
+<p>BOOL EnumProcesses(<br>  [out] DWORD   *lpidProcess,<br>  [in]  DWORD   cb,<br>  [out] LPDWORD lpcbNeeded<br>);</p>
+<p>[out] lpidProcess</p>
+<p>指向接收进程标识符列表的数组的指针。</p>
+<p>[in] cb</p>
+<p>pProcessIds 数组的大小（以字节为单位）。</p>
+<p>[out] lpcbNeeded</p>
+<p>pProcessIds 数组中返回的字节数。</p>
+</blockquote>
+<p><strong>EnumProcesses</strong> 函数运行后进程ID保存在地址 <strong>0019ED98</strong> 处，大小共计 <strong>3E8</strong> 个字节，之前多次测试都没有找到当前进程的ID，后来手动调用 <strong>EnumProcesses</strong> 函数发现返回结果中可以查到当前进程的PID，最终发现原因是数组太小，此时提前修改数组大小，修改为 <strong>1000</strong>。</p>
+<p>以下是一个简单的C++调用 <strong>EnumProcesses</strong> 函数示例。</p>
+<figure class="highlight c++"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-0nx8zelnj78x3t"></i><span>C++</span><div class="collapse show" id="collapse-0nx8zelnj78x3t"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Psapi.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    DWORD processIds[<span class="hljs-number">1024</span>], bytesReturned;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">EnumProcesses</span>(processIds, <span class="hljs-built_in">sizeof</span>(processIds), &amp;bytesReturned))<br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;EnumProcesses failed with error code: &quot;</span> &lt;&lt; <span class="hljs-built_in">GetLastError</span>() &lt;&lt; std::endl;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br><br>    DWORD processCount = bytesReturned / <span class="hljs-built_in">sizeof</span>(DWORD);<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Number of processes: &quot;</span> &lt;&lt; processCount &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">for</span> (DWORD i = <span class="hljs-number">0</span>; i &lt; processCount; i++)<br>    &#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Process ID: &quot;</span> &lt;&lt; processIds[i] &lt;&lt; std::endl;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></div></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010003114870.png" srcset="/img/load.gif" lazyload alt="EnumProcesses入参分析"></p>
+<p>继续运行到返回，查看地址 <strong>0019ED98</strong> 处内容，发现返回所有进程ID信息全部在这里。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010003622837.png" srcset="/img/load.gif" lazyload alt="image-20231010003622837"></p>
+<p>windows 任务管理器查看 <strong>x32dbg</strong> 进程ID，PID为13204（0x3394），成功枚举处进程ID，在 <strong>0019F2AC</strong> 处设置内存访问断点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010003806612.png" srcset="/img/load.gif" lazyload alt="PID"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010004029406.png" srcset="/img/load.gif" lazyload alt="成功找到PID"></p>
+<p>继续运行函数，程序访问该处地址断下来，发现此时将要调用 <strong>OpenProcess</strong> 函数，如果调用成功，就会获取 <strong>x32dbg</strong> 进程的句柄。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010004504188.png" srcset="/img/load.gif" lazyload alt="OpenProcess函数"></p>
+<p><strong>F8</strong> 步过函数，获取进程句柄为 <strong>1DC</strong> ，返回值保存在 <strong>EAX</strong> 中，句柄窗口中成功找到该句柄。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010004654485.png" srcset="/img/load.gif" lazyload alt="获取句柄"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010004731477.png" srcset="/img/load.gif" lazyload alt="句柄窗口"></p>
+<p>继续单步执行，发现 <strong>EnumProcessModules</strong> 函数，该函数枚举指定进程的模块，<strong>F7</strong> 跟进到函数入口处。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010005143222.png" srcset="/img/load.gif" lazyload alt="image-20231010005143222"></p>
+<p>中途有重新加载程序，操作跟之前一样，获取的句柄为 <strong>1E8，当我们请求获取进程中模块句柄的时候,系统会返回该模块在进程内存中基地址(模块起始地址)</strong> ，系统返回的是 <strong>400000</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010010445396.png" srcset="/img/load.gif" lazyload alt="EnumProcessesModules"></p>
+<p>继续跟进，发现 <strong>GetModuleBaseNameA</strong> 函数，该函数是获取指定进程模块的名称，跟进该函数，成功获取到进程的名称 <strong>x32dbg.exe</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010011314805.png" srcset="/img/load.gif" lazyload alt="image-20231010011314805"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010011526800.png" srcset="/img/load.gif" lazyload alt="进程模块名称"></p>
+<p>继续运行，程序使用 <strong>CloseHandle</strong> 来关闭句柄，然后调用 <strong>sub_45DAC0</strong> 函数来将进程名称转为大写，再对 <strong>X32DBG.EXE</strong> 与 <strong>OLLYDBG.EXE</strong> 进行比对。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010012018857.png" srcset="/img/load.gif" lazyload alt="字符串比较"></p>
+<p>显然，二者不等，跳转实现，不会执行下面的 <strong>TerminateProcess</strong> 函数，如果后台确实有 <strong>X32DBG.EXE</strong> ,进程最终退出。<strong>实际执行结果有出入，因为使用了x32dbg来调试的，通过前面的分析，我们可以得知如果出现OLLYDBG.EXE进程的话，程序最终会退出。</strong> 于是在启动 <strong>x32dbg</strong> 后，后台启动了 <strong>OLLYDBG</strong> ，也成功获取到了 <strong>PID</strong> ，但是最后还是没有实现退出程序，因为最后进程名称对比时，并不是跟 <strong>OLLYDBG.EXE</strong> 对比，而是跟其他的名称对比，看了一下字符串窗口，发现程序不止检测 <strong>OD</strong>，应该还会检测其他匹配名称的调试工具，<strong>后来发现程序会多次调用EnumProcesses，猜测每次调用EnumProcesses时使用不同的字符串来进行匹配比对</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010013637109.png" srcset="/img/load.gif" lazyload alt="字符串窗口"></p>
+<p>具体原理不再一一分析，绕过检测的方法也比较简单，可以继续使用 <strong>x32dbg</strong> 自带的 <strong>隐藏调试器</strong> 功能来绕过，成功运行该程序。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010014438469.png" srcset="/img/load.gif" lazyload alt="成功运行"></p>
+<p>查看日志窗口，发现通过卸载 <strong>psapi.dll</strong> 来实现反调试功能。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/df09543b/image-20231010014526216.png" srcset="/img/load.gif" lazyload alt="日志窗口"></p>
+<p>同样可以使用 <strong>ScyllaHide</strong> 插件来绕过。</p>
 
                 
               </div>
@@ -401,7 +450,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ollydbg反调试</div>
+      <div>ollydbg反调试一</div>
       <div>https://blog.zanelc.site/posts/df09543b/</div>
     </div>
     <div class="license-meta">
@@ -420,7 +469,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年10月1日</div>
+          <div>2023年10月10日</div>
         </div>
       
       
