@@ -16,27 +16,27 @@
   <meta name="author" content="Zane">
   <meta name="keywords" content="">
   
-    <meta name="description" content="其实并没有把这本书全部看完，最开始写的时候恨不得把所有知识点添加上，后来重在理解，知道大概意思即可，主要理解动态链接的基本思想与装载过程，不深究其实现方式。">
+    <meta name="description" content="160个Crackme系列（1-5） 1.Acid burn使用 DIE 工具查看程序信息，程序使用 Delphi 编写的，无加壳信息。  运行程序，发现总共有两处需要破解的地方，分别为 Serial、Serial&#x2F;Name。 Serial使用 x32dbg 加载程序，运行 Serial ，随便输入一个序列号 crackme ,弹窗错误。   重新加载程序，shift+D 查看字符串窗口">
 <meta property="og:type" content="article">
-<meta property="og:title" content="程序员的自我修养--三">
-<meta property="og:url" content="https://blog.zanelc.site/posts/fad8528d/index.html">
+<meta property="og:title" content="160个Crackme--一">
+<meta property="og:url" content="https://blog.zanelc.site/posts/a1e7b9f1/index.html">
 <meta property="og:site_name" content="Zane">
-<meta property="og:description" content="其实并没有把这本书全部看完，最开始写的时候恨不得把所有知识点添加上，后来重在理解，知道大概意思即可，主要理解动态链接的基本思想与装载过程，不深究其实现方式。">
+<meta property="og:description" content="160个Crackme系列（1-5） 1.Acid burn使用 DIE 工具查看程序信息，程序使用 Delphi 编写的，无加壳信息。  运行程序，发现总共有两处需要破解的地方，分别为 Serial、Serial&#x2F;Name。 Serial使用 x32dbg 加载程序，运行 Serial ，随便输入一个序列号 crackme ,弹窗错误。   重新加载程序，shift+D 查看字符串窗口">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/title.png">
-<meta property="article:published_time" content="2023-08-19T16:43:49.000Z">
-<meta property="article:modified_time" content="2023-09-30T03:59:07.876Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/title.jpg">
+<meta property="article:published_time" content="2023-10-12T15:31:26.000Z">
+<meta property="article:modified_time" content="2023-10-13T17:33:34.539Z">
 <meta property="article:author" content="Zane">
-<meta property="article:tag" content="浅析程序运行原理">
-<meta property="article:tag" content="程序链接过程">
+<meta property="article:tag" content="crackme">
+<meta property="article:tag" content="逆向学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/title.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/title.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>程序员的自我修养--三 - Zane</title>
+  <title>160个Crackme--一 - Zane</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +218,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="程序员的自我修养--三"></span>
+            <span id="subtitle" data-typed-text="160个Crackme--一"></span>
           
         </div>
 
@@ -229,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-20 00:43" pubdate>
-          2023年8月20日 凌晨
+        <time datetime="2023-10-12 23:31" pubdate>
+          2023年10月12日 晚上
         </time>
       </span>
     
@@ -241,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          1.3k 字
         
       </span>
     
@@ -252,7 +252,7 @@
         
         
         
-          27 分钟
+          11 分钟
         
       </span>
     
@@ -297,63 +297,53 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">程序员的自我修养--三</h1>
+            <h1 id="seo-header">160个Crackme--一</h1>
             
             
               <div class="markdown-body">
                 
-                <p>其实并没有把这本书全部看完，最开始写的时候恨不得把所有知识点添加上，后来重在理解，知道大概意思即可，主要理解动态链接的基本思想与装载过程，不深究其实现方式。</p>
-<span id="more"></span>
+                <p>160个Crackme系列（1-5）</p>
+<h3 id="1-Acid-burn"><a href="#1-Acid-burn" class="headerlink" title="1.Acid burn"></a>1.Acid burn</h3><p>使用 <strong>DIE</strong> 工具查看程序信息，程序使用 <strong>Delphi</strong> 编写的，无加壳信息。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012233744343.png" srcset="/img/load.gif" lazyload alt="DIE"></p>
+<p>运行程序，发现总共有两处需要破解的地方，分别为 <strong>Serial、Serial&#x2F;Name</strong>。</p>
+<h4 id="Serial"><a href="#Serial" class="headerlink" title="Serial"></a>Serial</h4><p>使用 <strong>x32dbg</strong> 加载程序，运行 <strong>Serial</strong> ，随便输入一个序列号 <strong>crackme</strong> ,弹窗错误。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012234825557.png" srcset="/img/load.gif" lazyload alt="Serial"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012234853017.png" srcset="/img/load.gif" lazyload alt="弹窗错误"></p>
+<p>重新加载程序，<strong>shift+D</strong> 查看字符串窗口,发现多处 <strong>Try Again</strong> ，在该字符串处下断点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012235020424.png" srcset="/img/load.gif" lazyload alt="Try Again"></p>
+<p>程序成功中断，可以看到错误提示的上面有一个 <strong>正确提示和关键跳转</strong> ，再往上看有一个 <strong>比较函数</strong>，推断出 <strong>程序将输入的Serial与 “Hello Dude!” 进行比较，如果相同就弹窗正确。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012235229078.png" srcset="/img/load.gif" lazyload alt="程序中断"></p>
+<p>输入 <strong>Hello Dude!</strong> 验证是否成功，弹窗正确！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012235610569.png" srcset="/img/load.gif" lazyload alt="输入正确序列号"></p>
+<h4 id="Serial-Name"><a href="#Serial-Name" class="headerlink" title="Serial&#x2F;Name"></a>Serial&#x2F;Name</h4><p>需要输入 <strong>Name</strong> 和 <strong>Serial</strong> ，猜测 <strong>Name</strong> 根据某种算法来生成 <strong>Serial</strong>，先测试一下弹窗。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012235857783.png" srcset="/img/load.gif" lazyload alt="输入用户名和序列号"></p>
+<p>在字符串窗口搜索关键提示，并下断点。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231012235947456.png" srcset="/img/load.gif" lazyload alt="字符串窗口"></p>
+<p><strong>F9</strong> 运行程序，输入 <strong>Serial和name</strong> 成功中断，回溯函数发现 <strong>比较与关键跳转</strong>，将用户输入的 <strong>Serial</strong> 与 <strong>CW-8118-CRACKED</strong> 比较。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014003409138.png" srcset="/img/load.gif" lazyload alt="中断"></p>
+<p>输入其他值，查看序列号是否变化，输入 <strong>testacc</strong> ，此时序列号变化为 <strong>CW-9512-CRACKED</strong> ，根据注释信息，<strong>推测</strong> 序列号由 三部分拼接而成，<strong>CW、XXXX、CRACKED</strong>，<strong>XXXX</strong> 由用户输入的 <strong>Name</strong> 计算得到。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014003548226.png" srcset="/img/load.gif" lazyload alt="更换Name"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014003655765.png" srcset="/img/load.gif" lazyload alt="序列号变化"></p>
+<p>接下来使用 <strong>IDA</strong> 对程序进行静态分析，查看程序的大致流程，程序存在两处跳转，<strong>一处是与4比较跳转，另一处是序列号比较跳转</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014003949255.png" srcset="/img/load.gif" lazyload alt="IDA分析"></p>
+<p>查看 <strong>sub_406930</strong> 函数,发现该函数用来获取字符串长度。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014004105104.png" srcset="/img/load.gif" lazyload alt="sub_406930"></p>
+<p>推测程序通过该函数获取 <strong>Name</strong> 长度，长度大于4，跳转，使用 <strong>x32dbg</strong> 动态调试来验证我们的猜想，在函数上方设置断点，单步执行分析。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014005128188.png" srcset="/img/load.gif" lazyload alt="设置断点"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014005221706.png" srcset="/img/load.gif" lazyload alt="获取用户名"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014010505785.png" srcset="/img/load.gif" lazyload alt="长度比较"></p>
+<p>由于输入的 <strong>Name</strong> 长度大于4，跳转继续执行，获取输入 <strong>Name</strong> 的第一个字节，此时我们输入的为 <strong>testacc</strong>，获取的为 <strong>t</strong>，<strong>将t的值*0x29</strong>，得到 <strong>EAX值为1294</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014011059311.png" srcset="/img/load.gif" lazyload alt="image-20231014011059311"></p>
+<p>将 <strong>1294</strong> 存储在 <strong>431750</strong> 处，add指令将值变为 <strong>2528（扩大一倍）</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014011421409.png" srcset="/img/load.gif" lazyload alt="扩大一倍"></p>
+<p>继续执行函数，发现 <strong>call sub_406718</strong> 执行后，产生序列号的中间部分数字 <strong>9512</strong>，此时 <strong>细心的话就会发现9512恰好是2528的十进制形式。</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014011623896.png" srcset="/img/load.gif" lazyload alt="产生序列号"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014011731603.png" srcset="/img/load.gif" lazyload alt="十六进制转换十进制"></p>
+<p>由此猜测上述函数 <strong>sub_406718</strong> 将十六进制数字转换为十进制数字！根据上述规则编写注册机代码</p>
+<figure class="highlight c++"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-lpyziklnow2qps"></i><span>C++</span><div class="collapse show" id="collapse-lpyziklnow2qps"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	string str;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;请输入Name：&quot;</span>);<br>	cin &gt;&gt; str;<br>	<span class="hljs-keyword">if</span> (str.<span class="hljs-built_in">length</span>() &lt; <span class="hljs-number">4</span>)<br>		<span class="hljs-built_in">perror</span>(<span class="hljs-string">&quot;字符串长度必须大于等于4&quot;</span>);<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-type">char</span> s = str[<span class="hljs-number">0</span>];<br>		<span class="hljs-type">int</span> num = s * <span class="hljs-number">0x29</span> * <span class="hljs-number">2</span>;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;序列号为：CW-%d-CRACKED .&quot;</span>, num);<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></div></figure>
 
-<h3 id="进程虚拟地址空间"><a href="#进程虚拟地址空间" class="headerlink" title="进程虚拟地址空间"></a>进程虚拟地址空间</h3><p><strong>可执行程序只有装在到内存以后才能被CPU执行。每个程序被运行起来以后，它将拥有自己的独立的虚拟地址空间。</strong></p>
-<p>32位平台决定了虚拟地址空间的地址为 0~2^32-1,即 <strong>0x00000000-0xFFFFFFFF</strong>，也就是我们常说的 <strong>4GB</strong> 虚拟空间大小，而64位的硬件平台具有64位寻址能力，几乎是无限的。</p>
-<p>那么32位平台下的 <strong>4GB</strong> 虚拟空间，我们的程序是否可以任意使用呢？</p>
-<blockquote>
-<p>不行，因为程序在运行时候处于操作系统的监管下，操作系统为了达到监控程序运行等一系列目的，进程的虚拟空间都在操作系统的掌控之中。进程只能使用那些操作系统分配给进程的地址，如果访问未经允许的空间，那么操作系统就会捕获到这些访问，将进程的这种访问当做非法操作，强制结束进程。</p>
-</blockquote>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/image-20230820010745909.png" srcset="/img/load.gif" lazyload alt="Linux进程虚拟空间分布"></p>
-<p>整个 <strong>4GB</strong> 被划分为两部分，其中操作系统本身用去了一部分，从地址 <strong>0xc0000000到0xffffffff</strong>，共 <strong>1GB</strong>。剩下的共 <strong>3GB</strong> 空间都是留给进程使用的。</p>
-<h4 id="装载的方式"><a href="#装载的方式" class="headerlink" title="装载的方式"></a>装载的方式</h4><blockquote>
-<p>程序执行时所需要的指令和数据必须在内存中才能正常运行，最简单的方法就是将程序所需要的指令和数据全部都装入内存中，这样程序就可以顺利执行，这就是最简单的 <strong>静态装入</strong> 的办法。但是很多情况下程序所需要的内存数量远大于物理内存输了，后来研究发现，程序运行时是有局部性原理的，所以我们可以将程序最常用的部分驻留在内存中，而将一些不太常用的数据存放在磁盘里面，这就是 <strong>动态装入</strong> 的基本原理</p>
-</blockquote>
-<h3 id="从操作系统角度看可执行文件的装载"><a href="#从操作系统角度看可执行文件的装载" class="headerlink" title="从操作系统角度看可执行文件的装载"></a>从操作系统角度看可执行文件的装载</h3><p><strong>有了硬件的地址转换和页映射机制，操作系统动态加载可执行文件的方式跟静态加载有了很大的区别。</strong></p>
-<h4 id="进程的建立"><a href="#进程的建立" class="headerlink" title="进程的建立"></a>进程的建立</h4><p>从操作系统的角度来看，一个进程最关键的特征是它 <strong>拥有独立的虚拟地址空间</strong>，这使得它有别于其他进程。</p>
-<p>在有虚拟存储的情况下，只需要做三件事：</p>
-<ol>
-<li>创建一个独立的虚拟地址空间</li>
-<li>读取可执行文件头，并且建立虚拟空间与可执行文件的映射关系</li>
-<li>将CPU的指令寄存器设置成可执行文件的入口地址，启动运行</li>
-</ol>
-<p><strong>由于可执行文件在装载时实际上是被映射的虚拟地址空间，所以可执行文件很多时候被叫做映像文件。</strong></p>
-<h4 id="页错误"><a href="#页错误" class="headerlink" title="页错误"></a>页错误</h4><p>上述步骤执行完以后，<strong>可执行文件的真正指令和数据都没有被装入到内存中</strong>，操作系统只是通过可执行文件头部的信息建立可执行文件和进程虚拟内存之间的映射关系而已。</p>
-<p>随着程序的执行， <strong>页错误</strong> 会不断产生，操作系统也会为进程分配相应的物理页面来满足进程执行的需求。</p>
-<blockquote>
-<p><strong>Segment</strong> 的概念实际上是从装载的角度重新划分了ELF的各个段，在将目标文件链接成可执行文件的时候，链接器会尽量把相同权限属性的段分配在同一空间。在ELF中把这些属性相似的、又连在一起的段叫做一个 <strong>Segment</strong> ，而系统正是按照 <strong>Segment</strong> 而不是 <strong>Section</strong> 来映射可执行文件的。</p>
-</blockquote>
-<h3 id="Window-PE-的装载"><a href="#Window-PE-的装载" class="headerlink" title="Window PE 的装载"></a>Window PE 的装载</h3><p><strong>RVA：相对虚拟地址，相当于文件中偏移量。</strong></p>
-<blockquote>
-<p>每个PE文件在装载时都会有一个装载目标地址，这个地址就是所谓的 <strong>基地址</strong> ，由于PE文件被这几场可以装载到任何地址，所以这个基地址并不是固定的，每次装载时都可能会变化。如果PE文件中的地址都使用绝对地址，它们都要随着基地址的变化而变化，但是如果使用RVA这样一种基于基地址的相对地址，那么无论基地址怎么变化，PE文件中的RVA都保持一致。</p>
-</blockquote>
-<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p>静态链接对于计算机内存和磁盘的 <strong>空间浪费</strong> 非常严重，同时对程序的 <strong>更新、部署和发布</strong> 也会带来很多麻烦，即一旦程序中有任何模块更新，整个程序就要重新链接、发布给用户。</p>
-<p><strong>把链接过程推迟到运行时再进行，这就是动态链接的基本思想。动态链接把程序按照模块拆分成各个相对独立的部分，在程序运行时才将它们连接在一起形成一个完整的程序，而不是像静态链接一样把所有的程序模块都链接成一个单独的可执行文件。</strong></p>
-<p>在Linux系统中， <strong>ELF</strong> 动态链接文件被称为 <strong>动态共享对象</strong> ，简称 <strong>共享对象，一般是以 “.so” 为扩展名的一些文件</strong>；而在 <strong>Windows</strong> 系统中，动态链接文件被称为 <strong>动态链接库，它们就是平时常见的以 “.dll” 为扩展名的文件。</strong></p>
-<blockquote>
-<p>动态链接会导致程序性能的一些损失(程序每次装载时都要重新进行链接)，但是用这点性能损失换取程序在空间上的节省和程序构建和升级的灵活性，是相当值得的。</p>
-</blockquote>
-<p>通过一个简单的例子来大致感受一下动态链接：</p>
-<figure class="highlight c"><i class="iconfont icon-github-fill" type="button" data-toggle="collapse" data-target="#collapse-zw51w1lnow2qps"></i><span>c</span><div class="collapse show" id="collapse-zw51w1lnow2qps"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// lib.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> LIB_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LIB_H</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">foobar</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-comment">//lib.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">foobar</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span><br>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Printing from lib.so %d\n&quot;</span>,i);<br>&#125;<br><br><span class="hljs-comment">//program1.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lib.h&quot;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>        foobar(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">//program2.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lib.h&quot;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>        foobar(<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 将lib.c编译成一个共享文件对象</span><br>$:gcc -fPIC -shared -o lib.so lib.c<br><br><span class="hljs-comment">// 编译目标文件</span><br>$:gcc -o program1 program1.c lib.so<br>$:gcc -o program2 program2.c lib.so<br></code></pre></td></tr></table></div></figure>
-
-<p>从 <strong>program1</strong> 的角度来看，整个编译和链接过程如下图所示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/fad8528d/image-20230820175441567.png" srcset="/img/load.gif" lazyload alt="动态链接过程"></p>
-<p>在静态链接过程中，链接会把 <strong>program1.o</strong> 和 <strong>lib.o</strong> 链接在一起，并且产生输出可执行文件 <strong>program1</strong> ，但是在这里， <strong>lib.o</strong> 没有被链接进来，链接的输入目标文件只有 <strong>program1.o</strong> ，但是 <strong>lib.so</strong> 也参与了链接过程，这是怎么回事呢？</p>
-<blockquote>
-<p>在静态链接时，程序最终只有一个可执行文件，它是一个不可分割的整体；但是在动态链接下，一个程序被分成了若干个文件，有程序的主要部分，即可执行文件(program1)和程序所依赖的共享对象(lib.so)，很多时候我们也把这些部分称为 <strong>模块</strong> ，即 <strong>动态链接下的可执行文件和共享对象都可以看作是程序的一个模块</strong> 。</p>
-</blockquote>
-<p>当链接器将 <strong>program1.o</strong> 链接成可执行文件时，这时候链接器必须确定 <strong>program1.o</strong> 中所引用的 <strong>foobar()</strong> 函数的性质。如果 <strong>foobar()</strong> 是一个定义与其他静态目标模块中的函数，那么链接器将会按照静态链接的规则，将 <strong>program1.o</strong> 中的 <strong>foobar</strong> 地址引用重定位；如果 <strong>foobar()</strong> 是一个定义在某个动态共享对象中的函数，那么链接器就会将这个符号的引用标记为一个动态链接的符号， <strong>不对它进行地址重定位，把这个过程留到装载时再进行。</strong></p>
-<p><strong>lib.so 保存了完整的符号信息，把它也作为链接的输入文件之一，链接器在解析符号时就可以知道：foobar是一个定义在lib.so 的动态符号，这样链接器就可以对foobar的引用做特殊处理，使它成为一个对动态符号的引用。</strong></p>
-<h3 id="Windows下动态链接"><a href="#Windows下动态链接" class="headerlink" title="Windows下动态链接"></a>Windows下动态链接</h3><p><strong>DLL</strong> 即动态链接库的缩写，它相当于linux下的共享对象。</p>
-<p><strong>PE</strong> 里面有两个很常用的概念就是 <strong>基地址</strong> 和 <strong>相对地址</strong>，当一个 <strong>PE</strong> 文件被装载时，其进程地址空间中的起始地址就是基地址。在DLL文件中，需要 <strong>显式</strong> 告诉编译器我们需要导出某个符号，否则编译器默认所有符号都不导出，当在程序中使用 <strong>DLL</strong> 导出的符号时，这个过程被称为 <strong>导入</strong> 。</p>
-<p>程序使用 <strong>DLL</strong> 的过程其实是引用 <strong>DLL</strong> 中的导出函数和符号的过程。导出表从最简单的结构上来看，它提供了一个符号名与符号地址的映射关系，即可以通过某个符号查找相应的地址。</p>
+<p>测试数据，弹窗正确！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014012957867.png" srcset="/img/load.gif" lazyload alt="success"></p>
 
                 
               </div>
@@ -372,15 +362,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/" class="category-chain-item">纸上得来终觉浅</a>
+  <a href="/categories/160%E4%B8%AACrackme%E7%B3%BB%E5%88%97/" class="category-chain-item">160个Crackme系列</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB-%E9%93%BE%E6%8E%A5%E3%80%81%E8%A3%85%E8%BD%BD%E4%B8%8E%E5%BA%93/" class="category-chain-item">程序员的自我修养--链接、装载与库</a>
-  
-  
-
   
 
       </span>
@@ -394,9 +377,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B5%85%E6%9E%90%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86/" class="print-no-link">#浅析程序运行原理</a>
+        <a href="/tags/crackme/" class="print-no-link">#crackme</a>
       
-        <a href="/tags/%E7%A8%8B%E5%BA%8F%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B/" class="print-no-link">#程序链接过程</a>
+        <a href="/tags/%E9%80%86%E5%90%91%E5%AD%A6%E4%B9%A0/" class="print-no-link">#逆向学习</a>
       
     </div>
   
@@ -408,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>程序员的自我修养--三</div>
-      <div>https://blog.zanelc.site/posts/fad8528d/</div>
+      <div>160个Crackme--一</div>
+      <div>https://blog.zanelc.site/posts/a1e7b9f1/</div>
     </div>
     <div class="license-meta">
       
@@ -421,13 +404,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月20日</div>
+          <div>2023年10月12日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月30日</div>
+          <div>2023年10月14日</div>
         </div>
       
       
@@ -458,18 +441,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/e0d0a40/" title="序列号生成算法分析三">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">序列号生成算法分析三</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/b884c480/" title="程序员的自我修养--二">
-                        <span class="hidden-mobile">程序员的自我修养--二</span>
+                      <a href="/posts/df09543b/" title="ollydbg反调试">
+                        <span class="hidden-mobile">ollydbg反调试</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
