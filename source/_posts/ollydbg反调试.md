@@ -1,5 +1,5 @@
 ---
-title: ollydbg反调试一
+title: ollydbg反调试
 categories:
   - [使用Ollydbg从零开始Cracking,xdbg使用]
 tags:
