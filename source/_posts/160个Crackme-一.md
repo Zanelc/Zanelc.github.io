@@ -117,3 +117,63 @@ int main()
 测试数据，弹窗正确！
 
 ![success](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231014012957867.png)
+
+### 2.Afkayas.1
+
+#### Serial/Name
+
+先输入测试数据来运行一下程序，查看输出。
+
+![弹窗错误](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015221228367.png)
+
+使用 **x32dbg** 来加载该程序，查看字符串窗口，在 **You Get Wrong** 处下断点。
+
+![字符串窗口](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015221441712.png)
+
+运行程序，程序中断下来，发现关键跳转语句及 **test** 语句，继续想上分析。
+
+![程序中断](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015221659310.png)
+
+回溯到函数入口处，下断点分析具体功能，**注意观察堆栈窗口及寄存器** 。
+
+![函数入口下断点](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015221822997.png)
+
+跟踪到 **402420** 处，发现此时输入的 **testacc** 压入堆栈中，根据提示名称分析：先获取输入字符串的长度，将 **长度*0x17CFB**，结果存储在edi中，对结果进行检测是否溢出。
+
+![程序分析](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015222337878.png)
+
+![程序分析](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015222502916.png)
+
+继续单步执行：获取字符串中第一个字节，将该字节的值与前面计算得到的值（EDI）相加，将结果压入栈中，执行 **__vbaStrI4** 后得到 **十进制形式**。
+
+![程序分析](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015223258332.png)
+
+![十六进制转十进制](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015223358766.png)
+
+ 继续分析函数，当执行到 **__vbaStrCmp** 函数时，此时堆栈中出现正确序列号及输入的序列号，根据函数名称这个函数是用来比较字符串的。
+
+![序列号比较](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015223703305.png)
+
+重新运行程序，输入正确序列号来验证结果。
+
+![验证成功](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015223905234.png)
+
+注册机代码编写
+
+```c++
+#include<iostream>
+using namespace std;
+int main()
+{
+	string name;
+	printf("输入Name：");
+	cin >> name;
+	int res = name.length() * 0x17cfb + name[0];
+	printf("Serial：AKA-%d", res);
+	return 0;
+}
+```
+
+测试结果，成功破解！
+
+![成功破解](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/a1e7b9f1/image-20231015224709762.png)
