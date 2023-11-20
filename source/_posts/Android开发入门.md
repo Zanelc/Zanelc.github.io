@@ -1,5 +1,5 @@
 ---
-title: Android开发入门
+title: Android基础
 categories:
   - - 纸上得来终觉浅
     - Android开发
@@ -125,3 +125,4 @@ action节点设置入口页面，启动App时会最先打开该页面；category
 也可以直接创建Activity，同时会创建好xml文件。
 
 ![创建activity](https://cdn.jsdelivr.net/gh/Zanelc/Zanelc.github.io@main/posts/c9fbe089/image-20231027001246548.png)
+
